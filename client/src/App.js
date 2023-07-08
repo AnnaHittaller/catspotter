@@ -1,12 +1,16 @@
-
-import './App.css';
+import MainLayout from "./layout/MainLayout";
+import { GlobalStyle } from "./styles/GlobalStyle";
+import AllRoutes from "./AllRoutes";
 
 function App() {
-  return (
-    <div className="App">
-    
-    </div>
-  );
+	return (
+		<>
+			<GlobalStyle />
+			<MainLayout>
+				<AllRoutes />
+			</MainLayout>
+		</>
+	);
 }
 
 export default App;

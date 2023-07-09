@@ -49,7 +49,7 @@ export default function NotificationsPage() {
 					<StyledPBig>There are no new messages.</StyledPBig>
 				</StyledDivSimple>
 			</StyledSection>
-			<StyledBGSection bgImg={BG_notification}></StyledBGSection>
+			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_upload_jetyme.jpg"></StyledBGSection>
 		</StyledPage>
 	);
 }

@@ -12,7 +12,7 @@ export default function CatPage() {
 			<StyledSection>
 				<CatInfoSheetMaxi />
 			</StyledSection>
-			<StyledBGSection bgImg={BG_upload}></StyledBGSection>
+			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_notification_udcr7h.jpg"></StyledBGSection>
 		</StyledPage>
 	);
 }

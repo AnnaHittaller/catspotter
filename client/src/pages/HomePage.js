@@ -56,7 +56,10 @@ export default function HomePage() {
 		<StyledPage>
 			<StyledHero>
 				<StyledHeroData>
-					<img src={logo_dark} alt="catspotter logo" />
+					<img
+						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899573/catspotter-assets/catspotter_logo_dark_mur6nz.png"
+						alt="catspotter logo"
+					/>
 					<p>
 						Help lost cats get safely back home! Spotted a cat? Load its data up
 						and make it easier for the worrying owner to find it.
@@ -87,7 +90,11 @@ export default function HomePage() {
 						going to school? Or an unfamiliar cat started to turn up in your
 						garden?{" "}
 					</p>
-					<img src={arrow} alt="" aria-hidden="true" />
+					<img
+						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/yellow_arrow_v7eq7h.png"
+						alt=""
+						aria-hidden="true"
+					/>
 					<StyledH2Underline page="home">1. Spot it</StyledH2Underline>
 				</StyledDivBorder>
 				<StyledDivBorder page="home">
@@ -97,7 +104,11 @@ export default function HomePage() {
 						home higher.
 					</p>
 
-					<img src={arrow} alt="" aria-hidden="true" />
+					<img
+						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/yellow_arrow_v7eq7h.png"
+						alt=""
+						aria-hidden="true"
+					/>
 
 					<StyledH2Underline page="home">2. Upload it</StyledH2Underline>
 				</StyledDivBorder>
@@ -107,7 +118,11 @@ export default function HomePage() {
 						and the owner gets notified, so they can check the detailed
 						infosheet, location and photos.
 					</p>
-					<img src={arrow} alt="" aria-hidden="true" />
+					<img
+						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/yellow_arrow_v7eq7h.png"
+						alt=""
+						aria-hidden="true"
+					/>
 					<span>
 						<StyledH2Underline page="home">3. Help it </StyledH2Underline>
 

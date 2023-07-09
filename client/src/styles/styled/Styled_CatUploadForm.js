@@ -127,12 +127,13 @@ export const StyledCatUploadForm = styled.form`
 		margin: 0 auto;
 	}
 
-	> div: nth-of-type(1) {
+	>div: nth-of-type(1) {
 		border: 2px solid ${v.cadetGrey};
 	}
 
 	> div:nth-of-type(3),
-	> div:nth-of-type(2) {
+	> div:nth-of-type(2),
+	> div:nth-of-type(9) {
 		border: 2px solid ${v.columbiaBlue};
 		min-width: 220px;
 		width: 100%;
@@ -174,5 +175,37 @@ export const StyledCatUploadForm = styled.form`
 		&:hover {
 			border: 2px solid ${v.sunGlow};
 		}
+	}
+
+	.photo-upload {
+		width: 120px;
+		height: 120px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: ${v.columbiaBlue};
+		cursor: pointer;
+
+		svg {
+			font-size: 3rem;
+		}
+	}
+
+	> div:nth-of-type(9) {
+
+		> div {
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+		
+		input[type="file"] {
+			display: none;
+		}
+
+		img {
+			width: 120px;
+			margin: 0;
+		}
+
 	}
 `;

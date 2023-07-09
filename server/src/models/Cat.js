@@ -26,32 +26,34 @@ const catSchema = new Schema({
 	image: {
 		type: [String],
 	},
-	notes: {
-		type: String,
-	},
-	chipNr: {
-		type: String,
-	},
-	reward: {
-		type: Number,
-	},
+	notes: String,
+	chipNr: String,
+	reward: Number,
+	contact: String,
 	location: {
 		type: {
 			type: String,
 			enum: ["Point"],
-			required: true,
+			
 		},
 		coordinates: {
 			type: [Number], //long, lat!!!!! in this order
+			required: true,
 		},
 	},
 	address: {
-		type: String,
+		type: {
+			street: String,
+			postcode: String,
+			city: String,
+			suburb: String,
+			road: String,
+		},
 	},
 	uploader: {
 		type: Schema.Types.ObjectId,
-		ref: "User"
-	}
+		ref: "User",
+	},
 });
 
 catSchema.index({ "location.coordinates": "2dsphere" });

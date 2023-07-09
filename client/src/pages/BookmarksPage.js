@@ -34,8 +34,8 @@ export default function BookmarksPage() {
 					<CatInfoSheetMidi />
 				</StyledDivSimpleGrid>
 			</StyledSection>
-			<StyledBGSection bgImg={BG_bookmark}></StyledBGSection>  
-		</StyledPage> 
+			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_bookmark_lobxmj.jpg"></StyledBGSection>
+		</StyledPage>
 	);
 }
 

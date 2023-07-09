@@ -21,7 +21,8 @@ import "leaflet/dist/leaflet.css";
 
 import { useLocation } from "react-router-dom";
 import ReverseGeocodeMarker from "./ReverseGeocodeMarker";
-import icon from "./MapMarkerOwn";
+import {markerIconOwn} from "./MapMarkers";
+//import icon from "./MapMarkerOwn";
 
 import MenuAddress from "../MenuAddress";
 
@@ -80,7 +81,7 @@ export default function MapUserUpdate({ height }) {
 						<ReverseGeocodeMarker
 							position={markerCoords}
 							mapRef={mapRef.current}
-							icon={icon}
+							icon={markerIconOwn}
 						/>
 					)}
 

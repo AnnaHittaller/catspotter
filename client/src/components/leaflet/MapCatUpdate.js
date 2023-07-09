@@ -19,7 +19,8 @@ import {
 import "leaflet/dist/leaflet.css";
 
 import ReverseGeocodeMarker from "./ReverseGeocodeMarker";
-import icon from "./MapMarkerOwn";
+//import icon from "./MapMarkerOwn";
+import { markerIconOwn } from "./MapMarkers";
 import MenuAddress from "./MenuAddress";
 
 export default function MapCatUpdate({ height }) {
@@ -61,7 +62,7 @@ export default function MapCatUpdate({ height }) {
 						<ReverseGeocodeMarker
 							position={markerCoords}
 							mapRef={mapRef.current}
-							icon={icon}
+							icon={markerIconOwn}
 						/>
 					)}
 				</MapContainer>

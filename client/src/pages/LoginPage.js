@@ -21,7 +21,7 @@ export default function LoginPage() {
 	return (
 		<StyledPage>
 			<StyledSection
-				bgImg={BG_login}
+				bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_login_fg4txa.jpg"
 				align="center"
 				padding="0"
 				minHeight="100%"

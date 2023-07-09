@@ -149,7 +149,7 @@ export default function ContactPage() {
 					<StyledPrimaryButton type="submit">Send message</StyledPrimaryButton>
 				</StyledForm>
 			</StyledSection>
-			<StyledBGSection bgImg={BG_contact}></StyledBGSection>
+			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_contact2_rnmpis.jpg"></StyledBGSection>
 		</StyledPage>
 	);
 }

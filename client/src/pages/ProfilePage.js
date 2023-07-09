@@ -109,7 +109,7 @@ export default function ProfilePage() {
 					<CatInfoSheetMini />
 				</StyledDivBorder>
 			</StyledSection>
-			<StyledBGSection bgImg={BG_profile}></StyledBGSection>
+			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_profile_cdrhze.jpg"></StyledBGSection>
 		</StyledPage>
 	);
 }

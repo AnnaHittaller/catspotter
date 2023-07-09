@@ -129,9 +129,8 @@ export default function MapPage() {
 					<CatInfoSheetMini />
 					<CatInfoSheetMini />
 				</StyledDivSimpleGrid>
-
 			</StyledSection>
-			<StyledBGSection bgImg={BG_map}></StyledBGSection>
+			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_map_ws93ba.jpg"></StyledBGSection>
 		</StyledPage>
 	);
 }

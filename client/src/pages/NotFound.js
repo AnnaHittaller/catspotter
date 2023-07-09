@@ -15,7 +15,11 @@ export default function NotFound() {
 			<StyledSection>
 				<StyledNotFound>
 					<StyledDivBorder padding="0" gap="0">
-						<img src={BG_notFound} aria-hidden="true" alt="" />
+						<img
+							src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/notFound_BG_xyspbj.jpg"
+							aria-hidden="true"
+							alt=""
+						/>
 						<StyledDivSimple flexDirection="column" justify="space-between">
 							<StyledH2>Ooops!</StyledH2>
 							<StyledH3>This page is gone.</StyledH3>

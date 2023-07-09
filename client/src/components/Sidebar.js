@@ -56,12 +56,19 @@ export default function Sidebar() {
 			</StyledSidebarButton>
 			<StyledLogo isOpen={sidebaropen}>
 				<img
-					src={sidebaropen ? logo_light : logo_small}
+					src={
+						sidebaropen
+							? "https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899573/catspotter-assets/catspotter_logo_light_eoazpt.png"
+							: "https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899573/catspotter-assets/catspotter_logo_small_mohq1r.png"
+					}
 					alt="catspotter logo"
 				/>
 			</StyledLogo>
 			<StyledUserInfo>
-				<img src={default_profile} alt="user profile" />
+				<img
+					src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/default_profile_small_g8rp1h.png"
+					alt="user avatar"
+				/>
 				{sidebaropen && (
 					<div>
 						{state.user.username

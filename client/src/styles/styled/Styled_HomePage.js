@@ -5,7 +5,7 @@ import BG_home from "../../assets/bgImages/BG_home.jpg";
 export const StyledHero = styled.div`
 	width: 100%;
 	padding: calc(${v.lgSpacing} * 5) calc(${v.lgSpacing} * 3);
-	background-image: url(${BG_home});
+	background-image: url("https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_home_xee69h.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-color: ${v.columbiaBlue};

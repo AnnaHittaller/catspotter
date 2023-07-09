@@ -17,12 +17,12 @@ import {
 	StyledDivSimple,
 	StyledDivSimpleGrid,
 } from "../styles/styled/Styled_Div";
-import black from "../assets/colorSamples/black.png";
-import white from "../assets/colorSamples/white.png";
-import orange from "../assets/colorSamples/orange.png";
-import beige from "../assets/colorSamples/beige.png";
-import grey from "../assets/colorSamples/grey.png";
-import brown from "../assets/colorSamples/brown.png";
+// import black from "../assets/colorSamples/black.png";
+// import white from "../assets/colorSamples/white.png";
+// import orange from "../assets/colorSamples/orange.png";
+// import beige from "../assets/colorSamples/beige.png";
+// import grey from "../assets/colorSamples/grey.png";
+// import brown from "../assets/colorSamples/brown.png";
 import {
 	CatPatternBicolor,
 	CatPatternBicolorTabby,
@@ -151,27 +151,45 @@ export default function GuidesPage() {
 					<StyledDivSimpleGrid padding="0" min="110px" justifyitems="center">
 						<StyledDivLabel max="170px">
 							<label>Black</label>
-							<img src={black} alt="black fur" />
+							<img
+								src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899490/catspotter-assets/black_ad4ue7.png"
+								alt="black fur"
+							/>
 						</StyledDivLabel>
 						<StyledDivLabel max="170px">
 							<label>White</label>
-							<img src={white} alt="white fur" />
+							<img
+								src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899490/catspotter-assets/white_wo7nva.png"
+								alt="white fur"
+							/>
 						</StyledDivLabel>
 						<StyledDivLabel max="170px">
 							<label>Orange</label>
-							<img src={orange} alt="orange fur" />
+							<img
+								src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899490/catspotter-assets/orange_bnn73i.png"
+								alt="orange fur"
+							/>
 						</StyledDivLabel>
 						<StyledDivLabel max="170px">
 							<label>Beige</label>
-							<img src={beige} alt="beige colored fur" />
+							<img
+								src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899490/catspotter-assets/beige_nndik4.png"
+								alt="beige colored fur"
+							/>
 						</StyledDivLabel>
 						<StyledDivLabel max="170px">
 							<label>Grey / blue</label>
-							<img src={grey} alt="grey or blue fur" />
+							<img
+								src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899490/catspotter-assets/grey_o4wizu.png"
+								alt="grey or blue fur"
+							/>
 						</StyledDivLabel>
 						<StyledDivLabel max="170px">
 							<label>Brown</label>
-							<img src={brown} alt="brown" />
+							<img
+								src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899490/catspotter-assets/brown_u8pjpb.png"
+								alt="brown"
+							/>
 						</StyledDivLabel>
 					</StyledDivSimpleGrid>
 				</StyledDivBorder>

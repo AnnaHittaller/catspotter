@@ -88,15 +88,15 @@ export const handleLogoutUser = async (req, res) => {
 };
 
 export const handleDeleteUser = async (req, res) => {
-	console.log("🚀 ~ handleDeleteUser:", req.params);
+	console.log("handleDeleteUser:", req.params);
 
 	try {
-		const deleteUser = await User.findByIdAndDelete(req.params.id);
-		console.log("🚀 ~ deleteUser:", deleteUser);
+		const deletedUser = await User.findByIdAndDelete(req.params.id);
+		console.log("deleted user:", deletedUser);
 
 		res.status(200).send({ success: true });
 	} catch (error) {
-		console.log("🚀 ~ error DELETING USER:", error.message);
+		console.log("error deleting user:", error.message);
 
 		res.send({
 			success: false,
@@ -104,3 +104,7 @@ export const handleDeleteUser = async (req, res) => {
 		});
 	}
 };
+
+export const handleUpdateUser = async (req, res) => {
+
+}

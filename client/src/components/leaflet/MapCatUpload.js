@@ -17,15 +17,16 @@ import LeafletControlGeocoder from "./LeafletControlGeocoder";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import ReverseGeocodeMarker from "./ReverseGeocodeMarker";
-import icon from "./MapMarkerOwn";
+//import icon from "./MapMarkerOwn";
+import { markerIconOwn } from "./MapMarkers";
 //import MenuAddress from "./MenuAddress";
 
-export default function MapCatUpload({ height }) {
+export default function MapCatUpload({ height, markerCoords, setMarkerCoords }) {
 	//console.log("rerender from mapnew component");
 	const mapRef = useRef();
 	const [showToast, setShowToast] = useState(false);
 	//const [geocoderAdded, setGeocoderAdded] = useState(false);
-	const [markerCoords, setMarkerCoords] = useState(null);
+	//const [markerCoords, setMarkerCoords] = useState(null);
 	console.log("markerCoords,", markerCoords);
 
 	const handleMapClick = (e) => {
@@ -63,7 +64,7 @@ export default function MapCatUpload({ height }) {
 						<ReverseGeocodeMarker
 							position={markerCoords}
 							mapRef={mapRef.current}
-							icon={icon}
+							icon={markerIconOwn}
 						/>
 					)}
 					<LeafletControlGeocoder

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+//import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
@@ -102,7 +102,7 @@ export default function LoginForm({ onFormSwitch, currentForm }) {
 								{showPassword ? <RiEyeCloseLine /> : <RiEyeLine />}
 							</StyledVisibilityBtn>
 						)}
-						<FaLock />
+						<FaLock /> 
 					</StyledInputBox>
 					<StyledRememberForgotBox currentForm={currentForm}>
 						<label>

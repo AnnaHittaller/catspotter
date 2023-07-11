@@ -20,10 +20,10 @@ import {
 } from "react";
 import { useMap } from "react-leaflet";
 import icon from "./MarkerOwn";
-import { LocationContext } from "../context/LocationContext";
+//import { LocationContext } from "../context/LocationContext";
 
 export default function LeafletControlGeocoder({ mapRef }) {
-	const { location, setLocation } = useContext(LocationContext);
+	//const { location, setLocation } = useContext(LocationContext);
 	const map = useMap();
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
 	

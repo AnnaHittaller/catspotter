@@ -22,3 +22,21 @@ export const handleAddCat = async (req, res) => {
 	}
 
 };
+
+export const handleListCats = async (req, res) => {
+		try {
+			
+		 const cats = await Cat.find().select("-__v").sort({ date: -1 });
+			res.send({
+				success: true,
+				cats
+			});
+			console.log("cats server:",cats)
+		} catch (error) {
+			console.log("error listing cats:", error.message);
+			res.send({
+				success: false,
+				message: error.message,
+			});
+		}
+}

@@ -1,6 +1,8 @@
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
+//CAN BE DELETED ******************************************
 export const AuthContext = createContext();
 
 export default function AuthContextFunction({ children }) {

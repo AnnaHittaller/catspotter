@@ -18,8 +18,11 @@ export default function MenuAddress({ r }) {
 
 	const formatAddressLine2 = () => {
 		const components = [];
-		if (address.city) {
-			components.push(address.city);
+		if (address.city || address.town) {
+			components.push(address.city || address.town);
+		}
+		if (address.village) {
+			components.push(address.village);
 		}
 		if (address.suburb) {
 			components.push(address.suburb);

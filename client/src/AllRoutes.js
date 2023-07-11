@@ -12,6 +12,8 @@ import CatUploadPage from "./pages/CatUploadPage";
 import UserUpdatePage from "./pages/UserUpdatePage";
 import CatPage from "./pages/CatPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import EmailConfirmPage from "./pages/EmailConfirmPage";
 
 const AllRoutes = () => {
 	return (
@@ -26,8 +28,11 @@ const AllRoutes = () => {
 			<Route path="/forgotpassword" element={<ForgotPasswordPage />} />
 			<Route path="/upload" element={<CatUploadPage />} />
 			<Route path="/cat/:id" element={<CatPage />} />
-			<Route path="/profile/:userId" element={<ProfilePage />} />
+			<Route path="/profile" element={<ProfilePage />} />
 			<Route path="/updateprofile" element={<UserUpdatePage />} />
+			<Route path="/emailconfirm/:token" element={<EmailConfirmPage />} />
+			<Route path="/forgotpassword/" element={<ForgotPasswordPage />} />
+			<Route path="/resetpassword/:token" element={<ResetPasswordPage />} />
 			<Route path="*" element={<NotFound />} />
 		</Routes>
 	);

@@ -29,12 +29,45 @@ import MenuMidi from "../MenuMidi";
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
+import { useMapEvents } from "react-leaflet";
 
-export default function MapFindCat({ height }) {
+export default function MapFindCat({ height, cats }) {
 	console.log("rerender from mapnew component");
 	const mapRef = useRef();
 	const [showToast, setShowToast] = useState(false);
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
+
+	console.log("map4", cats);
+
+	//maybe pass the state up to the page?
+	const [visibleCats, setVisibleCats] = useState([]);
+
+	useEffect(() => {
+		if (!mapRef.current) return;
+		const updateVisibleCats = () => {
+			const bounds = mapRef.current.getBounds();
+			const filteredCats = cats.filter((cat) => {
+				const catLatLng = L.latLng(
+					cat.location.coordinates[1],
+					cat.location.coordinates[0]
+				);
+				return bounds.contains(catLatLng);
+			});
+			setVisibleCats(filteredCats);
+		};
+
+		updateVisibleCats();
+
+		const handleMoveEnd = () => {
+			updateVisibleCats();
+		};
+
+		mapRef.current.on("moveend", handleMoveEnd);
+
+		return () => {
+			mapRef.current.off("moveend", handleMoveEnd);
+		};
+	}, [cats]);
 
 	return (
 		<>
@@ -56,11 +89,25 @@ export default function MapFindCat({ height }) {
 					/>
 					<MarkerClusterGroup
 						chunkedLoading
-						iconCreateFunction={createCustomClusterIcon}></MarkerClusterGroup>
-					<LeafletControlGeocoder
-						mapRef={mapRef}
-						setShowToast={setShowToast}
-					/>
+						iconCreateFunction={createCustomClusterIcon}
+						//disableClusteringAtZoom={13}
+						zoomToBoundsOnClick>
+						{cats.length > 0 &&
+							cats &&
+							cats.map((cat) => (
+								<Marker
+									key={cat._id}
+									//add popup with menu
+									icon={cat.status === "lost" ? markerIconLost : markerIconSeen}
+									position={[
+										cat.location.coordinates[1],
+										cat.location.coordinates[0],
+									]}>
+									{" "}
+								</Marker>
+							))}
+					</MarkerClusterGroup>
+					<LeafletControlGeocoder mapRef={mapRef} setShowToast={setShowToast} />
 				</MapContainer>
 			</StyledMapContainer>
 		</>

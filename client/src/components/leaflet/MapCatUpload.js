@@ -1,7 +1,4 @@
-import {
-	useState,
-	useRef,
-} from "react";
+import { useState, useRef } from "react";
 import { StyledMapContainer } from "../../styles/styled/Styled_MapContainer";
 import {
 	MapContainer,
@@ -21,7 +18,11 @@ import ReverseGeocodeMarker from "./ReverseGeocodeMarker";
 import { markerIconOwn } from "./MapMarkers";
 //import MenuAddress from "./MenuAddress";
 
-export default function MapCatUpload({ height, markerCoords, setMarkerCoords }) {
+export default function MapCatUpload({
+	height,
+	markerCoords,
+	setMarkerCoords,
+}) {
 	//console.log("rerender from mapnew component");
 	const mapRef = useRef();
 	const [showToast, setShowToast] = useState(false);
@@ -67,10 +68,7 @@ export default function MapCatUpload({ height, markerCoords, setMarkerCoords }) 
 							icon={markerIconOwn}
 						/>
 					)}
-					<LeafletControlGeocoder
-						mapRef={mapRef}
-						setShowToast={setShowToast}
-					/>
+					<LeafletControlGeocoder mapRef={mapRef} setShowToast={setShowToast} />
 				</MapContainer>
 			</StyledMapContainer>
 		</>

@@ -47,13 +47,14 @@ const userSchema = new Schema({
 	},
 	bookmarks: [
 		{
-
-				type: Schema.Types.ObjectId,
-				ref: "Cat"
-			
-		}
+			type: Schema.Types.ObjectId,
+			ref: "Cat",
+		},
 	],
-
+	emailVerified: {
+		type: String,
+		default: false,
+	},
 });
 
 userSchema.index({ "location.coordinates": "2dsphere" });

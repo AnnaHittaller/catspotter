@@ -42,18 +42,34 @@ import {
 } from "../data/SelectOptions";
 import {customStyles} from "../styles/SelectCustomStyles"
 import { LocationContext } from "../context/LocationContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MenuMini from "../components/MenuMini";
 import MenuMidi from "../components/MenuMidi";
 //import AreaRangeSlider from "../components/AreaRangeSlider";
 import ToggleButton from "../components/ToggleButton";
 import MapFindCat from "../components/leaflet/MapFindCat";
+import axios from "axios";
 
 export default function MapPage() {
 	//console.log("rerender from map page");
 	const { location, setLocation } = useContext(LocationContext);
+	const [cats, setCats] = useState([])
 
+		useEffect(() => {
+			const fetchCats = async () => {
+				try {
+					const data = await axios.get("/cats/list");
+					console.log("data:",data.data)
+					setCats(data.data.cats);
+				} catch (error) {
+					console.log(error.message);
+				}
+			};
+			fetchCats();
+		}, []);
+
+		console.log("cats", cats)
 
 	return (
 		<StyledPage display="flex" flexDirection="column">
@@ -64,7 +80,7 @@ export default function MapPage() {
 						The map shows sightings from the last 30 days as default - to view
 						older posts, please adjust the filters below.
 					</StyledP>
-					<MapFindCat />
+					<MapFindCat cats={cats}/>
 				</StyledDivSimple>
 				<StyledDivSimple padding="0" flexDirection="column" align="flex-start">
 					<StyledH2>Find cats:</StyledH2>

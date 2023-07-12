@@ -47,7 +47,7 @@ const catSchema = new Schema({
 			postcode: String,
 			city: String,
 			suburb: String,
-			road: String,
+			road: String, 
 		},
 	},
 	uploader: {

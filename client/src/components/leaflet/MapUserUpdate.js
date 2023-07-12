@@ -1,7 +1,7 @@
 import {
 	useState,
-	useMemo,
-	useCallback,
+	//useMemo,
+	//useCallback,
 	useRef,
 	useContext,
 	useEffect,
@@ -10,9 +10,9 @@ import { StyledMapContainer } from "../../styles/styled/Styled_MapContainer";
 import {
 	MapContainer,
 	TileLayer,
-	Marker,
-	Popup,
-	useMap,
+	// Marker,
+	// Popup,
+	// useMap,
 	useMapEvents,
 	Circle,
 } from "react-leaflet";
@@ -30,25 +30,28 @@ import LeafletControlGeocoder from "./LeafletControlGeocoder";
 import AreaRangeSlider from "./AreaRangeSlider";
 import { AppContext } from "../../context/AppContext";
 
-export default function MapUserUpdate({ height }) {
+export default function MapUserUpdate({ height, markerCoords, setMarkerCoords, rangeValue, setRangeValue }) {
 	
 	const {state} = useContext(AppContext)
 	const mapRef = useRef();
-	const [markerCoords, setMarkerCoords] = useState([
-		state.user.location.coordinates[1],
-		state.user.location.coordinates[0],
-	]);
-	console.log("markerCoords,", markerCoords);
-	const { pathname } = useLocation();
+	// const [markerCoords, setMarkerCoords] = useState([
+	// 	state.user.location.coordinates[1],
+	// 	state.user.location.coordinates[0],
+	// ]);
+	console.log("markerCoords from userupdatemap,", markerCoords);
+	const { pathname } = useLocation(); //is this used? probs not
 	const [showToast, setShowToast] = useState(false);
 
 	//const [circleRadius, setCircleRadius] = useState(0);
+
+	// center is just for initial map center, not for circle
 	const center = [
 		state.user.location.coordinates[1],
 		state.user.location.coordinates[0],
 	];
 
-	const [rangeValue, setRangeValue] = useState([0, 0]);
+	//pass up rangeValue to page & form ////////////////////////
+	//const [rangeValue, setRangeValue] = useState([0, 0]);
 
 	const handleMapClick = (e) => {
 		const { lat, lng } = e.latlng;

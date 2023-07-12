@@ -12,7 +12,7 @@ router.post("/logout", handleLogoutUser);
 router.post("/forgotpass", handleForgotPassword);
 router.post("/changepass", handleChangePassword);
 router.delete("/delete/:id", handleDeleteUser);
-router.put('/updateprofile', upload.single("image"), handleUpdateUser)
+router.put('/updateprofile', upload.single("avatar"), handleUpdateUser)
 
 export default router;
 

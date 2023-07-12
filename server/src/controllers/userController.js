@@ -95,6 +95,24 @@ export const handleLogoutUser = async (req, res) => {
 	}
 };
 
+export const handleDeleteUser = async (req, res) => {
+	console.log("handleDeleteUser:", req.params);
+
+	try {
+		const deletedUser = await User.findByIdAndDelete(req.params.id);
+		console.log("deleted user:", deletedUser);
+
+		res.status(200).send({ success: true });
+	} catch (error) {
+		console.log("error deleting user:", error.message);
+
+		res.send({
+			success: false,
+			message: error.message,
+		});
+	}
+};
+
 export const handleEmailConfirm = async (req, res) => {
 	console.log("handleemailconfirm function", req.body);
 
@@ -113,24 +131,6 @@ export const handleEmailConfirm = async (req, res) => {
 	} catch (error) {
 		console.log(" error at email confirm:", error.message);
 		res.send("Error in confirming the email", error.message);
-	}
-};
-
-export const handleDeleteUser = async (req, res) => {
-	console.log("handleDeleteUser:", req.params);
-
-	try {
-		const deletedUser = await User.findByIdAndDelete(req.params.id);
-		console.log("deleted user:", deletedUser);
-
-		res.status(200).send({ success: true });
-	} catch (error) {
-		console.log("error deleting user:", error.message);
-
-		res.send({
-			success: false,
-			message: error.message,
-		});
 	}
 };
 
@@ -196,4 +196,34 @@ export const handleChangePassword = async (req, res) => {
 };
 
 
-export const handleUpdateUser = async (req, res) => {};
+export const handleUpdateUser = async (req, res) => {
+// console.log(" handleUpdateProfile:", req.body);
+//   console.log(" handleUpdateProfile FILE:", req.file);
+
+  try {
+    //console.log(" handleUpdateUser FILENAME:", req.file.filename);
+
+    if (req.file) {
+			req.body.image = req.file.filename;
+		}
+
+	//PASSWORD CHANGE JWT HASHING NEEDED!!!!!!!!!!!!!!!1
+
+    const editedUser = await User.findByIdAndUpdate(req.body.id, req.body, {
+      new: true,
+    });
+
+    console.log("updatedUser:", editedUser);
+
+    res.send({
+			success: true,
+		});
+  } catch (error) {
+    console.log("error handleUpdateUser", error.message);
+
+    res.send({
+			success: false,
+			message: error.message,
+		});
+  }
+};

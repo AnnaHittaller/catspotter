@@ -29,7 +29,7 @@ import Toast from "../components/Toast";
 // import MapForUpload from "../components/MapForUpload";
 import { BsQuestionCircle } from "react-icons/bs";
 import { useContext, useEffect, useState } from "react";
-import { LocationContext } from "../context/LocationContext";
+//import { LocationContext } from "../context/LocationContext";
 import { StyledCatUploadForm } from "../styles/styled/Styled_CatUploadForm";
 import {
 	optionsCat,
@@ -62,7 +62,7 @@ export default function CatUploadPage() {
 	const { state } = useContext(AppContext);
 	const [toast, setToast] = useState("");
 	const [date, onChange] = useState(new Date());
-	const [lost, setLost] = useState(false);
+	//const [lost, setLost] = useState(false);
 	const [status, setStatus] = useState("");
 	const [color, setColor] = useState([]);
 	const [pattern, setPattern] = useState("");
@@ -109,17 +109,22 @@ export default function CatUploadPage() {
 				console.log("nominatim", response.data.address);
 				if (response.data.address.postcode)
 					setPostcode(response.data.address.postcode);
+				//check village-Town-city
+				if (response.data.address.village) setCity(response.data.address.village);
+				if (response.data.address.town) setCity(response.data.address.town);
 				if (response.data.address.city) setCity(response.data.address.city);
 				if (response.data.address.suburb)
 					setSuburb(response.data.address.suburb);
 				if (response.data.address.road) setStreet(response.data.address.road);
 			} catch (error) {
 				console.log(error);
-				setToast("Error while uploading the data.");
+				setToast("Error while fetching the address."); //does this need to be toast?
 			}
 		};
 		fetchAddress();
 	}, [markerCoords]);
+
+	//toast has to be set in the page!!!
 
 	const handleImageChange = (e) => {
 		if (!e.target.files[0]) {
@@ -189,17 +194,17 @@ export default function CatUploadPage() {
 				formdata.set("image", catImage.file, "filename");
 			}
 
-			console.log("formdata", formdata);
+			//console.log("formdata", formdata);
 
-			for (let pair of formdata.entries()) {
-				console.log(pair[0] + ": " + pair[1]);
-			}
+			// for (let pair of formdata.entries()) {
+			// 	console.log(pair[0] + ": " + pair[1]);
+			// }
 
-			console.log("pattern", pattern);
-			console.log("color", color);
-			console.log("status", status);
-			console.log("coatLength", coatLength);
-			console.log(typeof markerCoords.lng, markerCoords.lng);
+			// console.log("pattern", pattern);
+			// console.log("color", color);
+			// console.log("status", status);
+			// console.log("coatLength", coatLength);
+			// console.log(typeof markerCoords.lng, markerCoords.lng);
 
 			const response = await axios.post("/cats/add", formdata);
 			console.log("response", response);

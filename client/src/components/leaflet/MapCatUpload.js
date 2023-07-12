@@ -3,9 +3,9 @@ import { StyledMapContainer } from "../../styles/styled/Styled_MapContainer";
 import {
 	MapContainer,
 	TileLayer,
-	Marker,
-	Popup,
-	useMap,
+	// Marker,
+	// Popup,
+	// useMap,
 	useMapEvents,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -14,7 +14,7 @@ import LeafletControlGeocoder from "./LeafletControlGeocoder";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import ReverseGeocodeMarker from "./ReverseGeocodeMarker";
-//import icon from "./MapMarkerOwn";
+//import icon from "./MapMarkerOwn"; 
 import { markerIconOwn } from "./MapMarkers";
 //import MenuAddress from "./MenuAddress";
 

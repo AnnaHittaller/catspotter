@@ -21,7 +21,13 @@ const userSchema = new Schema({
 		type: String,
 	},
 	address: {
-		type: String,
+		type: {
+			street: String,
+			postcode: String,
+			city: String,
+			suburb: String,
+			road: String, 
+		},
 	},
 	location: {
 		type: {

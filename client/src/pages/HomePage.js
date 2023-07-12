@@ -86,9 +86,7 @@ export default function HomePage() {
 			<StyledSection>
 				<StyledDivBorder page="home">
 					<p>
-						Seen a cat while on your way to the workplace, running errands or
-						going to school? Or an unfamiliar cat started to turn up in your
-						garden?{" "}
+						Keep your eyes open while going about your daily routine - on your way to work, running errands, or going to school. You may have noticed any unfamiliar cat turning up in your street garden - maybe it's missing from just a few streets away.{" "}
 					</p>
 					<img
 						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/yellow_arrow_v7eq7h.png"
@@ -99,9 +97,7 @@ export default function HomePage() {
 				</StyledDivBorder>
 				<StyledDivBorder page="home">
 					<p>
-						Don’t just worry about whether it’s an outside cat or actually lost:
-						load it up to the database and you already made it’s chances to get
-						home higher.
+						Don't just wonder if it's a lost cat or an outdoor explorer. Take action! Load its data into the catspotter database, and you have already increased its chances of finding its way home.
 					</p>
 
 					<img
@@ -114,9 +110,7 @@ export default function HomePage() {
 				</StyledDivBorder>
 				<StyledDivBorder page="home">
 					<p>
-						If the data of a lost cat and a spotted cat match, both the spotter
-						and the owner gets notified, so they can check the detailed
-						infosheet, location and photos.
+						When a lost cat's data matches a sighting, both the spotter and the owner receive notifications. Tthey can check the detailed infosheets, locations and photos. Be a voice for lost cats in your community and help them reunite with their worrying families!
 					</p>
 					<img
 						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/yellow_arrow_v7eq7h.png"

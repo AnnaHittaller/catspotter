@@ -13,24 +13,26 @@ import { StyledPBold, StyledP, StyledSpan } from "../styles/styled/Styled_Text";
 import { useState } from "react";
 import MenuMini from "./MenuMini";
 
-export default function CatInfoSheetMini() {
+export default function CatInfoSheetMini({cat}) {
 
 	const [showMenu, setShowMenu] = useState(false);
+
+	//separate function needed to get the distance of the points from the users location
 
 	return (
 		<StyledCatInfoSheetMini>
 			<StyledDivSimpleRounded bgColor={v.columbiaBlue} padding=".5rem 1rem">
 				<StyledDivSimple padding="0" justify="flex-start">
-					<img src={marker_seen} alt="" aria-hidden="true" />
+					<img src={cat.status === "lost" ? marker_lost : marker_seen} alt="" aria-hidden="true" />
 					<div>
-						<StyledPBold>Tuxedo cat in Köln</StyledPBold>
+						<StyledPBold>{cat.pattern} cat in {cat.address.city}</StyledPBold>
 						<StyledP>2,8 km away</StyledP>
-						<StyledSpan>2023. 05. 12., </StyledSpan>
-						<StyledSpan>13:45</StyledSpan>
+						<StyledSpan>{cat.date}, </StyledSpan>
+						<StyledSpan>{cat.time}</StyledSpan>
 					</div>
 				</StyledDivSimple>
 				<CiMenuKebab onClick={() => setShowMenu((prev) => !prev)} />
-				{showMenu && <MenuMini />}
+				{showMenu && <MenuMini cat={cat}/>}
 			</StyledDivSimpleRounded>
 		</StyledCatInfoSheetMini>
 	);

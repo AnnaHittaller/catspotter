@@ -55,6 +55,11 @@ export default function MapPage() {
 	//console.log("rerender from map page");
 	const { location, setLocation } = useContext(LocationContext);
 	const [cats, setCats] = useState([])
+	const [visibleCats, setVisibleCats] = useState([]);
+	const [filteredCats, setFilteredCats] = useState([])
+
+	//separate function needed to get the distance of the points from the users location
+
 
 		useEffect(() => {
 			const fetchCats = async () => {
@@ -80,7 +85,7 @@ export default function MapPage() {
 						The map shows sightings from the last 30 days as default - to view
 						older posts, please adjust the filters below.
 					</StyledP>
-					<MapFindCat cats={cats}/>
+					<MapFindCat cats={cats} visibleCats={visibleCats} setVisibleCats={setVisibleCats}/>
 				</StyledDivSimple>
 				<StyledDivSimple padding="0" flexDirection="column" align="flex-start">
 					<StyledH2>Find cats:</StyledH2>
@@ -129,6 +134,7 @@ export default function MapPage() {
 							isClearable
 							menuPlacement="auto"
 						/>
+						{/* this may not be needed when latlngbounds work */}
 						<Select
 							options={optionsArea}
 							styles={customStyles}
@@ -141,9 +147,10 @@ export default function MapPage() {
 				<StyledDivSimpleGrid min="290px" padding="1rem 0">
 					<StyledH3>No search filters have been selected yet.</StyledH3>
 					<StyledH3>There are no matching results.</StyledH3>
-					<CatInfoSheetMini />
-					<CatInfoSheetMini />
-					<CatInfoSheetMini />
+					{visibleCats && visibleCats.length > 0 && visibleCats.map((cat)=> (
+						<CatInfoSheetMini key={cat._id} cat={cat}/>
+					))}
+					
 				</StyledDivSimpleGrid>
 			</StyledSection>
 			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_map_ws93ba.jpg"></StyledBGSection>

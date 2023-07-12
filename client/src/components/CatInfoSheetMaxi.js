@@ -21,10 +21,13 @@ import MapForOneCat from "./MapForOneCat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-export default function CatInfoSheetMaxi({ type }) {
+export default function CatInfoSheetMaxi({ id }) {
 	const [bookmarked, setBookmarked] = useState(false);
 
 	const handleBookmark = () => {};
+	//this needs to update the user in the db!
+
+	//here comes the listonecat useeffect function, nneds a route and a controller
 
 	  return (
 			<StyledCatInfoSheetMaxi>

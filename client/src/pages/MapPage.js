@@ -65,7 +65,7 @@ export default function MapPage() {
 			const fetchCats = async () => {
 				try {
 					const data = await axios.get("/cats/list");
-					console.log("data:",data.data)
+					console.log("data map page:",data.data)
 					setCats(data.data.cats);
 				} catch (error) {
 					console.log(error.message);
@@ -85,7 +85,11 @@ export default function MapPage() {
 						The map shows sightings from the last 30 days as default - to view
 						older posts, please adjust the filters below.
 					</StyledP>
-					<MapFindCat cats={cats} visibleCats={visibleCats} setVisibleCats={setVisibleCats}/>
+					<MapFindCat
+						cats={cats}
+						visibleCats={visibleCats}
+						setVisibleCats={setVisibleCats}
+					/>
 				</StyledDivSimple>
 				<StyledDivSimple padding="0" flexDirection="column" align="flex-start">
 					<StyledH2>Find cats:</StyledH2>
@@ -145,12 +149,13 @@ export default function MapPage() {
 					</StyledSelectWrapper>
 				</StyledDivSimple>
 				<StyledDivSimpleGrid min="290px" padding="1rem 0">
-					<StyledH3>No search filters have been selected yet.</StyledH3>
-					<StyledH3>There are no matching results.</StyledH3>
-					{visibleCats && visibleCats.length > 0 && visibleCats.map((cat)=> (
-						<CatInfoSheetMini key={cat._id} cat={cat}/>
-					))}
-					
+					{/* <StyledH3>No search filters have been selected yet.</StyledH3> */}
+					{/* <StyledH3>There are no matching results.</StyledH3> */}
+					{visibleCats && visibleCats.length > 0 ? (
+						visibleCats.map((cat) => <CatInfoSheetMini key={cat._id} cat={cat} />)
+					) : (
+						<StyledH3>There are no matching results.</StyledH3>
+					)}
 				</StyledDivSimpleGrid>
 			</StyledSection>
 			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_map_ws93ba.jpg"></StyledBGSection>

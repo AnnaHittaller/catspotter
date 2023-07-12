@@ -3,6 +3,7 @@ import { StyledMenuMidi } from "../styles/styled/Styled_Menu";
 import { StyledP, StyledPBold } from "../styles/styled/Styled_Text";
 
 export default function MenuMidi({cat}) {
+	console.log("menumidi cat", cat)
 	return (
 		<StyledMenuMidi>
 			<div>

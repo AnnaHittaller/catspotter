@@ -2,7 +2,7 @@ import { v } from "../Variables";
 import styled from "styled-components";
 
 export const StyledSection = styled.section`
-	padding: 2rem;
+	padding: ${(props) => props.padding || "2rem"};
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -38,7 +38,9 @@ export const StyledSection = styled.section`
     bottom: 0;
     left: 0;
     right: 0;
+	
     `}
+
 `;
 
 export const StyledBGSection = styled(StyledSection)`

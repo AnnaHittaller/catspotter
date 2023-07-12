@@ -5,7 +5,8 @@ import { v, btnReset } from "../Variables";
 export const StyledSidebar = styled.div`
 	width: ${({ isOpen }) => (!isOpen ? "100px" : v.sidebarWidth)};
 	background-color: ${v.charcoal};
-	height: 100vh;
+	height: min-content;
+	min-height: 100vh;
 	padding: ${v.lgSpacing};
 	position: fixed;
 	top: 0;
@@ -19,6 +20,9 @@ export const StyledSidebar = styled.div`
 	@media (max-width: 768px) {
 		width: ${({ isOpen }) => (!isOpen ? "100px" : "100vw")};
 		left: ${({ isOpen }) => (!isOpen ? "-100px" : "0")};
+		position: absolute;
+		padding-bottom: 2rem;
+		
 	}
 `;
 
@@ -47,7 +51,10 @@ export const StyledSidebarButton = styled.button`
 		height: 35px;
 		width: 35px;
 		left: unset;
-		right: ${({ isOpen }) => (isOpen ? "40px" : `-45px`)};
+		left: ${({ isOpen }) => (isOpen ? "unset" : `25px`)};
+		right: ${({ isOpen }) => (isOpen ? "40px" : `unset`)};
+		position: fixed;
+		top: 1.5rem;
 	}
 `;
 

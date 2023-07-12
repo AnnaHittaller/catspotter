@@ -26,7 +26,7 @@ import {
 import ToggleButton from "../components/ToggleButton";
 //import MapForArea from "../components/MapForArea";
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyledVisibilityBtn } from "../styles/styled/Styled_LoginRegisterForm";
 import { GrEdit } from "react-icons/gr";
 import MapUserUpdate from "../components/leaflet/MapUserUpdate";
@@ -116,7 +116,7 @@ export default function UserUpdatePage() {
 				if (response.data.address.road) setStreet(response.data.address.road);
 			} catch (error) {
 				console.log(error);
-				setToast("Error while fetching the address.");  //does this need to be toast?
+				//setToast("Error while fetching the address.");  //does this need to be toast?
 			}
 		};
 		fetchAddress();

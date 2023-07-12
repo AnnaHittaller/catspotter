@@ -14,7 +14,7 @@ export const markerIconLost = new Icon({
 		"https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/marker_lost_mpfwgq.png",
 	iconSize: [35, 50],
 	iconAnchor: [17, 46],
-	popupAnchor: [],
+	popupAnchor: [0, -40],
 });
 
 export const markerIconSeen = new Icon({
@@ -22,7 +22,7 @@ export const markerIconSeen = new Icon({
 		"https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/marker_seen_fjynd6.png",
 	iconSize: [35, 50],
 	iconAnchor: [17, 46],
-	popupAnchor: [],
+	popupAnchor: [0, -40],
 });
 
 export const createCustomClusterIcon = (cluster) => {

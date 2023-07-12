@@ -5,6 +5,7 @@ import {
 } from "../styles/styled/Styled_Section";
 //import BG_upload from "../assets/bgImages/BG_upload.jpg";
 import CatInfoSheetMaxi from "../components/CatInfoSheetMaxi";
+import { useParams } from "react-router-dom";
 
 export default function CatPage() {
 	const {id} = useParams()

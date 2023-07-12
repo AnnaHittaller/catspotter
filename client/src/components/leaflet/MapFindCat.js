@@ -37,37 +37,12 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 	const [showToast, setShowToast] = useState(false);
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
 
+	console.log("visible cats",visibleCats)
 	console.log("map4", cats);
 
 	//maybe pass the state up to the page? - yep, done
-	const [visibleCats, setVisibleCats] = useState([]);
+	//const [visibleCats, setVisibleCats] = useState([]);
 
-	useEffect(() => {
-		if (!mapRef.current) return;
-		const updateVisibleCats = () => {
-			const bounds = mapRef.current.getBounds();
-			const filteredCats = cats.filter((cat) => {
-				const catLatLng = L.latLng(
-					cat.location.coordinates[1],
-					cat.location.coordinates[0]
-				);
-				return bounds.contains(catLatLng);
-			});
-			setVisibleCats(filteredCats);
-		};
-
-		updateVisibleCats();
-
-		const handleMoveEnd = () => {
-			updateVisibleCats();
-		};
-
-		mapRef.current.on("moveend", handleMoveEnd);
-
-		return () => {
-			mapRef.current.off("moveend", handleMoveEnd);
-		};
-	}, [cats]);
 
 	return (
 		<>
@@ -90,27 +65,25 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 					<MarkerClusterGroup
 						chunkedLoading
 						iconCreateFunction={createCustomClusterIcon}
-						//disableClusteringAtZoom={13}
+						disableClusteringAtZoom={13}
 						zoomToBoundsOnClick>
-						{cats.length > 0 &&
+						{cats?.length > 0 &&
 							cats &&
 							cats.map((cat) => (
 								<Marker
 									key={cat._id}
-									//add popup with menu
 									icon={cat.status === "lost" ? markerIconLost : markerIconSeen}
 									position={[
 										cat.location.coordinates[1],
 										cat.location.coordinates[0],
 									]}>
-									{" "}
 									<Popup>
 										<MenuMidi cat={cat}/>
 									</Popup>
 								</Marker>
 							))}
 					</MarkerClusterGroup>
-					<LeafletControlGeocoder mapRef={mapRef} setShowToast={setShowToast} />
+					<LeafletControlGeocoder mapRef={mapRef} setShowToast={setShowToast} visibleCats={visibleCats} setVisibleCats={setVisibleCats} cats={cats} />
 				</MapContainer>
 			</StyledMapContainer>
 		</>

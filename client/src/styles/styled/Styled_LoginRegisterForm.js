@@ -13,6 +13,7 @@ export const StyledFormWrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
+	margin-bottom: 4rem;
 `;
 
 // this below is not more needed
@@ -279,7 +280,7 @@ export const StyledFlipper = styled.div`
 	align-items: flex-start;
 	justify-content: center;
 	width: 100%;
-	min-height: 560px;
+	min-height: 600px;
 	padding-top: 4rem;
 
 	@media (max-width: 600px) {

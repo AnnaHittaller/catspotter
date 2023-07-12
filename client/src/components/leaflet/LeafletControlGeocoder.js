@@ -17,7 +17,7 @@ import { useMap } from "react-leaflet";
 //import icon from "./MarkerOwn";
 //import { LocationContext } from "../context/LocationContext";
 
-export default function LeafletControlGeocoder({ mapRef, setShowToast }) {
+export default function LeafletControlGeocoder({ mapRef, setShowToast, visibleCats, setVisibleCats, cats }) {
 	//const { location, setLocation } = useContext(LocationContext);
 	const map = useMap();
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
@@ -69,9 +69,9 @@ export default function LeafletControlGeocoder({ mapRef, setShowToast }) {
 				.addTo(map);
 
 			map.on("locationfound", function (e) {
-				console.log("Accuracy:", e.accuracy);
-				console.log("Latitude:", e.latlng.lat);
-				console.log("Longitude:", e.latlng.lng);
+				//console.log("Accuracy:", e.accuracy);
+				//console.log("Latitude:", e.latlng.lat);
+				//console.log("Longitude:", e.latlng.lng);
 
 				if (e.accuracy > 1000) {
 					setShowToast(true);
@@ -80,37 +80,46 @@ export default function LeafletControlGeocoder({ mapRef, setShowToast }) {
 
 			setGeocoderAdded(true);
 		}
-	}, [mapRef, geocoderAdded]);
+	}, [mapRef, geocoderAdded ]);
+
+	useEffect(() => {
+		console.log("useeffect in geocoder for filter")
+    const handleMoveEnd = () => {
+      const bounds = map.getBounds();
+      const filteredCats = cats.filter((cat) => {
+        const catLatLng = L.latLng(
+          cat.location.coordinates[1],
+          cat.location.coordinates[0]
+        );
+        return bounds.contains(catLatLng);
+      });
+      setVisibleCats(filteredCats);
+    };
+
+    handleMoveEnd(); // Initial update of visibleCats
+
+    map.on("moveend", handleMoveEnd);
+
+    return () => {
+      map.off("moveend", handleMoveEnd);
+    };
+  }, [map, cats, setVisibleCats]);
+
+  
+
+	//   function getFeaturesInView(bbox) {
+	 		// let features = [];
+			// map.eachLayer(function (layer) {
+			// 	if (layer instanceof L.Marker) {
+			// 		const latLng = layer.getLatLng();
+			// 		if (bbox.contains(latLng)) {
+			// 			features.push(layer.feature);
+			// 		}
+			// 	}
+			// });
+			// console.log("features", features)
+		// 	return features;
+		// }
 
 	return null;
 }
-
-//https://github.com/atamj/leaflet-control-geocoders
-
-//   const map = this.leafletMap.leafletElement;
-//   const geocoder = L.Control.Geocoder.nominatim();
-//   let marker;
-
-//   map.on("click", (e) => {
-//     geocoder.reverse(
-//       e.latlng,
-//      map.options.crs.scale(map.getZoom()),
-//       (results) => {
-//        var r = results[0];
-//         if (r) {
-//           console.log(r.center.lat + "," + r.center.lng);
-//           if (marker) {
-//             marker
-//                .setLatLng(r.center)
-//                .setPopupContent(r.html || r.name)
-//                .openPopup();
-//           } else {
-//             marker = L.marker(r.center)
-//               .bindPopup(r.name)
-//               .addTo(map)
-//               .openPopup();
-//           }
-//         }
-//       }
-//     );
-//   });

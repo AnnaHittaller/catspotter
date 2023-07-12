@@ -14,6 +14,7 @@ import CatPage from "./pages/CatPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import EmailConfirmPage from "./pages/EmailConfirmPage";
+import ProtectedLayout from "./layout/ProtectedLayout";
 
 const AllRoutes = () => {
 	return (
@@ -22,14 +23,16 @@ const AllRoutes = () => {
 			<Route path="/login" element={<LoginPage />} />
 			<Route path="/map" element={<MapPage />} />
 			<Route path="/guides" element={<GuidesPage />} />
-			<Route path="/bookmarks" element={<BookmarksPage />} />
-			<Route path="/notifications" element={<NotificationsPage />} />
+			<Route element={<ProtectedLayout/>}>
+				<Route path="/bookmarks" element={<BookmarksPage />} />
+				<Route path="/notifications" element={<NotificationsPage />} />
+				<Route path="/upload" element={<CatUploadPage />} />
+				<Route path="/profile" element={<ProfilePage />} />
+				<Route path="/updateprofile" element={<UserUpdatePage />} />
+			</Route>
 			<Route path="/contact" element={<ContactPage />} />
 			<Route path="/forgotpassword" element={<ForgotPasswordPage />} />
-			<Route path="/upload" element={<CatUploadPage />} />
 			<Route path="/cat/:id" element={<CatPage />} />
-			<Route path="/profile" element={<ProfilePage />} />
-			<Route path="/updateprofile" element={<UserUpdatePage />} />
 			<Route path="/emailconfirm/:token" element={<EmailConfirmPage />} />
 			<Route path="/forgotpassword/" element={<ForgotPasswordPage />} />
 			<Route path="/resetpassword/:token" element={<ResetPasswordPage />} />

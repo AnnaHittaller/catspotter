@@ -147,6 +147,10 @@ export default function UserUpdatePage() {
 
 			console.log("formdata", formdata);
 
+			for (let pair of formdata.entries()) {
+			console.log(pair[0] + ": " + pair[1]);
+			}
+
 			//const response = await axios.put("/users/updateprofile", formdata)
 			//console.log("response", response);
 

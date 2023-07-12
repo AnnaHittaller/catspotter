@@ -110,7 +110,7 @@ export default function HomePage() {
 						aria-hidden="true"
 					/>
 
-					<StyledH2Underline page="home">2. Upload it</StyledH2Underline>
+					<StyledH2Underline page="home">2. Register it</StyledH2Underline>
 				</StyledDivBorder>
 				<StyledDivBorder page="home">
 					<p>

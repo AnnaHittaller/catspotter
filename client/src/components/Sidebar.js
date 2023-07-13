@@ -30,6 +30,7 @@ import {
 import { SidebarContext } from "../context/SidebarContext";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
+import { cloudinaryRoot } from "./utils/ImageUrlRoot";
 
 export default function Sidebar() {
 	const { state, dispatch } = useContext(AppContext);
@@ -58,15 +59,17 @@ export default function Sidebar() {
 				<img
 					src={
 						sidebaropen
-							? "https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899573/catspotter-assets/catspotter_logo_light_eoazpt.png"
-							: "https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899573/catspotter-assets/catspotter_logo_small_mohq1r.png"
+							? cloudinaryRoot +
+							  "catspotter-assets/catspotter_logo_light_eoazpt.png"
+							: cloudinaryRoot +
+							  "catspotter-assets/catspotter_logo_small_mohq1r.png"
 					}
 					alt="catspotter logo"
 				/>
 			</StyledLogo>
 			<StyledUserInfo>
 				<img
-					src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/default_profile_small_g8rp1h.png"
+					src={cloudinaryRoot + state.user.image || cloudinaryRoot + "catspotter-assets/default_profile_small_g8rp1h.png"}
 					alt="user avatar"
 				/>
 				{sidebaropen && (

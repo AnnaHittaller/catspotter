@@ -174,73 +174,73 @@ export const CatPatternBicolorTabby = (props) => {
 					/>
 					<path
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						className="cls-3"
 						d="M125,21.79a21.73,21.73,0,0,0-4.34-1.11,1.87,1.87,0,0,0-1.72.59,1,1,0,0,0-.18.77A2,2,0,0,0,120,23.6a34.44,34.44,0,0,0,3.57,1.17c.49.14.41-.3.61-.78l.82-2.2"
 					/>
 					<path
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						className="cls-3"
 						d="M17.36,48.68s-1.72,2.86-2.91,3.54a.52.52,0,0,0-.14.69.65.65,0,0,0,1,.29,9.55,9.55,0,0,0,3-3,.78.78,0,0,0-.18-1l-.73-.53"
 					/>
 					<path
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						className="cls-3"
 						d="M64.86,49.88s.77,10.69-1.07,15.23c0,0-.49,1.37,1.21,1.67s2.83-.86,3.46-2.16,4.13-7.09,3-13.63c-.09-.52-.51-1.29-1-1.26l-5.53.15"
 					/>
 					<path
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						className="cls-3"
 						d="M56.58,50.33s.82,6.78-.17,9.77c0,0-.26.89.77.74a2.84,2.84,0,0,0,2-1.94c.33-.83,2.52-5.06,1.66-8.62-.07-.29-.45-.17-.89-.15l-3.4.2"
 					/>
 					<path
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						className="cls-3"
 						d="M77.3,49.34S78,61,76,66c0,0,0,1.59,1.32,1.83,1.86.33,3.11-1,3.8-2.37a44.31,44.31,0,0,0,2.93-15.33c0-.57-.27-1.17-.84-1.17l-5.94.4"
 					/>
 					<path
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						className="cls-3"
 						d="M91.88,48.57s.24,10.3-1.12,14.92a1,1,0,0,0,0,.39,1.83,1.83,0,0,0,1.19,1.44c1.59.67,2.83-.86,3.46-2.16a35.78,35.78,0,0,0,2.74-13.89A1,1,0,0,0,97,48.39l-5.13.18"
 					/>
 					<path
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						className="cls-3"
 						d="M15.09,54.35a.54.54,0,0,0-.32.69.79.79,0,0,0,1,.57,8.28,8.28,0,0,0,4-2.36,2.12,2.12,0,0,0,.45-.72v-.29a.64.64,0,0,0-.6-.71s-.23-.3-1.31.74A14.79,14.79,0,0,1,15.09,54.35Z"
 					/>
 					<path
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						className="cls-3"
 						d="M12.26,50.53a.38.38,0,0,0-.06.5.46.46,0,0,0,.71.15,5.5,5.5,0,0,0,2-2.29,1.36,1.36,0,0,0,.14-.55l0-.18a.39.39,0,0,0-.48-.33s-.19-.14-.65.73A10,10,0,0,1,12.26,50.53Z"
 					/>
 					<path
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						className="cls-3"
 						d="M117.91,13.74a11,11,0,0,0,4,1.59c1.6.06,1.79-.79,1.79-.79a1.57,1.57,0,0,0-.77-2,31.58,31.58,0,0,0-3.17-1.61c-.5-.21-.57.27-.82.75l-1,2.08"
 					/>
 					<path
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						className="cls-3"
 						d="M112.17,29.74a12.4,12.4,0,0,0,4.41.84c1.58-.22,1.62-1.09,1.62-1.09a1.56,1.56,0,0,0-1.11-1.85,25.81,25.81,0,0,0-3.12-.93c-.54-.14-.74-.38-.89.16l-.9,2.95"
 					/>
 					<path
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						className="cls-3"
 						d="M117.42,45.48s-6.84-2.91-9.66-3.46a1,1,0,0,0-1.1.51l-1.12,2.15c-.32.58-.41.72.22.9,1.18.33,3.46,1.12,4.66,1.61l4,1.65c.51.21,1.12.56,1.35,0l1.45-3.41"
 					/>
 					<path
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						className="cls-3"
 						d="M120.49,36.25a91.43,91.43,0,0,0-9.6-2.08c-.33,0-.64,1-.64,1l-.7,2c-.25.6.37.67,1,.78,1.13.18,2.78.47,3.93.78s2.84.86,3.87,1.07c1.35.29,1.18-.09,1.32-.61l.84-2.84"
 					/>
@@ -504,13 +504,13 @@ export const CatPatternCalico = (props) => {
 					<path
 						className="cls-3"
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						d="M41,51.26s.06,7,3,11,5.42,5.11,5.42,5.11,5,3.25,8-.83a2.75,2.75,0,0,1,1.08-2.11s2.87-.32,2.55-2.3c0,0,.45-4.78-4.08-4.91,0,0-3.38-1-3.45-3.19,0,0-.25-1.79,2.3.32,0,0,3.38,1.66,3.32-1A3.06,3.06,0,0,0,57,50.31Z"
 					/>
 					<path
 						className="cls-3"
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						d="M86.23,48.81s.19,7.83,1.72,10,5.36,2,6.13,0A22.43,22.43,0,0,1,97.21,54s2-2.93,5.36-.57,3.06,7,3.06,7,2.11,9.08-1.66,16.49-8.61,1.27-8.61,1.27-3.07-4.4-3.2-9c0,0-1.28-4.85-5.93-2.29a7.11,7.11,0,0,1-3.94-.31c-1.72-.64-3.65-2.12-5-5.37a9.24,9.24,0,0,1-1.21-7.54l-.57-2-.58-2.32Z"
 					/>
 					<path
@@ -522,13 +522,13 @@ export const CatPatternCalico = (props) => {
 					<path
 						className="cls-3"
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						d="M111.86,30.78s2.69,2.71,9.4,3.41a105.86,105.86,0,0,1-4.33,12.37s-4.43,1.66-12.71,0a41.86,41.86,0,0,0,4.79-8.3Z"
 					/>
 					<path
 						className="cls-3"
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						d="M125.86,3s3.9,3,5.24,6l3.13-5.15s1.47-2.69-.48-3.55C133.75.25,128.72.29,125.86,3Z"
 					/>
 					<path
@@ -540,13 +540,13 @@ export const CatPatternCalico = (props) => {
 					<path
 						className="cls-3"
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						d="M117.63,14s3-2.71,4.09-3,2-.2,2.49.51a2.39,2.39,0,0,1-.58,2.51,22.74,22.74,0,0,1-4.91,5.21,22.86,22.86,0,0,0-5.13,5.89A53.71,53.71,0,0,1,117.63,14Z"
 					/>
 					<path
 						className="cls-3"
 						stroke={props.strokeColor || "#384f64"}
-						fill={props.terciaryColor || "#384f64"}
+						fill={props.tertiaryColor || "#384f64"}
 						d="M91.61,95.61a5.65,5.65,0,0,1,5.73-1.18,5.24,5.24,0,0,1,3.12,4.79s0,3.25-4.08,4.66a4,4,0,0,1-2.52-.68A7.06,7.06,0,0,0,93.58,99Z"
 					/>
 					<path

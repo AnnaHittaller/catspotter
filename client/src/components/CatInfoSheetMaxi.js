@@ -1,7 +1,7 @@
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import {
 	StyledCatInfoSheetMaxi,
-	StyledCatInfoSheetMidi,
+	//StyledCatInfoSheetMidi,
 } from "../styles/styled/Styled_CatInfoSheet";
 import {
 	StyledDivBorder,
@@ -16,18 +16,24 @@ import {
 import { StyledP, StyledPBig, StyledPBold } from "../styles/styled/Styled_Text";
 import { StyledH3 } from "../styles/styled/Styled_Title";
 import { v } from "../styles/Variables";
-import { CiMenuKebab } from "react-icons/ci";
+//import { CiMenuKebab } from "react-icons/ci";
 import MapForOneCat from "./MapForOneCat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import dateFormatter from "./utils/DateFormatter";
+import { cloudinaryRoot } from "./utils/ImageUrlRoot";
 
 export default function CatInfoSheetMaxi({ id }) {
+	const { formattedDate, formattedTime } = dateFormatter(dateStr);
+	
 	const [bookmarked, setBookmarked] = useState(false);
 
 	const handleBookmark = () => {};
 	//this needs to update the user in the db!
 
-	//here comes the listonecat useeffect function, nneds a route and a controller
+	// find a cat based on cat id - handleListOneCat, or just get it from state
+
+	//here comes the listonecat useeffect function, needs a route and a controller
 
 	  return (
 			<StyledCatInfoSheetMaxi>
@@ -43,7 +49,7 @@ export default function CatInfoSheetMaxi({ id }) {
 					<StyledDivSimple padding="0">
 						<StyledDivSimple padding="0" flexDirection="column">
 							<img
-								src="https://picsum.photos/300/200"
+								// src={cloudinaryRoot + cat.image}
 								alt="uploaded photo of the cat"
 								//Or SVG if theres no foto
 							/>
@@ -62,12 +68,13 @@ export default function CatInfoSheetMaxi({ id }) {
 								justify="center"
 								padding=".5rem">
 								<StyledP>On 25th Mai 2023, at 13:49</StyledP>
+								<StyledP>On {formattedDate}, at {formattedTime}</StyledP>
 							</StyledDivSimpleRounded>
 							<StyledDivSimpleRounded
 								bgColor={v.columbiaBlue}
 								justify="center"
 								padding=".5rem">
-								<StyledP>Bicolor tuxedo: orange and white</StyledP>
+								<StyledP>Short-haired bicolor tuxedo: orange and white</StyledP>
 							</StyledDivSimpleRounded>
 							<StyledDivSimpleRounded
 								bgColor={v.columbiaBlue}
@@ -76,6 +83,13 @@ export default function CatInfoSheetMaxi({ id }) {
 								<StyledP>
 									Black collar, white spot on the left ear, male
 								</StyledP>
+							</StyledDivSimpleRounded>
+							<StyledDivSimpleRounded
+								bgColor={v.columbiaBlue}
+								justify="center"
+								padding=".5rem">
+								<StyledPBold>Chip number:</StyledPBold>
+								<StyledP>xxxxx x xxxx</StyledP>
 							</StyledDivSimpleRounded>
 							<StyledDivSimpleRounded
 								bgColor={v.columbiaBlue}

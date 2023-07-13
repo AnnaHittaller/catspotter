@@ -15,12 +15,13 @@ import {
 	StyledDivSimpleGrid,
 } from "../styles/styled/Styled_Div";
 import { StyledForm } from "../styles/styled/Styled_ContactForm";
-import BG_contact from "../assets/bgImages/BG_contact.jpg";
+//import BG_contact from "../assets/bgImages/BG_contact.jpg";
 import { useEffect, useState } from "react";
 import { StyledPrimaryButton } from "../styles/styled/Styled_Button";
-import { StyledToast } from "../styles/styled/Styled_Toast";
+//import { StyledToast } from "../styles/styled/Styled_Toast";
 import Toast from "../components/Toast";
 import axios from "axios";
+import { cloudinaryRoot } from "../components/utils/ImageUrlRoot";
 //import dotenv from "dotenv";
 
 export default function ContactPage() {
@@ -35,7 +36,7 @@ export default function ContactPage() {
 	const [formError, setFormError] = useState(false);
 	const [formSubmitted, setFormSubmitted] = useState(false);
 	const [showToast, setshowToast] = useState(false);
-
+ 
 	const validateEmail = (email) => {
 		const emailRegex = /^\S+@\S+\.\S+$/;
 		return emailRegex.test(email);
@@ -149,7 +150,10 @@ export default function ContactPage() {
 					<StyledPrimaryButton type="submit">Send message</StyledPrimaryButton>
 				</StyledForm>
 			</StyledSection>
-			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_contact2_rnmpis.jpg"></StyledBGSection>
+			<StyledBGSection
+				bgImg={
+					cloudinaryRoot + "catspotter-assets/BG_contact2_rnmpis.jpg"  // or import the cloudinaryRoot to styled section directly?
+				}></StyledBGSection>
 		</StyledPage>
 	);
 }

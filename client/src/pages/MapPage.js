@@ -23,7 +23,7 @@ import {
 	StyledH3,
 	StyledH4Underline,
 } from "../styles/styled/Styled_Title";
-import { LuGlobe } from "react-icons/lu";
+//import { LuGlobe } from "react-icons/lu";
 import { BsQuestionCircle } from "react-icons/bs";
 import {
 	StyledP,
@@ -53,13 +53,13 @@ import axios from "axios";
 
 export default function MapPage() {
 	//console.log("rerender from map page");
-	const { location, setLocation } = useContext(LocationContext);
+	//const { location, setLocation } = useContext(LocationContext);
 	const [cats, setCats] = useState([])
 	const [visibleCats, setVisibleCats] = useState([]);
 	const [filteredCats, setFilteredCats] = useState([])
 
 	//separate function needed to get the distance of the points from the users location
-
+	//set toast for filtering and fetching errors
 
 		useEffect(() => {
 			const fetchCats = async () => {
@@ -76,10 +76,20 @@ export default function MapPage() {
 
 		console.log("cats", cats)
 
+		useEffect(()=> {
+			const filterCats = async () => {
+				try{	
+					//complex queries lesson: done best at server or client side? or both?
+				} catch (error) {
+					console.log(error.message);
+				}
+			}
+		})
+
 	return (
 		<StyledPage display="flex" flexDirection="column">
 			<StyledSection>
-				<StyledH2Underline>catspotting</StyledH2Underline>
+				<StyledH2Underline>Catspotting</StyledH2Underline>
 				<StyledDivSimple padding="0" flexDirection="column">
 					<StyledP>
 						The map shows sightings from the last 30 days as default - to view

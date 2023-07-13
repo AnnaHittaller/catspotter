@@ -26,7 +26,7 @@ const userSchema = new Schema({
 			postcode: String,
 			city: String,
 			suburb: String,
-			road: String, 
+			road: String,
 		},
 	},
 	location: {
@@ -52,6 +52,12 @@ const userSchema = new Schema({
 		default: false,
 	},
 	bookmarks: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "Cat",
+		},
+	],
+	uploads: [
 		{
 			type: Schema.Types.ObjectId,
 			ref: "Cat",

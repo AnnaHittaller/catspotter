@@ -50,10 +50,13 @@ import MenuMidi from "../components/MenuMidi";
 import ToggleButton from "../components/ToggleButton";
 import MapFindCat from "../components/leaflet/MapFindCat";
 import axios from "axios";
+import { AppContext } from "../context/AppContext";
+import { cloudinaryRoot } from "../components/utils/ImageUrlRoot";
 
 export default function MapPage() {
 	//console.log("rerender from map page");
 	//const { location, setLocation } = useContext(LocationContext);
+	const {state, dispatch} = useContext(AppContext)
 	const [cats, setCats] = useState([])
 	const [visibleCats, setVisibleCats] = useState([]);
 	const [filteredCats, setFilteredCats] = useState([])
@@ -64,9 +67,18 @@ export default function MapPage() {
 		useEffect(() => {
 			const fetchCats = async () => {
 				try {
-					const data = await axios.get("/cats/list");
-					console.log("data map page:",data.data)
-					setCats(data.data.cats);
+					const response = await axios.get("/cats/list");
+					console.log("data map page:",response.data)
+
+					if(response.data.success) {
+						dispatch({
+							type: "LIST_CATS",
+							payload: response.data.cats
+						})
+					}
+
+					setCats(response.data.cats); // map them directly from state contextt? then no need for passing them down as prop - TEST THIS
+
 				} catch (error) {
 					console.log(error.message);
 				}
@@ -164,11 +176,11 @@ export default function MapPage() {
 					{visibleCats && visibleCats.length > 0 ? (
 						visibleCats.map((cat) => <CatInfoSheetMini key={cat._id} cat={cat} />)
 					) : (
-						<StyledH3>There are no matching results.</StyledH3>
+						<StyledH3>There are no matching results in the area that is shown on the map.</StyledH3>
 					)}
 				</StyledDivSimpleGrid>
 			</StyledSection>
-			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_map_ws93ba.jpg"></StyledBGSection>
+			<StyledBGSection bgImg={cloudinaryRoot + "catspotter-assets/BG_map_ws93ba.jpg"}></StyledBGSection>
 		</StyledPage>
 	);
 }

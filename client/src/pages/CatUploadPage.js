@@ -56,10 +56,11 @@ import MapCatUpload from "../components/leaflet/MapCatUpload";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import { cloudinaryRoot } from "../components/utils/ImageUrlRoot";
 
 export default function CatUploadPage() {
 	//const { location } = useContext(LocationContext);
-	const { state } = useContext(AppContext);
+	const { state, dispatch } = useContext(AppContext);
 	const [toast, setToast] = useState("");
 	const [date, onChange] = useState(new Date());
 	//const [lost, setLost] = useState(false);
@@ -85,7 +86,7 @@ export default function CatUploadPage() {
 	const [time, setTime] = useState(formattedTime);
 
 	const placeholder =
-		"https://res.cloudinary.com/dgum1eu6e/image/upload/v1688906503/placeholder_sfuu70.png";
+		"https://res.cloudinary.com/dgum1eu6e/image/upload/v1688906503/placeholder_sfuu70.png"; /// check url, put it into a folder + add cloudinary root
 
 	const [catImage, setCatImage] = useState({
 		url: placeholder,
@@ -166,6 +167,32 @@ export default function CatUploadPage() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
+		//take out required values and add toast instead
+
+		if(pattern.value === "solid" && color.length > 1){ 
+		setToast("Solid colored cats can only have one coat color.") 
+		return
+		}
+
+		if (pattern.value === "bicolor" || pattern.value === "tuxedo" || pattern.value === "tortoiseshell" || pattern.value === "van" || pattern.value === "pointed" && color.length > 2) {
+			setToast("Bicolor cats can only have two coat colors.");
+			return;
+		}
+
+		if 
+			(pattern.value === "calico" && color.length != 3)
+		 {
+			setToast("Calico cats must have three coat colors.");
+			return;
+		}
+
+		if (color.length > 3) {
+			setToast("Invalid color combination.");
+			return;
+		}
+
+		//may add more invalid combinations later
+
 		try {
 			const formdata = new FormData();
 
@@ -208,6 +235,24 @@ export default function CatUploadPage() {
 
 			const response = await axios.post("/cats/add", formdata);
 			console.log("response", response);
+
+			if(response.data.success) {
+				dispatch({
+					type: "ADD_CAT",
+					payload: response.data.cat
+				})
+
+				//RESET STATE TO EMPTY ///////////////////////////
+				
+				setToast("Cat data was uploaded successfully!")
+
+				setTimeout(() => {
+					navigate("/")
+				}, 3000);
+			} else {
+				setToast("Error while uploading the data!")
+			}
+
 		} catch (error) {
 			console.log(error);
 		}
@@ -264,6 +309,7 @@ export default function CatUploadPage() {
 							onChange={(selectedOption) =>
 								handleChange(selectedOption, "status")
 							}
+							required
 						/>
 					</StyledDivLabel>
 					<StyledDivLabel padding="0" textAlign="left">
@@ -280,6 +326,7 @@ export default function CatUploadPage() {
 							onChange={(selectedOption) =>
 								handleChange(selectedOption, "coatLength")
 							}
+							required
 						/>
 					</StyledDivLabel>
 					<StyledDivLabel padding="0" textAlign="left">
@@ -296,6 +343,7 @@ export default function CatUploadPage() {
 							onChange={(selectedOption) =>
 								handleChange(selectedOption, "coatPattern")
 							}
+							required
 						/>
 					</StyledDivLabel>
 					<StyledDivLabel padding="0" textAlign="left">
@@ -314,10 +362,12 @@ export default function CatUploadPage() {
 							onChange={(selectedOption) =>
 								handleChange(selectedOption, "coatColor")
 							}
+							required
 						/>
 					</StyledDivLabel>
+					{/* //SVG comes here: */}
 					<img src="https://picsum.photos/300/200" alt="cat illustration" />
-					{status.value === "lost" && (
+					{status.value === "Lost" && (
 						<>
 							<StyledDivLabel padding="0">
 								<label>Chip number</label>
@@ -334,12 +384,14 @@ export default function CatUploadPage() {
 								<label>Finder's reward</label>
 								<input
 									type="text"
-									placeholder="Amount of reward..."
+									placeholder="Amount of reward in euro..."
 									id="reward"
 									name="reward"
 									value={reward}
 									onChange={(e) => setReward(e.target.value)}
 								/>
+								{/* this has to be styled yet: */}
+								<StyledSpan className="euro">€</StyledSpan>
 							</StyledDivLabel>
 							<StyledDivLabel padding="0">
 								<label>Contact phone</label>
@@ -390,8 +442,9 @@ export default function CatUploadPage() {
 							Delete photo
 						</StyledButton>
 					</StyledDivLabel>
+					{toast && <Toast type="error">{toast}</Toast>}
 					<StyledDivSimple padding="0" justify="center">
-						<StyledButton>Go back</StyledButton>
+						<StyledButton onClick={() => navigate(-1)}>Cancel</StyledButton>
 						<StyledPrimaryButton type="submit">Upload</StyledPrimaryButton>
 					</StyledDivSimple>
 				</StyledCatUploadForm>

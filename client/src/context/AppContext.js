@@ -15,7 +15,17 @@ export default function ContextProvider({ children }) {
 			case "LOGOUT":
 				return {
 					user: {},
-					//posts: [], // what should come here
+					cats: [],
+				};
+			case "LIST_CATS":
+				return {
+					...state,
+					cats: action.payload,
+				};
+			case "ADD_CATS":
+				return {
+					...state,
+					cats: [...state.posts, action.payload],
 				};
 			default:
 				return state;

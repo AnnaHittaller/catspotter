@@ -56,7 +56,15 @@ export default function LoginForm({ onFormSwitch, currentForm }) {
 					type: "LOGIN",
 					payload: {...response.data.user}
 				})
-				navigate('/')
+
+				const location = localStorage.getItem("abandonedAddress")
+
+				if(location) {
+					localStorage.removeItem("abandonedAddress")
+					navigate(location)
+				} else {
+					navigate('/')
+				}
 			}
 
 		} catch (error) {

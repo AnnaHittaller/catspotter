@@ -20,11 +20,11 @@ import { v } from "../styles/Variables";
 import MapForOneCat from "./MapForOneCat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import dateFormatter from "./utils/DateFormatter";
-import { cloudinaryRoot } from "./utils/ImageUrlRoot";
+import dateFormatter from "../utils/DateFormatter";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 
 export default function CatInfoSheetMaxi({ id }) {
-	const { formattedDate, formattedTime } = dateFormatter(dateStr);
+	//const { formattedDate, formattedTime } = dateFormatter(dateStr);
 	
 	const [bookmarked, setBookmarked] = useState(false);
 
@@ -68,7 +68,7 @@ export default function CatInfoSheetMaxi({ id }) {
 								justify="center"
 								padding=".5rem">
 								<StyledP>On 25th Mai 2023, at 13:49</StyledP>
-								<StyledP>On {formattedDate}, at {formattedTime}</StyledP>
+								{/* <StyledP>On {formattedDate}, at {formattedTime}</StyledP> */}
 							</StyledDivSimpleRounded>
 							<StyledDivSimpleRounded
 								bgColor={v.columbiaBlue}

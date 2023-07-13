@@ -30,15 +30,17 @@ import LeafletControlGeocoder from "./LeafletControlGeocoder";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import { useMapEvents } from "react-leaflet";
+import { AppContext } from "../../context/AppContext";
 
 export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }) {
 	console.log("rerender from mapnew component");
 	const mapRef = useRef();
 	const [showToast, setShowToast] = useState(false);
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
+	const {state, dispatch} = useContext(AppContext)
 
-	console.log("visible cats",visibleCats)
-	console.log("map4", cats);
+	//console.log("visible cats",visibleCats)
+	//console.log("map4", cats);
 
 	//maybe pass the state up to the page? - yep, done
 	//const [visibleCats, setVisibleCats] = useState([]);

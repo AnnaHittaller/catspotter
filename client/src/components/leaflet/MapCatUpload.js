@@ -26,6 +26,8 @@ export default function MapCatUpload({
 	//console.log("rerender from mapnew component");
 	const mapRef = useRef();
 	const [showToast, setShowToast] = useState(false);
+	const [cats, setCats] = useState([]);
+	const [visibleCats, setVisibleCats] = useState([]);
 	//const [geocoderAdded, setGeocoderAdded] = useState(false);
 	//const [markerCoords, setMarkerCoords] = useState(null);
 	console.log("markerCoords,", markerCoords);
@@ -68,7 +70,12 @@ export default function MapCatUpload({
 							icon={markerIconOwn}
 						/>
 					)}
-					<LeafletControlGeocoder mapRef={mapRef} setShowToast={setShowToast} />
+					<LeafletControlGeocoder
+						mapRef={mapRef}
+						setShowToast={setShowToast}
+						setVisibleCats={setVisibleCats}
+						cats={cats}
+					/>
 				</MapContainer>
 			</StyledMapContainer>
 		</>

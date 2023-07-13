@@ -27,11 +27,13 @@ import { useContext, useEffect, useState } from "react";
 import Toast from "../components/Toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import axios from "axios";
 
 export default function HomePage() {
 	const [showToast, setShowToast] = useState(false);
 	const navigate = useNavigate();
-	const { state } = useContext(AppContext);
+	const { state, dispatch } = useContext(AppContext);
+	const [cats, setCats] = useState([]);
 
 	useEffect(() => {
 		if (showToast) {
@@ -45,10 +47,31 @@ export default function HomePage() {
 		}
 	}, [showToast]);
 
-	const redirectToUpload = () => {
-		navigate("/upload");
+		useEffect(() => {
+			const fetchCats = async () => {
+				try {
+					const response = await axios.get("/cats/list");
+					console.log("home page:", response.data);
+
+					if (response.data.success) {
+						dispatch({
+							type: "LIST_CATS",
+							payload: response.data.cats,
+						});
+					}
+
+					setCats(response.data.cats); // map them directly from state contextt? then no need for passing them down as prop - TEST THIS
+				} catch (error) {
+					console.log(error.message);
+				}
+			};
+			fetchCats();
+		}, []);
+
+	//const redirectToUpload = () => {
+	//	navigate("/upload");
 		// logic for checking authorization and if not logged in, set showtoast to true
-	};
+	//};
 
 	console.log("state:", state)
 	
@@ -61,7 +84,7 @@ export default function HomePage() {
 						alt="catspotter logo"
 					/>
 					<p>
-						Help lost cats get safely back home! Spotted a cat? Load its data up
+						Let's create a world together where no lost cat goes unnoticed. Help lost cats get safely back home! Spotted a cat? Load its data up
 						and make it easier for the worrying owner to find it.
 					</p>
 					<p>

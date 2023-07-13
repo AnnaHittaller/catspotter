@@ -39,6 +39,8 @@ export default function UserUpdatePage() {
 	const { state, dispatch } = useContext(AppContext);
 	const [showPassword, setShowPassword] = useState(false);
 	const navigate = useNavigate();
+	const [cats, setCats] = useState([]);
+	const [visibleCats, setVisibleCats] = useState([]);
 
 	// states adjusted by the map component, geocoder and range slider
 	const [markerCoords, setMarkerCoords] = useState([
@@ -173,7 +175,7 @@ export default function UserUpdatePage() {
 								id="newUsername"
 								name="newUsername"
 								value={newUsername}
-								onChange={(e)=> setNewUsername(e.target.value)}
+								onChange={(e) => setNewUsername(e.target.value)}
 							/>
 						</StyledDivLabel>
 						<StyledDivLabel>
@@ -189,12 +191,12 @@ export default function UserUpdatePage() {
 									onChange={handleImageChange}
 								/>
 								<img
-								//src-hez kell a cloudinary url eleje - test image changes
-									src={state.user.avatar || avatar.url ||default_profile}
+									//src-hez kell a cloudinary url eleje - test image changes
+									src={state.user.avatar || avatar.url || default_profile}
 									alt="user avatar"
 								/>
 								{/* // does this update okay woth the overlay? */}
-								<div> 
+								<div>
 									<GrEdit />
 								</div>
 							</label>
@@ -206,25 +208,37 @@ export default function UserUpdatePage() {
 						</StyledDivLabel>
 						<StyledDivLabel>
 							<label>Address & area</label>
-							<MapUserUpdate height="300px"
+							<MapUserUpdate
+								height="300px"
 								markerCoords={markerCoords}
 								setMarkerCoords={setMarkerCoords}
 								rangeValue={rangeValue}
 								setRangeValue={setRangeValue}
+								cats={cats}
+								visibleCats={visibleCats}
+								setVisibleCats={setVisibleCats}
 							/>
 						</StyledDivLabel>
 						<StyledDivLabel>
 							<label>Email</label>
-							<input type="email" placeholder="New email address" name="newEmail" id="newEmail" value={newEmail} onChange={(e)=> setNewEmail(e.target.value)}/>
-							
+							<input
+								type="email"
+								placeholder="New email address"
+								name="newEmail"
+								id="newEmail"
+								value={newEmail}
+								onChange={(e) => setNewEmail(e.target.value)}
+							/>
 						</StyledDivLabel>
 						<StyledDivLabel>
 							<label>Password</label>
 							<input
 								type={showPassword ? "text" : "password"}
 								placeholder="New password"
-								name="newPassword" id="newPassword"
-								value={newPassword} onChange={(e)=> setNewPassword(e.target.value)}
+								name="newPassword"
+								id="newPassword"
+								value={newPassword}
+								onChange={(e) => setNewPassword(e.target.value)}
 							/>
 							<StyledVisibilityBtn
 								type="button"
@@ -240,14 +254,24 @@ export default function UserUpdatePage() {
 								justify="flex-start"
 								mobilewidth="unset">
 								<StyledP>Data matches</StyledP>
-								<ToggleButton value={dataMatchNotification} onChange={(value) => setDataMatchNotification(value)} name="dataMatchNotification" id="dataMatchNotification" />
+								<ToggleButton
+									value={dataMatchNotification}
+									onChange={(value) => setDataMatchNotification(value)}
+									name="dataMatchNotification"
+									id="dataMatchNotification"
+								/>
 							</StyledDivSimple>
 							<StyledDivSimple
 								padding="0"
 								justify="flex-start"
 								mobilewidth="unset">
 								<StyledP>Area activities</StyledP>
-								<ToggleButton value={areaNotification} onChange={(value) => setAreaNotification(value)} name="areaNotification" id="areaNotification"/>
+								<ToggleButton
+									value={areaNotification}
+									onChange={(value) => setAreaNotification(value)}
+									name="areaNotification"
+									id="areaNotification"
+								/>
 							</StyledDivSimple>
 						</StyledDivLabel>
 						<StyledPrimaryButton type="submit">

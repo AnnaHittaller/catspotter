@@ -1,7 +1,7 @@
 import {
 	useState,
 	//useMemo,
-	//useCallback,
+	//useCallback, 
 	useRef,
 	useContext,
 	useEffect,
@@ -30,9 +30,17 @@ import LeafletControlGeocoder from "./LeafletControlGeocoder";
 import AreaRangeSlider from "./AreaRangeSlider";
 import { AppContext } from "../../context/AppContext";
 
-export default function MapUserUpdate({ height, markerCoords, setMarkerCoords, rangeValue, setRangeValue }) {
-	
-	const {state} = useContext(AppContext)
+export default function MapUserUpdate({
+	height,
+	markerCoords,
+	setMarkerCoords,
+	rangeValue,
+	setRangeValue,
+	cats,
+	visibleCats,
+	setVisibleCats,
+}) {
+	const { state } = useContext(AppContext);
 	const mapRef = useRef();
 	// const [markerCoords, setMarkerCoords] = useState([
 	// 	state.user.location.coordinates[1],
@@ -94,6 +102,9 @@ export default function MapUserUpdate({ height, markerCoords, setMarkerCoords, r
 					<LeafletControlGeocoder
 						mapRef={mapRef}
 						setShowToast={setShowToast}
+						visibleCats={visibleCats}
+						setVisibleCats={setVisibleCats}
+						cats={cats}
 					/>
 				</MapContainer>
 			</StyledMapContainer>

@@ -72,7 +72,7 @@ export const StyledMenuMidi = styled(StyledDivBorder)`
 
 	div:nth-child(1) {
 		background-color: ${(props) =>
-			(props.type = "lost" ? v.sunGlow : v.columbiaBlue)};
+			(props.type === "Lost" ? v.sunGlow : v.columbiaBlue)};
 		width: 100%;
 		font-weight: 600;
 		padding-top: 0.25rem;

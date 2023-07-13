@@ -51,7 +51,7 @@ import ToggleButton from "../components/ToggleButton";
 import MapFindCat from "../components/leaflet/MapFindCat";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
-import { cloudinaryRoot } from "../components/utils/ImageUrlRoot";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot"
 
 export default function MapPage() {
 	//console.log("rerender from map page");
@@ -114,7 +114,7 @@ export default function MapPage() {
 					/>
 				</StyledDivSimple>
 				<StyledDivSimple padding="0" flexDirection="column" align="flex-start">
-					<StyledH2>Find cats:</StyledH2>
+					<StyledH3>Find cats:</StyledH3>
 					<StyledSpan type="icon-span">
 						<StyledPBold>
 							<BsQuestionCircle />
@@ -122,6 +122,7 @@ export default function MapPage() {
 							detailed description of coat patterns and colors.
 						</StyledPBold>
 					</StyledSpan>
+						<StyledPBold>Move or zoom the map to find more cats.</StyledPBold>
 					<StyledSelectWrapper>
 						<Select
 							options={optionsCat}
@@ -170,17 +171,26 @@ export default function MapPage() {
 						/>
 					</StyledSelectWrapper>
 				</StyledDivSimple>
+
 				<StyledDivSimpleGrid min="290px" padding="1rem 0">
 					{/* <StyledH3>No search filters have been selected yet.</StyledH3> */}
 					{/* <StyledH3>There are no matching results.</StyledH3> */}
 					{visibleCats && visibleCats.length > 0 ? (
-						visibleCats.map((cat) => <CatInfoSheetMini key={cat._id} cat={cat} />)
+						visibleCats.map((cat) => (
+							<CatInfoSheetMini key={cat._id} cat={cat} />
+						))
 					) : (
-						<StyledH3>There are no matching results in the area that is shown on the map.</StyledH3>
+						<StyledH3>
+							There are no matching results in the area that is shown on the
+							map.
+						</StyledH3>
 					)}
 				</StyledDivSimpleGrid>
 			</StyledSection>
-			<StyledBGSection bgImg={cloudinaryRoot + "catspotter-assets/BG_map_ws93ba.jpg"}></StyledBGSection>
+			<StyledBGSection
+				bgImg={
+					cloudinaryRoot + "catspotter-assets/BG_map_ws93ba.jpg"
+				}></StyledBGSection>
 		</StyledPage>
 	);
 }

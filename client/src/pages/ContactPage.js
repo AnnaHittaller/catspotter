@@ -21,7 +21,7 @@ import { StyledPrimaryButton } from "../styles/styled/Styled_Button";
 //import { StyledToast } from "../styles/styled/Styled_Toast";
 import Toast from "../components/Toast";
 import axios from "axios";
-import { cloudinaryRoot } from "../components/utils/ImageUrlRoot";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 //import dotenv from "dotenv";
 
 export default function ContactPage() {

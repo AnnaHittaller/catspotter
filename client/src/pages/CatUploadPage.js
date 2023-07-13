@@ -56,7 +56,7 @@ import MapCatUpload from "../components/leaflet/MapCatUpload";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
-import { cloudinaryRoot } from "../components/utils/ImageUrlRoot";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 
 export default function CatUploadPage() {
 	//const { location } = useContext(LocationContext);
@@ -119,7 +119,7 @@ export default function CatUploadPage() {
 				if (response.data.address.road) setStreet(response.data.address.road);
 			} catch (error) {
 				console.log(error);
-				setToast("Error while fetching the address."); //does this need to be toast?
+				//setToast("Error while fetching the address."); //does this need to be toast?
 			}
 		};
 		fetchAddress();
@@ -256,7 +256,7 @@ export default function CatUploadPage() {
 		} catch (error) {
 			console.log(error);
 		}
-	};
+	}; 
 
 	return (
 		<StyledPage display="flex" flexDirection="column">

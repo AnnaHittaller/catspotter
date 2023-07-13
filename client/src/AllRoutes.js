@@ -23,7 +23,7 @@ const AllRoutes = () => {
 			<Route path="/login" element={<LoginPage />} />
 			<Route path="/map" element={<MapPage />} />
 			<Route path="/guides" element={<GuidesPage />} />
-			<Route element={<ProtectedLayout/>}>
+			<Route element={<ProtectedLayout/>}> 
 				<Route path="/bookmarks" element={<BookmarksPage />} />
 				<Route path="/notifications" element={<NotificationsPage />} />
 				<Route path="/upload" element={<CatUploadPage />} />

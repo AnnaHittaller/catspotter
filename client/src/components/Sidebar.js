@@ -30,7 +30,7 @@ import {
 import { SidebarContext } from "../context/SidebarContext";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
-import { cloudinaryRoot } from "./utils/ImageUrlRoot";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 
 export default function Sidebar() {
 	const { state, dispatch } = useContext(AppContext);
@@ -69,7 +69,7 @@ export default function Sidebar() {
 			</StyledLogo>
 			<StyledUserInfo>
 				<img
-					src={cloudinaryRoot + state.user.image || cloudinaryRoot + "catspotter-assets/default_profile_small_g8rp1h.png"}
+					src={state.user.image ? cloudinaryRoot + state.user.image : cloudinaryRoot + "catspotter-assets/default_profile_small_g8rp1h.png"}
 					alt="user avatar"
 				/>
 				{sidebaropen && (
@@ -203,14 +203,14 @@ export default function Sidebar() {
 			{state.user.username && (
 				<StyledLinkContainer isActive={pathname === "/profile/:userId"}>
 					<StyledLink
-						to="/profile/:userId"
-						isActive={pathname === "/profile/:userId"}
+						to="/profile"
+						isActive={pathname === "/profile"}
 						onClick={() => setsidebaropen(false)}>
-						<StyledLinkIcon isActive={pathname === "/profile/:userId"}>
+						<StyledLinkIcon isActive={pathname === "/profile"}>
 							<BsPerson />
 						</StyledLinkIcon>
 						{sidebaropen && (
-							<StyledLinkLabel isActive={pathname === "/profile/:userId"}>
+							<StyledLinkLabel isActive={pathname === "/profile"}>
 								Profile
 							</StyledLinkLabel>
 						)}

@@ -180,6 +180,7 @@ export const StyledCatUploadForm = styled.form`
 	.photo-upload {
 		width: 120px;
 		height: 120px;
+
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -192,20 +193,20 @@ export const StyledCatUploadForm = styled.form`
 	}
 
 	> div:nth-of-type(9) {
-
 		> div {
 			justify-content: center;
 			flex-wrap: wrap;
 		}
-		
+
 		input[type="file"] {
 			display: none;
 		}
 
 		img {
 			width: 120px;
+			height: 120px;
+			object-fit: cover;
 			margin: 0;
 		}
-
 	}
 `;

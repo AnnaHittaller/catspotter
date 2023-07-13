@@ -14,6 +14,8 @@ import {
 	useEffect,
 } from "react";
 import { useMap } from "react-leaflet";
+import { AppContext } from "../../context/AppContext";
+import { useLocation } from "react-router-dom";
 //import icon from "./MarkerOwn";
 //import { LocationContext } from "../context/LocationContext";
 
@@ -21,6 +23,8 @@ export default function LeafletControlGeocoder({ mapRef, setShowToast, visibleCa
 	//const { location, setLocation } = useContext(LocationContext);
 	const map = useMap();
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
+	const { state, dispatch } = useContext(AppContext);
+	const location = useLocation()
 
 	useEffect(() => {
 		if (map && !geocoderAdded) {
@@ -83,27 +87,33 @@ export default function LeafletControlGeocoder({ mapRef, setShowToast, visibleCa
 	}, [mapRef, geocoderAdded ]);
 
 	useEffect(() => {
-		console.log("useeffect in geocoder for filter")
-    const handleMoveEnd = () => {
-      const bounds = map.getBounds();
-      const filteredCats = cats.filter((cat) => {
-        const catLatLng = L.latLng(
-          cat.location.coordinates[1],
-          cat.location.coordinates[0]
-        );
-        return bounds.contains(catLatLng);
-      });
-      setVisibleCats(filteredCats);
-    };
+		if(location.pathname = "map") {
 
-    handleMoveEnd(); // Initial update of visibleCats
+			console.log("state.cats geocoder", state)
+			const handleMoveEnd = () => {
+			  const bounds = map.getBounds();
+			  const filteredResults = state.cats?.filter((cat) => {
+				const catLatLng = L.latLng(
+				  cat.location.coordinates[1],
+				  cat.location.coordinates[0]
+				);
+				return bounds.contains(catLatLng);
+			  });
+			  setVisibleCats(filteredResults);
+			};
+		
+			handleMoveEnd(); // Initial update of visibleCats
+		
+			map.on("moveend", handleMoveEnd);
+		
+			return () => {
+			  map.off("moveend", handleMoveEnd);
+			};
+		} else {
+			return 
+		}
 
-    map.on("moveend", handleMoveEnd);
-
-    return () => {
-      map.off("moveend", handleMoveEnd);
-    };
-  }, [map, cats, setVisibleCats]);
+  }, [map, state]);
 
   
 

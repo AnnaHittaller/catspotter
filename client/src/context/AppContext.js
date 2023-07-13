@@ -22,10 +22,10 @@ export default function ContextProvider({ children }) {
 					...state,
 					cats: action.payload,
 				};
-			case "ADD_CATS":
+			case "ADD_CAT":
 				return {
 					...state,
-					cats: [...state.posts, action.payload],
+					cats: [...state.cats, action.payload],
 				};
 			default:
 				return state;
@@ -34,7 +34,7 @@ export default function ContextProvider({ children }) {
 	
 	const [state, dispatch] = useReducer(reducer, {
 		user: {},
-		//posts: [],
+		cats: [],
 	});
 
 	 const [storedState, setStoredState] = useLocalStorage("state", null);
@@ -43,6 +43,7 @@ export default function ContextProvider({ children }) {
   useEffect(() => {
 		if (storedState) {
 			dispatch({ type: "LOGIN", payload: storedState.user });
+			dispatch({type: "LIST_CATS", payload: storedState.cats})
 			// Dispatch other actions to update state based on storedState
 		}
 	}, []);

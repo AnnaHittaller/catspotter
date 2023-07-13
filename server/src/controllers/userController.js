@@ -96,7 +96,7 @@ export const handleLogoutUser = async (req, res) => {
 };
 
 export const handleDeleteUser = async (req, res) => {
-	console.log("handleDeleteUser:", req.params);
+	//console.log("handleDeleteUser:", req.params);
 
 	try {
 		const deletedUser = await User.findByIdAndDelete(req.params.id);
@@ -134,7 +134,6 @@ export const handleEmailConfirm = async (req, res) => {
 	}
 };
 
-
 export const handleForgotPassword = async (req, res) => {
 	console.log(" handleForgotPass:", req.body);
 
@@ -164,6 +163,7 @@ export const handleForgotPassword = async (req, res) => {
 		res.send("Error in handleForgotPassword" + error.message);
 	}
 };
+
 export const handleChangePassword = async (req, res) => {
 	console.log("handleChangePassword:", req.body);
 
@@ -194,7 +194,6 @@ export const handleChangePassword = async (req, res) => {
 		res.send("Error in handleChangePassword" + error.message);
 	}
 };
-
 
 export const handleUpdateUser = async (req, res) => {
 // console.log(" handleUpdateProfile:", req.body);

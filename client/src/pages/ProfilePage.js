@@ -29,7 +29,7 @@ import MapUser from "../components/leaflet/MapUser";
 import axios from "axios";
 
 export default function ProfilePage() {
-	const {id} = useParams()
+	//const {id} = useParams()
 	const dataMatch = "dataMatch";
 	const areaActivity = "areaActivity";
 	const { state, dispatch } = useContext(AppContext);

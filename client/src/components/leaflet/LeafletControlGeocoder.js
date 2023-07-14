@@ -56,19 +56,19 @@ export default function LeafletControlGeocoder({ mapRef, setShowToast, visibleCa
 					locateOptions: {
 						enableHighAccuracy: true,
 					},
-					compassStyle: {
-						fillColor: "red",
-						fillOpacity: 1,
-						weight: 0,
-						color: "purple",
-					},
-					circleStyle: {
-						className: "leaflet-control-locate-circle",
-						color: "red",
-						fillColor: "yellow",
-						fillOpacity: 0.5,
-						weight: 0,
-					},
+					// compassStyle: {
+					// 	fillColor: "red",
+					// 	fillOpacity: 1,
+					// 	weight: 0,
+					// 	color: "purple",
+					// },
+					// circleStyle: {
+					// 	className: "leaflet-control-locate-circle",
+					// 	color: "red",
+					// 	fillColor: "yellow",
+					// 	fillOpacity: 0.5,
+					// 	weight: 0,
+					//},
 				})
 				.addTo(map);
 

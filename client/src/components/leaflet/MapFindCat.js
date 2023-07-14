@@ -32,6 +32,8 @@ import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import { useMapEvents } from "react-leaflet";
 import { AppContext } from "../../context/AppContext";
 
+import { useMap } from "react-leaflet"; // this may not work
+
 export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }) {
 	console.log("rerender from mapnew component");
 	const mapRef = useRef();
@@ -45,6 +47,15 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 	//maybe pass the state up to the page? - yep, done
 	//const [visibleCats, setVisibleCats] = useState([]);
 
+	// import { useMap } from "react-leaflet";
+
+	// function ShowBounds() {
+	// 	const mMap = useMap();
+	// 	let newBounds = mMap.getBounds();
+	// 	console.log(newBounds);
+
+	//or mapRef.current.leafletElement.getBounds() or just .getBounds()
+	// }
 
 	return (
 		<>
@@ -60,6 +71,7 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 					zoom={16}
 					minZoom={2}
 					whenCreated={(mapInstance) => (mapRef.current = mapInstance)}>
+				{/* getBounds= */}
 					<TileLayer
 						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

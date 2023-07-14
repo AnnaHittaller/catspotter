@@ -11,7 +11,6 @@ export default function ContextProvider({ children }) {
 					...state,
 					user: action.payload,
 				};
-
 			case "LOGOUT":
 				return {
 					user: {},
@@ -37,7 +36,7 @@ export default function ContextProvider({ children }) {
 		cats: [],
 	});
 
-	 const [storedState, setStoredState] = useLocalStorage("state", null);
+	const [storedState, setStoredState] = useLocalStorage("state", null);
 
 	 
   useEffect(() => {

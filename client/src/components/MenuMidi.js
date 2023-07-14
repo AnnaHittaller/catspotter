@@ -18,7 +18,7 @@ export default function MenuMidi({cat}) {
 					{cat?.pattern === "tortoiseshell" || cat?.pattern === "calico"
 						? cat?.pattern.charAt(0).toUpperCase() + cat?.pattern.slice(1)
 						: cat?.color[0].charAt(0).toUpperCase() +
-						  cat?.color[0].slice(1) +
+						  cat?.color[0].slice(1) + cat?.color[1] +
 						  cat?.pattern}{" "}
 					cat
 				</StyledP>

@@ -57,12 +57,6 @@ const userSchema = new Schema({
 			ref: "Cat",
 		},
 	],
-	uploads: [
-		{
-			type: Schema.Types.ObjectId,
-			ref: "Cat",
-		},
-	],
 	emailVerified: {
 		type: String,
 		default: false,

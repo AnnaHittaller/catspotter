@@ -21,9 +21,10 @@ export default function auth(req, res, next) {
 		//may have to delete this line before modifying upload page 
 
 		next();
-
+		
 	} catch (error) {
 		console.log("error in AUTH:", error.message);
 		res.send({ success: false, errorId: error.message });
 	}
+	
 }

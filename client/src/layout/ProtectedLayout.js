@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { AppContext } from "../context/AppContext"
 import { Outlet, Navigate, useLocation} from "react-router-dom"
 
-export default function ProtectedLayout () {
+export default function ProtectedLayout (props) {
     const { state } = useContext(AppContext)
     const location = useLocation()
 

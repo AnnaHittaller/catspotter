@@ -65,7 +65,7 @@ export const handleLoginUser = async (req, res) => {
 		delete newUser.password;
 
 		const token = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN, {
-			expiresIn: "1d",
+			expiresIn: "10h",
 		});
 
 		console.log("token:", token);

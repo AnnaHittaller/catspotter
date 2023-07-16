@@ -65,7 +65,7 @@ export const handleLoginUser = async (req, res) => {
 		delete newUser.password;
 
 		const token = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN, {
-			expiresIn: "10h",
+			expiresIn: "1d",
 		});
 
 		console.log("token:", token);
@@ -203,19 +203,26 @@ export const handleUpdateUser = async (req, res) => {
     //console.log(" handleUpdateUser FILENAME:", req.file.filename);
 
     if (req.file) {
-			req.body.image = req.file.filename;
+			req.body.avatar = req.file.filename;
 		}
+	
+	if (req.body.password) {
+		const salt = await bcrypt.genSalt(10);
+		const hashedPass = await bcrypt.hash(password, salt);
+		req.body.password = hashedPass
+	}
 
-	//PASSWORD CHANGE JWT HASHING NEEDED!!!!!!!!!!!!!!!1
-
-    const editedUser = await User.findByIdAndUpdate(req.body.id, req.body, {
+    const editedUser = await User.findByIdAndUpdate(req.user, req.body, {
       new: true,
-    });
+    }); 
 
-    console.log("updatedUser:", editedUser);
+	const newUser = editedUser.toObject();
+	delete newUser.password;
+    console.log("updatedUser:", newUser);
 
     res.send({
 			success: true,
+			user: newUser
 		});
   } catch (error) {
     console.log("error handleUpdateUser", error.message);

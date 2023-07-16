@@ -8,13 +8,9 @@ import {
 } from "react";
 import { StyledMapContainer } from "../../styles/styled/Styled_MapContainer";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-
 import L, { Icon, divIcon, point } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { LuGlobe } from "react-icons/lu";
-//import { StyledPrimaryButton } from "../styles/styled/Styled_Button";
-//import { LocationContext } from "../context/LocationContext";
-//import useGeolocation from "../customHooks/useGeolocation";
 import Toast from "../../components/Toast";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import {
@@ -23,21 +19,19 @@ import {
 	markerIconLost,
 	createCustomClusterIcon,
 } from "./MapMarkers";
-
 import MenuMidi from "../MenuMidi";
-
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import { useMapEvents } from "react-leaflet";
 import { AppContext } from "../../context/AppContext";
 
-import { useMap } from "react-leaflet"; // this may not work
+
 
 export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }) {
 	console.log("rerender from mapnew component");
 	const mapRef = useRef();
-	const [showToast, setShowToast] = useState(false);
+	const [showToast, setShowToast] = useState("");
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
 	const {state, dispatch} = useContext(AppContext)
 
@@ -60,9 +54,7 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 	return (
 		<>
 			{showToast && (
-				<Toast type="error" setShowToast={setShowToast}>
-					The geolocation accuracy is too low, please zoom in to your exact
-					position.
+				<Toast type="error" setShowToast={setShowToast}>{showToast}
 				</Toast>
 			)}
 			<StyledMapContainer height={height}>
@@ -86,7 +78,7 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 							cats.map((cat) => (
 								<Marker
 									key={cat._id}
-									icon={cat.status === "lost" ? markerIconLost : markerIconSeen}
+									icon={cat.status === "Lost" ? markerIconLost : markerIconSeen}
 									position={[
 										cat.location.coordinates[1],
 										cat.location.coordinates[0],

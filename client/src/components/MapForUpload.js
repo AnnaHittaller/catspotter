@@ -25,7 +25,7 @@ import {
 
 export default function MapForUpload({ height, type }) {
 	const mapRef = useRef();
-	const [showtoast, setShowtoast] = useState(false);
+	const [showtoast, setShowtoast] = useState("");
 	//const center = useMemo(() => ({ lat: 51.64535, lng: -0.15448 }), []);
 	//const options = useMemo(() => ({
 	//    disableDefaultUI: true,

@@ -78,7 +78,7 @@ export default function LeafletControlGeocoder({ mapRef, setShowToast, visibleCa
 				//console.log("Longitude:", e.latlng.lng);
 
 				if (e.accuracy > 1000) {
-					setShowToast(true);
+					setShowToast("The geolocation accuracy is too low, please zoom in to your exact position.");
 				}
 			});
 
@@ -89,7 +89,7 @@ export default function LeafletControlGeocoder({ mapRef, setShowToast, visibleCa
 	useEffect(() => {
 		if(location.pathname = "map") {
 
-			console.log("state.cats geocoder", state)
+			//console.log("state.cats geocoder", state)
 			const handleMoveEnd = () => {
 			  const bounds = map.getBounds();
 			  const filteredResults = state.cats?.filter((cat) => {

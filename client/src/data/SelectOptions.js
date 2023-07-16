@@ -17,7 +17,7 @@ export const optionsPattern = [
 
 export const optionsColor = [
 	{ value: "black", label: "Black" },
-	{ value: "white", label: "White" },
+	{ value: "white", label: "White"},
 	{ value: "orange", label: "Orange" },
 	{ value: "beige", label: "Beige" },
 	{ value: "grey", label: "Grey / Blue" },

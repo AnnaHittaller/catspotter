@@ -69,7 +69,7 @@ export default function Sidebar() {
 			</StyledLogo>
 			<StyledUserInfo>
 				<img
-					src={state.user.image ? cloudinaryRoot + state.user.image : cloudinaryRoot + "catspotter-assets/default_profile_small_g8rp1h.png"}
+					src={state.user.avatar ? cloudinaryRoot + state.user.avatar : cloudinaryRoot + "catspotter-assets/default_profile_small_g8rp1h.png"}
 					alt="user avatar"
 				/>
 				{sidebaropen && (

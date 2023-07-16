@@ -16,6 +16,11 @@ export default function ContextProvider({ children }) {
 					user: {},
 					cats: [],
 				};
+			case "UPDATE_USER":
+				return {
+					...state,
+					user: action.payload,
+				};
 			case "LIST_CATS":
 				return {
 					...state,
@@ -25,6 +30,16 @@ export default function ContextProvider({ children }) {
 				return {
 					...state,
 					cats: [...state.cats, action.payload],
+				};
+			case "DELETE_CAT":
+				return {
+					...state,
+					cats: [...state.cats.filter((cat) => cat._id !== action.payload)],
+				};
+			case "UPDATE_CAT":
+				return {
+					...state,
+					cat: action.payload,
 				};
 			default:
 				return state;
@@ -38,12 +53,10 @@ export default function ContextProvider({ children }) {
 
 	const [storedState, setStoredState] = useLocalStorage("state", null);
 
-	 
   useEffect(() => {
 		if (storedState) {
 			dispatch({ type: "LOGIN", payload: storedState.user });
 			dispatch({type: "LIST_CATS", payload: storedState.cats})
-			// Dispatch other actions to update state based on storedState
 		}
 	}, []);
 

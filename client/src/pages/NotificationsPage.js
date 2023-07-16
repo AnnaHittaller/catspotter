@@ -41,13 +41,13 @@ export default function NotificationsPage() {
 						<CatInfoSheetMini />
 					</StyledDivSimpleGrid>
 				</StyledDivSimple>
-				<StyledDivSimple
+				{/* <StyledDivSimple
 					padding="1rem 0 0 0"
 					flexDirection="column"
 					align="flex-start">
 					<StyledH3>Messages (?)</StyledH3>
 					<StyledPBig>There are no new messages.</StyledPBig>
-				</StyledDivSimple>
+				</StyledDivSimple> */}
 			</StyledSection>
 			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_upload_jetyme.jpg"></StyledBGSection>
 		</StyledPage>

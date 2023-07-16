@@ -21,6 +21,9 @@ export default function MenuAddress({ r }) {
 		if (address.city || address.town) {
 			components.push(address.city || address.town);
 		}
+		if (address.city_district) {
+			components.push(address.city_district);
+		}
 		if (address.village) {
 			components.push(address.village);
 		}

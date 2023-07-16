@@ -44,8 +44,8 @@ export default function ContactPage() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log("handleSubmit fired");
-		console.log(process.env.REACT_APP_FORMSPREE_ENDPOINT);
+		//console.log("handleSubmit fired");
+		
 
 		if (!message.name || !message.text) {
 			setFormError(true);
@@ -65,7 +65,7 @@ export default function ContactPage() {
 		console.log("submit", message);
 
 		try {
-			await axios.post(process.env.REACT_APP_FORMSPREE_ENDPOINT, message);
+			await axios.post("https://formspree.io/f/mzblpvwo", message);
 
 			// Reset the form
 			setMessage({ name: "", email: "", text: "" });
@@ -98,7 +98,7 @@ export default function ContactPage() {
 				<StyledForm
 					noValidate
 					onSubmit={handleSubmit}
-					action={process.env.REACT_APP_FORMSPREE_ENDPOINT}>
+					action="https://formspree.io/f/mzblpvwo">
 					<StyledDivLabel>
 						<label htmlFor="name">Name</label>
 						<input
@@ -152,7 +152,7 @@ export default function ContactPage() {
 			</StyledSection>
 			<StyledBGSection
 				bgImg={
-					cloudinaryRoot + "catspotter-assets/BG_contact2_rnmpis.jpg"  // or import the cloudinaryRoot to styled section directly?
+					cloudinaryRoot + "catspotter-assets/BG_contact2_rnmpis.jpg" // or import the cloudinaryRoot to styled section directly?
 				}></StyledBGSection>
 		</StyledPage>
 	);

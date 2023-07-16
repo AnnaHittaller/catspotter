@@ -28,7 +28,7 @@ import LeafletControlGeocoder from "./LeafletControlGeocoder";
 export default function Map({ height, type }) {
 	console.log("rerender from map component");
 	const mapRef = useRef();
-	const [showtoast, setShowtoast] = useState(false);
+	const [showtoast, setShowtoast] = useState("");
 
 	const { location, setLocation } = useContext(LocationContext);
 	useGeolocation();

@@ -7,7 +7,7 @@ export const StyledCatInfoSheetMini = styled.div`
 	img {
 		height: 50px;
 	}
-
+ 
 	svg {
 		font-size: 2rem;
 		cursor: pointer;
@@ -60,6 +60,7 @@ export const StyledCatInfoSheetMaxi = styled.div`
 
 	div > svg + p:nth-child(2) {
 		color: ${v.sunGlow};
+		font-size: 2rem;
 		margin-bottom: -1rem;
 	}
 
@@ -75,15 +76,13 @@ export const StyledCatInfoSheetMaxi = styled.div`
 
 	img:nth-of-type(1) {
 		width: 100%;
+		max-width: 300px;
+		height: auto;
 		border-radius: 10px;
 	}
 
-	img:nth-of-type(2) {
-		width: 100%;
-		max-width: 200px;
-	}
-
-	svg:nth-child(1) {
+	
+	svg:nth-of-type(1) {
 		font-size: 2rem;
 		color: ${v.sunGlow};
 		position: absolute;
@@ -91,6 +90,14 @@ export const StyledCatInfoSheetMaxi = styled.div`
 		padding: 0;
 		top: -0.25rem;
 		right: 0.5rem;
+	}
+
+	.cat-svg svg {
+		width: 100%;
+		max-width: 200px;
+		height: auto;
+		position: unset;
+		margin: 0 auto;
 	}
 
 	a {

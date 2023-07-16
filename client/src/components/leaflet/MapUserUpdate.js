@@ -38,7 +38,7 @@ export default function MapUserUpdate({
 	setRangeValue,
 	cats,
 	visibleCats,
-	setVisibleCats,
+	setVisibleCats, 
 }) {
 	const { state } = useContext(AppContext);
 	const mapRef = useRef();
@@ -64,6 +64,7 @@ export default function MapUserUpdate({
 	const handleMapClick = (e) => {
 		const { lat, lng } = e.latlng;
 		setMarkerCoords({ lat, lng });
+		console.log("newmarkercoords", markerCoords)
 		console.log(rangeValue, "rangevalue");
 	};
 	const MapClickHandler = () => {

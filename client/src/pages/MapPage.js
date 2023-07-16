@@ -1,27 +1,27 @@
 
-import Map from "../components/Map";
+// import Map from "../components/Map";
 import CatInfoSheetMini from "../components/CatInfoSheetMini";
-import { v } from "../styles/Variables";
+// import { v } from "../styles/Variables";
 import {
 	StyledDivSimple,
 	StyledDivSimpleGrid,
 } from "../styles/styled/Styled_Div";
 import Select from "react-select";
-import BG_map from "../assets/bgImages/BG_map.jpg";
-import {
-	StyledButton,
-	StyledPrimaryButton,
-} from "../styles/styled/Styled_Button";
+// import BG_map from "../assets/bgImages/BG_map.jpg";
+// import {
+// 	StyledButton,
+// 	StyledPrimaryButton,
+// } from "../styles/styled/Styled_Button";
 import { StyledPage } from "../styles/styled/Styled_Page";
 import {
 	StyledSection,
 	StyledBGSection,
 } from "../styles/styled/Styled_Section";
 import {
-	StyledH2,
+	//StyledH2,
 	StyledH2Underline,
 	StyledH3,
-	StyledH4Underline,
+	//StyledH4Underline,
 } from "../styles/styled/Styled_Title";
 //import { LuGlobe } from "react-icons/lu";
 import { BsQuestionCircle } from "react-icons/bs";
@@ -41,13 +41,13 @@ import {
 	optionsPattern,
 } from "../data/SelectOptions";
 import {customStyles} from "../styles/SelectCustomStyles"
-import { LocationContext } from "../context/LocationContext";
+//import { LocationContext } from "../context/LocationContext";
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import MenuMini from "../components/MenuMini";
-import MenuMidi from "../components/MenuMidi";
+// import { Link } from "react-router-dom";
+// import MenuMini from "../components/MenuMini";
+// import MenuMidi from "../components/MenuMidi";
 //import AreaRangeSlider from "../components/AreaRangeSlider";
-import ToggleButton from "../components/ToggleButton";
+// import ToggleButton from "../components/ToggleButton";
 import MapFindCat from "../components/leaflet/MapFindCat";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";

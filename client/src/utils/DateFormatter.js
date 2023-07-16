@@ -11,7 +11,7 @@ const dateFormatter = (dateStr) => {
 		.replace(/\//g, ". ");
 
 	// Extract the time component in the desired format
-	const formattedTime = dateTime.toLocaleTimeString("en-US", {
+	const formattedTime = dateTime.toLocaleTimeString("en-GB", {
 		hour: "2-digit",
 		minute: "2-digit",
 	});

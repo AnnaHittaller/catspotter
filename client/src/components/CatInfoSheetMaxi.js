@@ -18,79 +18,179 @@ import { StyledH3 } from "../styles/styled/Styled_Title";
 import { v } from "../styles/Variables";
 //import { CiMenuKebab } from "react-icons/ci";
 import MapForOneCat from "./MapForOneCat";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
 import dateFormatter from "../utils/DateFormatter";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+import axios from "axios";
+import { AppContext } from "../context/AppContext";
+// import {
+// 	CatPatternBicolor,
+// 	CatPatternBicolorTabby,
+// 	CatPatternCalico,
+// 	CatPatternPointed,
+// 	CatPatternSolid,
+// 	CatPatternTabby,
+// 	CatPatternTortoiseshell,
+// 	CatPatternTuxedo,
+// 	CatPatternVan,
+// } from "./CatSilhouettes";
+import { getCatSvgComponent } from "../utils/CatSvgHelper";
+import MapCatInfoSheet from "./leaflet/MapCatInfoSheet";
 
 export default function CatInfoSheetMaxi({ id }) {
-	//const { formattedDate, formattedTime } = dateFormatter(dateStr);
-	
+	const { state, dispatch } = useContext(AppContext);
+	console.log(state);
+	const [cat, setCat] = useState("");
+	console.log(cat);
 	const [bookmarked, setBookmarked] = useState(false);
+	const navigate = useNavigate()
+
+	const { formattedDate, formattedTime } = dateFormatter(cat?.date);
 
 	const handleBookmark = () => {};
 	//this needs to update the user in the db!
 
-	// find a cat based on cat id - handleListOneCat, or just get it from state
+	useEffect(() => {
+		const fetchCat = async () => {
+			try {
+				const response = await axios.get(`/cats/listone/${id}`);
+				console.log("response", response);
+				if (response.data.success) {
+					setCat(response.data.cat);
+				}
+			} catch (error) {
+				console.log(error.message);
+			}
+		};
+		fetchCat();
+	}, id);
 
-	//here comes the listonecat useeffect function, needs a route and a controller
+	const handleDeleteCat = async () => {
+		const response = await axios.delete(`/cats/delete/${id}`)
+		console.log('response:', response)
 
-	  return (
-			<StyledCatInfoSheetMaxi>
-				<StyledDivBorder flexDirection="column">
-					{bookmarked ? <BsBookmarkFill /> : <BsBookmark />}
+		if(!response.data.success && response.data.errorId === "jwt expired") {
+			navigate("/login")
+		}
 
-					<StyledPBig>Lost cat - keep an eye open!</StyledPBig>
-					<StyledDivLabel>
-						<label>Cat Id Nr.#</label>
-						<StyledH3>Tuxedo cat in Köln</StyledH3>
-					</StyledDivLabel>
+		if(response.data.success) {
+			dispatch({
+				type: "DELETE_CAT",
+				payload: id,
+			})
 
-					<StyledDivSimple padding="0">
-						<StyledDivSimple padding="0" flexDirection="column">
+			navigate("/")
+		}
+	}
+
+	//put a spinner here
+	if (!cat) {
+		return <div>Loading...</div>; // or any loading indicator you prefer
+	}
+
+	const catSVG = getCatSvgComponent(
+		cat.pattern,
+		cat.color[0],
+		cat.color[1],
+		cat.color[2]
+	);
+
+
+	return (
+		<StyledCatInfoSheetMaxi>
+			<StyledDivBorder flexDirection="column">
+				{bookmarked ? <BsBookmarkFill /> : <BsBookmark />}
+				{cat?.status === "Lost" && (
+					<StyledPBig>Keep an eye open for me!</StyledPBig>
+				)}
+
+				<StyledDivLabel>
+					<label>{cat?.status}</label>
+					<StyledH3>
+						{" "}
+						{cat?.pattern === "tortoiseshell" || cat?.pattern === "calico"
+							? `${cat?.pattern.charAt(0).toUpperCase()}${cat?.pattern.slice(
+									1
+							  )}`
+							: cat?.color
+									?.map((color, index) => {
+										if (index === 0) {
+											return (
+												color.charAt(0).toUpperCase() +
+												color.slice(1).toLowerCase()
+											);
+										}
+										return color.toLowerCase();
+									})
+									.join(" ")}
+						{" cat in "}
+						{cat?.address.city}
+					</StyledH3>
+				</StyledDivLabel>
+
+				<StyledDivSimple padding="0">
+					<StyledDivSimple padding="0" flexDirection="column">
+						{cat?.image.length > 0 ? (
 							<img
-								// src={cloudinaryRoot + cat.image}
+								src={cloudinaryRoot + cat?.image}
 								alt="uploaded photo of the cat"
-								//Or SVG if theres no foto
 							/>
+						) : (
+							<StyledDivSimple className="cat-svg">{catSVG}</StyledDivSimple>
+						)}
 
-							<MapForOneCat height="300px" />
-						</StyledDivSimple>
-						<StyledDivSimple padding="0" flexDirection="column">
+						<MapCatInfoSheet height="300px" cat={cat} />
+					</StyledDivSimple>
+					<StyledDivSimple padding="0" flexDirection="column">
+						<StyledDivSimpleRounded
+							bgColor={v.columbiaBlue}
+							justify="center"
+							padding=".5rem">
+							<StyledP>
+								{cat?.address?.road + ", "}
+								{cat?.address?.suburb && cat?.address.suburb + ", "}
+								{cat?.address?.city + ", "}
+								{cat?.address?.postcode}
+							</StyledP>
+						</StyledDivSimpleRounded>
+						<StyledDivSimpleRounded
+							bgColor={v.columbiaBlue}
+							justify="center"
+							padding=".5rem">
+							<StyledP>
+								On {formattedDate}, at {formattedTime}
+							</StyledP>
+							{/* <StyledP>On {formattedDate}, at {formattedTime}</StyledP> */}
+						</StyledDivSimpleRounded>
+						<StyledDivSimpleRounded
+							bgColor={v.columbiaBlue}
+							justify="center"
+							padding=".5rem">
+							<StyledP>
+								{cat?.coatLength?.charAt(0)?.toUpperCase() +
+									cat?.coatLength?.slice(1)}{" "}
+								{cat?.pattern} cat: {cat?.color?.join(", ")}
+							</StyledP>
+						</StyledDivSimpleRounded>
+						{cat?.notes && (
 							<StyledDivSimpleRounded
 								bgColor={v.columbiaBlue}
 								justify="center"
 								padding=".5rem">
-								<StyledP>56212 Köln, Heinrich-Günther-Straße</StyledP>
+								<StyledP>{cat.notes}</StyledP>
 							</StyledDivSimpleRounded>
-							<StyledDivSimpleRounded
-								bgColor={v.columbiaBlue}
-								justify="center"
-								padding=".5rem">
-								<StyledP>On 25th Mai 2023, at 13:49</StyledP>
-								{/* <StyledP>On {formattedDate}, at {formattedTime}</StyledP> */}
-							</StyledDivSimpleRounded>
-							<StyledDivSimpleRounded
-								bgColor={v.columbiaBlue}
-								justify="center"
-								padding=".5rem">
-								<StyledP>Short-haired bicolor tuxedo: orange and white</StyledP>
-							</StyledDivSimpleRounded>
-							<StyledDivSimpleRounded
-								bgColor={v.columbiaBlue}
-								justify="center"
-								padding=".5rem">
-								<StyledP>
-									Black collar, white spot on the left ear, male
-								</StyledP>
-							</StyledDivSimpleRounded>
+						)}
+						{cat?.chipNr && (
 							<StyledDivSimpleRounded
 								bgColor={v.columbiaBlue}
 								justify="center"
 								padding=".5rem">
 								<StyledPBold>Chip number:</StyledPBold>
-								<StyledP>xxxxx x xxxx</StyledP>
+								<StyledP>{cat.chipNr}</StyledP>
 							</StyledDivSimpleRounded>
+						)}
+						{cat.reward && (
 							<StyledDivSimpleRounded
 								bgColor={v.columbiaBlue}
 								justify="center"
@@ -98,8 +198,10 @@ export default function CatInfoSheetMaxi({ id }) {
 								flexDirection="column"
 								gap=".25rem">
 								<StyledPBold>Finder's reward:</StyledPBold>
-								<StyledP>200 €</StyledP>
+								<StyledP>{cat.reward} €</StyledP>
 							</StyledDivSimpleRounded>
+						)}
+						{cat?.contact && (
 							<StyledDivSimpleRounded
 								bgColor={v.columbiaBlue}
 								justify="center"
@@ -108,19 +210,27 @@ export default function CatInfoSheetMaxi({ id }) {
 								gap=".25rem">
 								<StyledPBold>Contact for the owner:</StyledPBold>
 								<StyledP>
-									<Link to="tel:">+49 176 1122334</Link>
+									<Link to="tel:">{cat?.contact}</Link>
 								</StyledP>
 							</StyledDivSimpleRounded>
-						</StyledDivSimple>
+						)}
 					</StyledDivSimple>
+				</StyledDivSimple>
 
-					<StyledDivSimple padding="0" justify="center">
-						<StyledButton>Message user / Edit data</StyledButton>
-						<StyledPrimaryButton onClick={() => setBookmarked((prev) => !prev)}>
-							{bookmarked ? "Delete bookmark" : "Add bookmark"}
-						</StyledPrimaryButton>
-					</StyledDivSimple>
-				</StyledDivBorder>
-			</StyledCatInfoSheetMaxi>
-		);
+				<StyledDivSimple padding="2rem 0 0 0" justify="center">
+					{state.user._id === cat.uploader ? (
+						<>
+							<StyledButton onClick={handleDeleteCat}>Delete</StyledButton>
+							<StyledButton>
+								<Link to={`/updatecat/${id}`}>Edit data</Link>
+							</StyledButton>
+						</>
+					) : null}
+					<StyledPrimaryButton onClick={() => setBookmarked((prev) => !prev)}>
+						{bookmarked ? "Delete bookmark" : "Add bookmark"}
+					</StyledPrimaryButton>
+				</StyledDivSimple>
+			</StyledDivBorder>
+		</StyledCatInfoSheetMaxi>
+	);
 }

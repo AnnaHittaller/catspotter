@@ -18,7 +18,6 @@ export default function CatInfoSheetMini({cat}) {
 
 	const [showMenu, setShowMenu] = useState(false);
 	const { formattedDate, formattedTime } = dateFormatter(cat?.date); 
-	//const dateStr = cat.date
 
 	//separate function needed to get the distance of the points from the users location
 
@@ -27,20 +26,33 @@ export default function CatInfoSheetMini({cat}) {
 			<StyledDivSimpleRounded bgColor={v.columbiaBlue} padding=".5rem 1rem">
 				<StyledDivSimple padding="0" justify="flex-start">
 					<img
-						src={cat?.status === "lost" ? marker_lost : marker_seen}
+						src={cat?.status === "Lost" ? marker_lost : marker_seen}
 						alt=""
 						aria-hidden="true"
 					/>
 					<div>
 						<StyledPBold>
 							{cat?.pattern === "tortoiseshell" || cat?.pattern === "calico"
-								? cat?.pattern.charAt(0).toUpperCase() + cat?.pattern.slice(1)
-								: cat?.color[0].charAt(0).toUpperCase() +
-								  cat?.color[0].slice(1) +
-								  cat?.pattern}{" "}
+								? `${cat?.pattern.charAt(0).toUpperCase()}${cat?.pattern.slice(
+										1
+								  )}`
+								: cat?.color
+										?.map((color, index) => {
+											if (index === 0) {
+												return (
+													color.charAt(0).toUpperCase() +
+													color.slice(1).toLowerCase()
+												);
+											}
+											return color.toLowerCase();
+										})
+										.join(" ") +
+								  ` ${cat?.pattern.charAt(0).toUpperCase()}${cat?.pattern.slice(
+										1
+								  )}`}{" "}
 							cat in {cat?.address.city}
 						</StyledPBold>
-						<StyledP>2,8 km away *********</StyledP>
+						<StyledP>2,8 km away ********* from you</StyledP>
 						<StyledSpan>{formattedDate}, </StyledSpan>
 						<StyledSpan>at {formattedTime}</StyledSpan>
 					</div>

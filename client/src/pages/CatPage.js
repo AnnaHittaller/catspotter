@@ -7,6 +7,7 @@ import {
 import CatInfoSheetMaxi from "../components/CatInfoSheetMaxi";
 import { useParams } from "react-router-dom";
 
+
 export default function CatPage() {
 	const {id} = useParams()
 	

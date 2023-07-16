@@ -15,6 +15,7 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import EmailConfirmPage from "./pages/EmailConfirmPage";
 import ProtectedLayout from "./layout/ProtectedLayout";
+import CatUpdatePage from "./pages/CatUpdatePage";
 
 const AllRoutes = () => {
 	return (
@@ -23,10 +24,11 @@ const AllRoutes = () => {
 			<Route path="/login" element={<LoginPage />} />
 			<Route path="/map" element={<MapPage />} />
 			<Route path="/guides" element={<GuidesPage />} />
-			<Route element={<ProtectedLayout/>}> 
+			<Route element={<ProtectedLayout />}>
 				<Route path="/bookmarks" element={<BookmarksPage />} />
 				<Route path="/notifications" element={<NotificationsPage />} />
 				<Route path="/upload" element={<CatUploadPage />} />
+				<Route path="/updatecat/:id" element={<CatUpdatePage />} />
 				<Route path="/profile" element={<ProfilePage />} />
 				<Route path="/updateprofile" element={<UserUpdatePage />} />
 			</Route>

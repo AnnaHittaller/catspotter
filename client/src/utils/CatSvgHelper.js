@@ -1,4 +1,4 @@
-import { CatPatternBicolor, CatPatternBicolorTabby, CatPatternCalico, CatPatternPointed, CatPatternSolid, CatPatternTabby, CatPatternTortoiseshell, CatPatternTuxedo, CatPatternVan} from "../CatSilhouettes";
+import { CatPatternBicolor, CatPatternBicolorTabby, CatPatternCalico, CatPatternPointed, CatPatternSolid, CatPatternTabby, CatPatternTortoiseshell, CatPatternTuxedo, CatPatternVan} from "../components/CatSilhouettes";
 
 
 export const getCatSvgComponent = (
@@ -8,15 +8,21 @@ export const getCatSvgComponent = (
 	tertiaryColor
 ) => {
 
+	 const defaultColors = {
+			beige: '#e4cca7',
+			grey: "#a6acb4",
+			orange: "#e38120",
+			brown: '#874826'
+			// Add more default colors as needed
+		};
+
     const svgProps = {
-        mainColor: mainColor,
-        secondaryColor: secondaryColor,
-        tertiaryColor: tertiaryColor,
-	}; 
+			mainColor: defaultColors[mainColor] || mainColor,
+			secondaryColor: defaultColors[secondaryColor] || secondaryColor,
+			tertiaryColor: defaultColors[tertiaryColor] || tertiaryColor,
+		}; 
  
 	switch (pattern) {
-		case "bicolor":
-			return <CatPatternBicolor {...svgProps} />;
 		case "solid":
 			return <CatPatternSolid {...svgProps} />;
 		case "tabby":
@@ -25,23 +31,21 @@ export const getCatSvgComponent = (
 			svgProps.mainColor = "white";
 			return <CatPatternBicolor {...svgProps} />;
 		case "tuxedo":
-			svgProps.secondaryColor = "white";
-			return <CatPatternTuxedo {...svgProps} />;
-		case "bicolor":
 			svgProps.mainColor = "white";
-			return <CatPatternBicolor {...svgProps} />;
+			return <CatPatternTuxedo {...svgProps} />;
 		case "bicolorTabby":
 			svgProps.mainColor = "white";
 			return <CatPatternBicolorTabby {...svgProps} />;
 		case "van":
+			svgProps.mainColor = "white";
 			return <CatPatternVan {...svgProps} />;
 		case "tortoiseshell":
-			svgProps.mainColor = "orange";
-			svgProps.secondaryolor = "black";
+			svgProps.mainColor = "#e38120";
+			svgProps.secondaryColor = "black";
 			return <CatPatternTortoiseshell {...svgProps} />;
 		case "calico":
 			svgProps.mainColor = "white";
-			svgProps.secondaryColor = "orange";
+			svgProps.secondaryColor = "#e38120";
 			svgProps.tertiaryColor = "black";
 			return <CatPatternCalico {...svgProps} />;
 		case "pointed":

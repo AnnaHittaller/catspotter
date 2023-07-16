@@ -9,17 +9,28 @@ export default function MenuMidi({cat}) {
 	return (
 		<StyledMenuMidi type={cat.status}>
 			<div>
-				<StyledPBold>{cat.status === "lost" ? "Lost" : "Seen"}</StyledPBold>
+				<StyledPBold>{cat.status === "Lost" ? "Lost" : "Seen"}</StyledPBold>
 			</div>
 			<div></div>
 			<div>
 				{/* cat color may require a map method?? */}
 				<StyledP>
 					{cat?.pattern === "tortoiseshell" || cat?.pattern === "calico"
-						? cat?.pattern.charAt(0).toUpperCase() + cat?.pattern.slice(1)
-						: cat?.color[0].charAt(0).toUpperCase() +
-						  cat?.color[0].slice(1) + cat?.color[1] +
-						  cat?.pattern}{" "}
+						? `${cat?.pattern.charAt(0).toUpperCase()}${cat?.pattern.slice(1)}`
+						: cat?.color
+								?.map((color, index) => {
+									if (index === 0) {
+										return (
+											color.charAt(0).toUpperCase() +
+											color.slice(1).toLowerCase()
+										);
+									}
+									return color.toLowerCase();
+								})
+								.join(" ") +
+						  ` ${cat?.pattern.charAt(0).toUpperCase()}${cat?.pattern.slice(
+								1
+						  )}`}{" "}
 					cat
 				</StyledP>
 				<StyledP>{formattedDate}</StyledP>

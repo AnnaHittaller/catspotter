@@ -52,21 +52,24 @@ import "react-clock/dist/Clock.css";
 import { FaPlus } from "react-icons/fa";
 //import L from "leaflet";
 
-import MapCatUpload from "../components/leaflet/MapCatUpload";
+import MapCatUpdate from "../components/leaflet/MapCatUpdate";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import { getCatSvgComponent } from "../utils/CatSvgHelper";
+import { marker } from "leaflet";
 
-export default function CatUploadPage() {
-	//const { location } = useContext(LocationContext);
+export default function CatUpdatePage() {
+	const { id } = useParams();
+	const [cat, setCat] = useState(null);
 	const { state, dispatch } = useContext(AppContext);
+	const navigate = useNavigate();
+
 	const [showToast, setShowToast] = useState("");
-	const [date, onChange] = useState(new Date());
-	//const [lost, setLost] = useState(false);
+	const [date, onChange] = useState("");
 	const [status, setStatus] = useState("");
-	const [color, setColor] = useState([]);
+	const [color, setColor] = useState("");
 	const [pattern, setPattern] = useState("");
 	const [chipNumber, setChipNumber] = useState("");
 	const [reward, setReward] = useState("");
@@ -78,13 +81,14 @@ export default function CatUploadPage() {
 	const [city, setCity] = useState("");
 	const [postcode, setPostcode] = useState("");
 	//const [uploader, setUploader] = useState("");
+	const [markerCoords, setMarkerCoords] = useState({
+		lat: "",
+		lng: ""
+	});
 
-	const [markerCoords, setMarkerCoords] = useState(null);
-	const navigate = useNavigate();
-
-	const currentTime = new Date();
-	const formattedTime = currentTime.toTimeString().slice(0, 5);
-	const [time, setTime] = useState(formattedTime);
+	//const currentTime = new Date();
+	//const formattedTime = currentTime.toTimeString().slice(0, 5);
+	const [time, setTime] = useState("");
 
 	const [whiteColorDisabled, setWhiteColorDisabled] = useState(false);
 
@@ -92,9 +96,26 @@ export default function CatUploadPage() {
 		"https://res.cloudinary.com/dgum1eu6e/image/upload/v1688906503/placeholder_sfuu70.png"; /// check url, put it into a folder + add cloudinary root
 
 	const [catImage, setCatImage] = useState({
-		url: placeholder,
+		url: "",
 		file: null,
 	});
+
+	console.log("cat", cat);
+
+	useEffect(() => {
+		const fetchCat = async () => {
+			try {
+				const response = await axios.get(`/cats/listone/${id}`);
+				console.log("response", response);
+				if (response.data.success) {
+					setCat(response.data.cat);
+				}
+			} catch (error) {
+				console.log(error.message);
+			}
+		};
+		fetchCat();
+	}, id);
 
 	const catSVG = getCatSvgComponent(
 		pattern?.value || "solid",
@@ -102,35 +123,72 @@ export default function CatUploadPage() {
 		color[1]?.value,
 		color[2]?.value
 	);
-	console.log(pattern?.value);
-	console.log(color[0]?.value, color[1]?.value, color[2]?.value);
 
-	console.log(date, time)
+	console.log("markerCoords", markerCoords);
 
 	useEffect(() => {
-		const fetchAddress = async () => {
-			try {
-				const response = await axios.get(
-					`https://nominatim.openstreetmap.org/reverse?lat=${markerCoords.lat}&lon=${markerCoords.lng}&format=json`
-				);
-				console.log("nominatim", response.data.address);
-				if (response.data.address.postcode)
-					setPostcode(response.data.address.postcode);
-				//check village-Town-city
-				if (response.data.address.village)
-					setCity(response.data.address.village);
-				if (response.data.address.town) setCity(response.data.address.town);
-				if (response.data.address.city) setCity(response.data.address.city);
-				if (response.data.address.suburb)
-					setSuburb(response.data.address.suburb);
-				if (response.data.address.road) setStreet(response.data.address.road);
-			} catch (error) {
-				console.log(error);
-				//setShowToast("Error while fetching the address."); //does this need to be toast?
-			}
-		};
-		fetchAddress();
-	}, [markerCoords]);
+		if (cat) {
+			setStatus(optionsCat.find((option) => option.value === cat.status));
+			setColor(
+				cat.color.map((color) =>
+					optionsColor.find((option) => option.value === color)
+				)
+			);
+			setPattern(optionsPattern.find((option) => option.value === cat.pattern));
+			setChipNumber(cat.chipNr);
+			setReward(cat.reward);
+			setNotes(cat.notes);
+			setContact(cat.contact);
+			setCoatLength(
+				optionsCoatLength.find((option) => option.value === cat.coatLength)
+			);
+			setStreet(cat.address.road);
+			setSuburb(cat.address.suburb);
+			setCity(cat.address.city);
+			setPostcode(cat.address.postcode);
+			setCatImage({
+				url: cat.image[0],
+				file: null,
+			});
+			setMarkerCoords({
+				lat: cat.location.coordinates[1],
+				lng: cat.location.coordinates[0],
+			});
+
+			//console.log(pattern?.value);
+			//console.log(color[0]?.value, color[1]?.value, color[2]?.value);
+		}
+	}, [cat]);
+
+	// useEffect(() => {
+	// 	const fetchAddress = async () => {
+	// 		try {
+	// 	 if (!markerCoords) {
+	// 			return; // Exit early if markerCoords is invalid
+	// 		}
+	// 			const response = await axios.get(
+	// 				`https://nominatim.openstreetmap.org/reverse?lat=${markerCoords.lat}&lon=${markerCoords.lng}&format=json`
+	// 			);
+	// 			console.log("nominatim", response.data.address);
+	// 			if (response.data.address.postcode)
+	// 				setPostcode(response.data.address.postcode);
+	// 			//check village-Town-city
+	// 			if (response.data.address.village)
+	// 				setCity(response.data.address.village);
+	// 			if (response.data.address.town) setCity(response.data.address.town);
+	// 			if (response.data.address.city) setCity(response.data.address.city);
+	// 			if (response.data.address.suburb)
+	// 				setSuburb(response.data.address.suburb);
+	// 			if (response.data.address.road) setStreet(response.data.address.road);
+	// 		} catch (error) {
+	// 			console.log(error);
+	// 			//setShowToast("Error while fetching the address."); //does this need to be toast?
+	// 		}
+	// 	};
+	// 	fetchAddress();
+	// }, [markerCoords]);
+
+	console.log(street, city);
 
 	//toast has to be set in the page!!!
 
@@ -161,7 +219,7 @@ export default function CatUploadPage() {
 				setCoatLength(selectedOption || "");
 				break;
 			case "coatPattern":
-			 if (selectedOption) {
+				if (selectedOption) {
 					if (
 						selectedOption.value === "bicolor" ||
 						selectedOption.value === "van" ||
@@ -201,10 +259,9 @@ export default function CatUploadPage() {
 		}
 	};
 
-	console.log("color",color)
+	console.log("color", color);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
 
 		//take out required values and add toast instead
 
@@ -233,8 +290,6 @@ export default function CatUploadPage() {
 			setShowToast("Invalid color combination.");
 			return;
 		}
-
-		//may add more invalid combinations later
 
 		try {
 			const formdata = new FormData();
@@ -300,20 +355,26 @@ export default function CatUploadPage() {
 		}
 	};
 
+	if (!cat) {
+		return <div>Loading...</div>; // or any loading indicator you prefer
+	}
+
 	return (
 		<StyledPage display="flex" flexDirection="column">
 			<StyledSection justify="center">
-				<StyledH2Underline>Upload a cat</StyledH2Underline>
+				<StyledH2Underline>Update a cat</StyledH2Underline>
 				<StyledPBold>
 					Please select the cat's most accurate location (zoom and click the map
 					at the exact point) on the map and fill out the form below.
 				</StyledPBold>
 				<StyledCatUploadForm onSubmit={handleSubmit}>
-					<MapCatUpload
-						height="30vh"
-						markerCoords={markerCoords}
-						setMarkerCoords={setMarkerCoords}
-					/>
+					{markerCoords && markerCoords.lat && markerCoords.lng && (
+						<MapCatUpdate
+							height="30vh"
+							markerCoords={markerCoords}
+							setMarkerCoords={setMarkerCoords}
+						/>
+					)}
 					<StyledSpan type="icon-span" className="icon-span">
 						<StyledPBold>
 							{" "}
@@ -408,7 +469,7 @@ export default function CatUploadPage() {
 						/>
 					</StyledDivLabel>
 					<StyledDivSimple className="cat-svg">{catSVG}</StyledDivSimple>
-					{status.value === "Lost" && (
+					{status?.value === "Lost" && (
 						<>
 							<StyledDivLabel padding="0" className="text-input">
 								<label>Chip number</label>
@@ -462,7 +523,10 @@ export default function CatUploadPage() {
 						<label>Photo upload</label>
 						<StyledDivSimple padding="0">
 							{catImage && (
-								<img src={catImage.url || placeholder} alt="selected file" />
+								<img
+									src={cloudinaryRoot + catImage.url || placeholder}
+									alt="selected file"
+								/>
 							)}
 							<label hrmlFor="image">
 								<input

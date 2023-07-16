@@ -25,7 +25,7 @@ export default function MapCatUpload({
 }) {
 	//console.log("rerender from mapnew component");
 	const mapRef = useRef();
-	const [showToast, setShowToast] = useState(false);
+	const [showToast, setShowToast] = useState("");
 	const [cats, setCats] = useState([]);
 	const [visibleCats, setVisibleCats] = useState([]);
 	//const [geocoderAdded, setGeocoderAdded] = useState(false);
@@ -47,8 +47,7 @@ export default function MapCatUpload({
 		<>
 			{showToast && (
 				<Toast type="error" setShowToast={setShowToast}>
-					The geolocation accuracy is too low, please zoom in to your exact
-					position.
+					{showToast}
 				</Toast>
 			)}
 			<StyledMapContainer height={height}>

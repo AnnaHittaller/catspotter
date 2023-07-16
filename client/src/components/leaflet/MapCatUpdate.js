@@ -21,16 +21,14 @@ import "leaflet/dist/leaflet.css";
 import ReverseGeocodeMarker from "./ReverseGeocodeMarker";
 //import icon from "./MapMarkerOwn";
 import { markerIconOwn } from "./MapMarkers";
-import MenuAddress from "./MenuAddress";
+import MenuAddress from "../MenuAddress";
 
-export default function MapCatUpdate({ height }) {
-	//console.log("rerender from mapuploadedit component");
+export default function MapCatUpdate({ height, markerCoords, setMarkerCoords }) {
+	console.log("rerender from mapuploadedit component");
 	const mapRef = useRef();
-	const [markerCoords, setMarkerCoords] = useState({
-		lat: 51.64535,
-		lng: -0.15448,
-	});
+	
 	console.log("markerCoords,", markerCoords);
+	//const [visibleCats, setVisibleCats] = useState("")
 
 	const handleMapClick = (e) => {
 		const { lat, lng } = e.latlng;
@@ -47,7 +45,7 @@ export default function MapCatUpdate({ height }) {
 		<>
 			<StyledMapContainer height={height}>
 				<MapContainer
-					center={[51.64536, -0.15448]}
+					center={markerCoords}
 					zoom={16}
 					minZoom={2}
 					maxZoom={18}
@@ -63,6 +61,8 @@ export default function MapCatUpdate({ height }) {
 							position={markerCoords}
 							mapRef={mapRef.current}
 							icon={markerIconOwn}
+							// visibleCats={visibleCats}
+							// setVisibleCats={setVisibleCats}
 						/>
 					)}
 				</MapContainer>

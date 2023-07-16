@@ -29,7 +29,7 @@ import AreaRangeSlider from "./leaflet/AreaRangeSlider";
 export default function MapForArea({ height, type }) {
 	const mapRef = useRef();
 	const circleRef = useRef();
-	const [showtoast, setShowtoast] = useState(false);
+	const [showtoast, setShowtoast] = useState("");
 	const { pathname } = useLocation();
 	console.log(pathname);
 

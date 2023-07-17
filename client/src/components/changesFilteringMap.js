@@ -103,7 +103,7 @@ const fetchCats = async () => {
 			},
 		});
 
-		if (response.data.success) {
+		if (response.data.success) { 
 			dispatch({
 				type: "LIST_CATS", // Or create another one LIST_FILTERED CATS and save them into the context separately
 				payload: response.data.cats,

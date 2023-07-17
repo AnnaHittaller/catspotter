@@ -35,12 +35,7 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
 	const {state, dispatch} = useContext(AppContext)
 
-	//console.log("visible cats",visibleCats)
-	//console.log("map4", cats);
-
-	//maybe pass the state up to the page? - yep, done
-	//const [visibleCats, setVisibleCats] = useState([]);
-
+	console.log("visible cats", visibleCats);
 	// import { useMap } from "react-leaflet";
 
 	// function ShowBounds() {
@@ -73,9 +68,9 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 						iconCreateFunction={createCustomClusterIcon}
 						disableClusteringAtZoom={13}
 						zoomToBoundsOnClick>
-						{cats?.length > 0 &&
-							cats &&
-							cats.map((cat) => (
+						{state.cats?.length > 0 &&
+							state.cats &&
+							state.cats.map((cat) => (
 								<Marker
 									key={cat._id}
 									icon={cat.status === "Lost" ? markerIconLost : markerIconSeen}

@@ -159,7 +159,7 @@ export default function CatInfoSheetMaxi({ id }) {
 							justify="center"
 							padding=".5rem">
 							<StyledP>
-								On {formattedDate}, at {formattedTime}
+								On {formattedDate}, at {cat.time}
 							</StyledP>
 							{/* <StyledP>On {formattedDate}, at {formattedTime}</StyledP> */}
 						</StyledDivSimpleRounded>

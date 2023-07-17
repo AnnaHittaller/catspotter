@@ -10,16 +10,33 @@ import { StyledCatInfoSheetMini } from "../styles/styled/Styled_CatInfoSheet";
 import { v } from "../styles/Variables";
 import { CiMenuKebab } from "react-icons/ci";
 import { StyledPBold, StyledP, StyledSpan } from "../styles/styled/Styled_Text";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MenuMini from "./MenuMini";
 import dateFormatter from "../utils/DateFormatter";
+import { calculateDistance } from "../utils/CalculateDistance";
+import { AppContext } from "../context/AppContext";
 
 export default function CatInfoSheetMini({cat}) {
 
 	const [showMenu, setShowMenu] = useState(false);
 	const { formattedDate, formattedTime } = dateFormatter(cat?.date); 
-
+  const [distance, setDistance] = useState(null);
+  const {state} = useContext(AppContext)
 	//separate function needed to get the distance of the points from the users location
+
+	 useEffect(() => {
+			// Calculate the distance between the cat's location and the user's location
+			const catLocation = cat?.location?.coordinates;
+			const userLocation = state.user?.location?.coordinates;
+			if (catLocation && userLocation) {
+				const catLat = catLocation[1]; // Latitude of the cat's location
+				const catLon = catLocation[0]; // Longitude of the cat's location
+				const userLat = userLocation[1]; // Latitude of the user's location
+				const userLon = userLocation[0]; // Longitude of the user's location
+				const dist = calculateDistance(catLat, catLon, userLat, userLon);
+				setDistance(dist);
+			}
+		}, [cat, state.user]);
 
 	return (
 		<StyledCatInfoSheetMini>
@@ -52,9 +69,9 @@ export default function CatInfoSheetMini({cat}) {
 								  )}`}{" "}
 							cat in {cat?.address.city}
 						</StyledPBold>
-						<StyledP>2,8 km away ********* from you</StyledP>
+						<StyledP>{distance} km away from you</StyledP>
 						<StyledSpan>{formattedDate}, </StyledSpan>
-						<StyledSpan>at {formattedTime}</StyledSpan>
+						<StyledSpan>at {cat.time}</StyledSpan>
 					</div>
 				</StyledDivSimple>
 				<CiMenuKebab onClick={() => setShowMenu((prev) => !prev)} />

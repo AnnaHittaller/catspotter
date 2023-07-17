@@ -1,6 +1,7 @@
 
 import L, { Icon, divIcon, point } from "leaflet";
-import cloudinaryRoot from "../../utils/ImageUrlRoot"
+import { cloudinaryRoot } from "../../utils/ImageUrlRoot";
+
 
 export const markerIconOwn = new Icon({
 	iconSize: [35, 50],

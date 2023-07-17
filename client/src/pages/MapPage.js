@@ -1,29 +1,20 @@
 
-// import Map from "../components/Map";
+
 import CatInfoSheetMini from "../components/CatInfoSheetMini";
-// import { v } from "../styles/Variables";
 import {
 	StyledDivSimple,
 	StyledDivSimpleGrid,
 } from "../styles/styled/Styled_Div";
 import Select from "react-select";
-// import BG_map from "../assets/bgImages/BG_map.jpg";
-// import {
-// 	StyledButton,
-// 	StyledPrimaryButton,
-// } from "../styles/styled/Styled_Button";
 import { StyledPage } from "../styles/styled/Styled_Page";
 import {
 	StyledSection,
 	StyledBGSection,
 } from "../styles/styled/Styled_Section";
 import {
-	//StyledH2,
 	StyledH2Underline,
 	StyledH3,
-	//StyledH4Underline,
 } from "../styles/styled/Styled_Title";
-//import { LuGlobe } from "react-icons/lu";
 import { BsQuestionCircle } from "react-icons/bs";
 import {
 	StyledP,
@@ -41,62 +32,129 @@ import {
 	optionsPattern,
 } from "../data/SelectOptions";
 import {customStyles} from "../styles/SelectCustomStyles"
-//import { LocationContext } from "../context/LocationContext";
 import { useContext, useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
-// import MenuMini from "../components/MenuMini";
-// import MenuMidi from "../components/MenuMidi";
-//import AreaRangeSlider from "../components/AreaRangeSlider";
-// import ToggleButton from "../components/ToggleButton";
 import MapFindCat from "../components/leaflet/MapFindCat";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot"
 
+
 export default function MapPage() {
-	//console.log("rerender from map page");
-	//const { location, setLocation } = useContext(LocationContext);
+
 	const {state, dispatch} = useContext(AppContext)
 	const [cats, setCats] = useState([])
 	const [visibleCats, setVisibleCats] = useState([]);
 	const [filteredCats, setFilteredCats] = useState([])
 
-	//separate function needed to get the distance of the points from the users location
+	console.log("visible cats",visibleCats)
+
+	const [selectedStatus, setSelectedStatus] = useState(null);
+	const [selectedPattern, setSelectedPattern] = useState(null);
+	const [selectedColor, setSelectedColor] = useState(null);
+	const [selectedDate, setSelectedDate] = useState(null);
+	const [selectedCoatLength, setSelectedCoatLength] = useState(null);
+
+	console.log(selectedStatus, selectedPattern, selectedDate, selectedCoatLength, selectedColor)
+
+	const handleSelectChange = (selectedOption, name) => {
+		switch (name) {
+			case "status":
+				setSelectedStatus(selectedOption);
+				break;
+			case "pattern":
+				setSelectedPattern(selectedOption);
+				break;
+			case "color":
+				setSelectedColor(selectedOption);
+				break;
+			case "date":
+				setSelectedDate(selectedOption);
+				break;
+			case "coatLength":
+				setSelectedCoatLength(selectedOption);
+				break;
+			default:
+				break;
+		}
+	};
 	//set toast for filtering and fetching errors
 
-		useEffect(() => {
-			const fetchCats = async () => {
-				try {
-					const response = await axios.get("/cats/list");
-					console.log("data map page:",response.data)
+		// useEffect(() => {
+		// 	const fetchCats = async () => {
+		// 		try {
+		// 			const response = await axios.get("/cats/list");
+		// 			console.log("data map page:",response.data)
 
-					if(response.data.success) {
-						dispatch({
-							type: "LIST_CATS",
-							payload: response.data.cats
-						})
-					}
+		// 			if(response.data.success) {
+		// 				dispatch({
+		// 					type: "LIST_CATS",
+		// 					payload: response.data.cats
+		// 				})
+		// 			}
 
-					setCats(response.data.cats); // map them directly from state contextt? then no need for passing them down as prop - TEST THIS
+		// 			setCats(response.data.cats); // map them directly from state contextt? then no need for passing them down as prop - TEST THIS
 
-				} catch (error) {
-					console.log(error.message);
-				}
-			};
-			fetchCats();
-		}, []);
+		// 		} catch (error) {
+		// 			console.log(error.message);
+		// 		}
+		// 	};
+		// 	fetchCats();
+		//}, []);
 
 		console.log("cats", cats)
 
-		useEffect(()=> {
-			const filterCats = async () => {
-				try{	
-					//complex queries lesson: done best at server or client side? or both?
-				} catch (error) {
-					console.log(error.message);
-				}
-			}
-		})
+useEffect(() => {
+	const filterCats = () => {
+		let filteredCats = state.cats;
+
+		if (selectedStatus) {
+			filteredCats = filteredCats.filter(
+				(cat) => cat.status === selectedStatus.value
+			);
+		}
+
+		if (selectedPattern) {
+			filteredCats = filteredCats.filter(
+				(cat) => cat.pattern === selectedPattern.value
+			);
+		}
+
+		if (selectedColor) {
+			filteredCats = filteredCats.filter((cat) => {
+				const catColors = cat.color.map((color) => color.value);
+				return selectedColor.every((color) => catColors.includes(color.value));
+			});
+		}
+
+		if (selectedCoatLength) {
+			filteredCats = filteredCats.filter(
+				(cat) => cat.coatLength === selectedCoatLength.value
+			);
+		}
+
+		if (selectedDate) {
+			const today = new Date();
+			const selectedDateValue = Number(selectedDate.value);
+			const minDate = new Date(
+				today.getTime() - selectedDateValue * 24 * 60 * 60 * 1000
+			);
+			filteredCats = filteredCats.filter(
+				(cat) => new Date(cat.date) >= minDate
+			);
+		}
+
+		setVisibleCats(filteredCats);
+	};
+
+	filterCats();
+}, [
+	cats,
+	selectedStatus,
+	selectedPattern,
+	selectedColor,
+	selectedCoatLength,
+	selectedDate,
+]);
 
 	return (
 		<StyledPage display="flex" flexDirection="column">
@@ -106,6 +164,7 @@ export default function MapPage() {
 					<StyledP>
 						The map shows sightings from the last 30 days as default - to view
 						older posts, please adjust the filters below.
+						<StyledP>Move or zoom the map to find more cats.</StyledP>
 					</StyledP>
 					<MapFindCat
 						cats={cats}
@@ -122,7 +181,6 @@ export default function MapPage() {
 							detailed description of coat patterns and colors.
 						</StyledPBold>
 					</StyledSpan>
-						<StyledPBold>Move or zoom the map to find more cats.</StyledPBold>
 					<StyledSelectWrapper>
 						<Select
 							options={optionsCat}
@@ -130,6 +188,11 @@ export default function MapPage() {
 							placeholder="Select lost / seen..."
 							isClearable
 							menuPlacement="auto"
+							name="status"
+							onChange={(selectedOption) =>
+								handleSelectChange(selectedOption, "status")
+							}
+							value={selectedStatus}
 						/>
 						<Select
 							options={optionsPattern}
@@ -137,6 +200,11 @@ export default function MapPage() {
 							placeholder="Select coat pattern..."
 							isClearable
 							menuPlacement="auto"
+							onChange={(selectedOption) =>
+								handleSelectChange(selectedOption, "pattern")
+							}
+							value={selectedPattern}
+							name="pattern"
 						/>
 						<Select
 							options={optionsColor}
@@ -146,6 +214,11 @@ export default function MapPage() {
 							placeholder="Select coat color..."
 							isClearable
 							menuPlacement="auto"
+							onChange={(selectedOption) =>
+								handleSelectChange(selectedOption, "color")
+							}
+							value={selectedColor}
+							name="color"
 						/>
 						<Select
 							options={optionsCoatLength}
@@ -153,6 +226,11 @@ export default function MapPage() {
 							placeholder="Select coat length..."
 							isClearable
 							menuPlacement="auto"
+							onChange={(selectedOption) =>
+								handleSelectChange(selectedOption, "coatLength")
+							}
+							value={selectedCoatLength}
+							name="coatLength"
 						/>
 						<Select
 							options={optionsDate}
@@ -160,29 +238,31 @@ export default function MapPage() {
 							placeholder="Select timeframe..."
 							isClearable
 							menuPlacement="auto"
+							onChange={(selectedOption) =>
+								handleSelectChange(selectedOption, "date")
+							}
+							value={selectedDate}
+							name="date"
 						/>
-						{/* this may not be needed when latlngbounds work */}
-						<Select
+
+						{/* <Select
 							options={optionsArea}
 							styles={customStyles}
 							placeholder="Select area radius..."
 							isClearable
 							menuPlacement="auto"
-						/>
+						/> */}
 					</StyledSelectWrapper>
 				</StyledDivSimple>
 
 				<StyledDivSimpleGrid min="290px" padding="1rem 0">
-					{/* <StyledH3>No search filters have been selected yet.</StyledH3> */}
-					{/* <StyledH3>There are no matching results.</StyledH3> */}
 					{visibleCats && visibleCats.length > 0 ? (
 						visibleCats.map((cat) => (
 							<CatInfoSheetMini key={cat._id} cat={cat} />
 						))
 					) : (
 						<StyledH3>
-							There are no matching results in the area that is shown on the
-							map.
+							There are no matching results in the mapped area.
 						</StyledH3>
 					)}
 				</StyledDivSimpleGrid>

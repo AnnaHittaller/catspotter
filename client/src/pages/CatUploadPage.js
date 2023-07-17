@@ -85,6 +85,7 @@ export default function CatUploadPage() {
 	const currentTime = new Date();
 	const formattedTime = currentTime.toTimeString().slice(0, 5);
 	const [time, setTime] = useState(formattedTime);
+	console.log(time, date)
 
 	const [whiteColorDisabled, setWhiteColorDisabled] = useState(false);
 
@@ -266,9 +267,9 @@ export default function CatUploadPage() {
 
 			//console.log("formdata", formdata);
 
-			// for (let pair of formdata.entries()) {
-			// 	console.log(pair[0] + ": " + pair[1]);
-			// }
+			for (let pair of formdata.entries()) {
+				console.log(pair[0] + ": " + pair[1]);
+			}
 
 			// console.log("pattern", pattern);
 			// console.log("color", color);
@@ -324,7 +325,7 @@ export default function CatUploadPage() {
 					</StyledSpan>
 					<StyledDivLabel padding="0" className="date-time-picker">
 						<label>Pick a date</label>
-						<DatePicker onChange={onChange} value={date} locale="en-EN" />
+						<DatePicker onChange={onChange} value={date} locale="en-EN" maxDate={new Date()}/>
 					</StyledDivLabel>
 					<StyledDivLabel padding="0" className="date-time-picker">
 						<label>Pick a time</label>

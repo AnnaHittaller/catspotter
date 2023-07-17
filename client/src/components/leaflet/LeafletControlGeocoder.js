@@ -4,23 +4,17 @@ import "leaflet.locatecontrol/dist/L.Control.Locate.css";
 import "leaflet.locatecontrol";
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L, { Icon, divIcon, point } from "leaflet";
+import L from "leaflet";
 import {
 	useState,
-	useMemo,
-	useCallback,
-	useRef,
 	useContext,
 	useEffect,
 } from "react";
 import { useMap } from "react-leaflet";
 import { AppContext } from "../../context/AppContext";
 import { useLocation } from "react-router-dom";
-//import icon from "./MarkerOwn";
-//import { LocationContext } from "../context/LocationContext";
 
 export default function LeafletControlGeocoder({ mapRef, setShowToast, visibleCats, setVisibleCats, cats }) {
-	//const { location, setLocation } = useContext(LocationContext);
 	const map = useMap();
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
 	const { state, dispatch } = useContext(AppContext);
@@ -56,19 +50,7 @@ export default function LeafletControlGeocoder({ mapRef, setShowToast, visibleCa
 					locateOptions: {
 						enableHighAccuracy: true,
 					},
-					// compassStyle: {
-					// 	fillColor: "red",
-					// 	fillOpacity: 1,
-					// 	weight: 0,
-					// 	color: "purple",
-					// },
-					// circleStyle: {
-					// 	className: "leaflet-control-locate-circle",
-					// 	color: "red",
-					// 	fillColor: "yellow",
-					// 	fillOpacity: 0.5,
-					// 	weight: 0,
-					//},
+					
 				})
 				.addTo(map);
 

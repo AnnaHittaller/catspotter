@@ -23,6 +23,7 @@ const catSchema = new Schema({
 		type: Date,
 		required: true,
 	},
+	time: String,
 	image: {
 		type: [String],
 	},

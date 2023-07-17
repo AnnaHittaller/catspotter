@@ -39,7 +39,9 @@ export default function ContextProvider({ children }) {
 			case "UPDATE_CAT":
 				return {
 					...state,
-					cat: action.payload,
+					cats: state.cats.map((cat) =>
+						cat._id === action.payload._id ? action.payload : cat
+					),
 				};
 			default:
 				return state;

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { v } from "../Variables";
-import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+import { cloudinaryRoot } from "../../utils/ImageUrlRoot";
+
 
 
 export const StyledHero = styled.div`

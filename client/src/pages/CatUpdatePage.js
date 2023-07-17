@@ -72,7 +72,7 @@ export default function CatUpdatePage() {
 	const [color, setColor] = useState("");
 	const [pattern, setPattern] = useState("");
 	const [chipNumber, setChipNumber] = useState("");
-	const [reward, setReward] = useState("");
+	const [reward, setReward] = useState(null);
 	const [notes, setNotes] = useState("");
 	const [contact, setContact] = useState("");
 	const [coatLength, setCoatLength] = useState("");
@@ -93,7 +93,9 @@ export default function CatUpdatePage() {
 	const [whiteColorDisabled, setWhiteColorDisabled] = useState(false);
 
 	const placeholder =
-		"https://res.cloudinary.com/dgum1eu6e/image/upload/v1688906503/placeholder_sfuu70.png"; /// check url, put it into a folder + add cloudinary root
+		cloudinaryRoot + "placeholder_sfuu70.png"; 
+
+		console.log(cloudinaryRoot)
 
 	const [catImage, setCatImage] = useState({
 		url: "",
@@ -136,6 +138,8 @@ export default function CatUpdatePage() {
 			);
 			setPattern(optionsPattern.find((option) => option.value === cat.pattern));
 			setChipNumber(cat.chipNr);
+			setTime(cat.time)
+			onChange(cat.date)
 			setReward(cat.reward);
 			setNotes(cat.notes);
 			setContact(cat.contact);
@@ -147,9 +151,10 @@ export default function CatUpdatePage() {
 			setCity(cat.address.city);
 			setPostcode(cat.address.postcode);
 			setCatImage({
-				url: cat.image[0],
+				url: cat.image[0] ? cloudinaryRoot + cat.image[0] : "",
 				file: null,
 			});
+
 			setMarkerCoords({
 				lat: cat.location.coordinates[1],
 				lng: cat.location.coordinates[0],
@@ -160,33 +165,33 @@ export default function CatUpdatePage() {
 		}
 	}, [cat]);
 
-	// useEffect(() => {
-	// 	const fetchAddress = async () => {
-	// 		try {
-	// 	 if (!markerCoords) {
-	// 			return; // Exit early if markerCoords is invalid
-	// 		}
-	// 			const response = await axios.get(
-	// 				`https://nominatim.openstreetmap.org/reverse?lat=${markerCoords.lat}&lon=${markerCoords.lng}&format=json`
-	// 			);
-	// 			console.log("nominatim", response.data.address);
-	// 			if (response.data.address.postcode)
-	// 				setPostcode(response.data.address.postcode);
-	// 			//check village-Town-city
-	// 			if (response.data.address.village)
-	// 				setCity(response.data.address.village);
-	// 			if (response.data.address.town) setCity(response.data.address.town);
-	// 			if (response.data.address.city) setCity(response.data.address.city);
-	// 			if (response.data.address.suburb)
-	// 				setSuburb(response.data.address.suburb);
-	// 			if (response.data.address.road) setStreet(response.data.address.road);
-	// 		} catch (error) {
-	// 			console.log(error);
-	// 			//setShowToast("Error while fetching the address."); //does this need to be toast?
-	// 		}
-	// 	};
-	// 	fetchAddress();
-	// }, [markerCoords]);
+	useEffect(() => {
+		const fetchAddress = async () => {
+			try {
+		 if (!markerCoords) {
+				return; // Exit early if markerCoords is invalid
+			}
+				const response = await axios.get(
+					`https://nominatim.openstreetmap.org/reverse?lat=${markerCoords.lat}&lon=${markerCoords.lng}&format=json`
+				);
+				console.log("nominatim", response.data.address);
+				if (response.data.address.postcode)
+					setPostcode(response.data.address.postcode);
+				//check village-Town-city
+				if (response.data.address.village)
+					setCity(response.data.address.village);
+				if (response.data.address.town) setCity(response.data.address.town);
+				if (response.data.address.city) setCity(response.data.address.city);
+				if (response.data.address.suburb)
+					setSuburb(response.data.address.suburb);
+				if (response.data.address.road) setStreet(response.data.address.road);
+			} catch (error) {
+				console.log(error);
+				//setShowToast("Error while fetching the address."); //does this need to be toast?
+			}
+		};
+		fetchAddress();
+	}, [markerCoords]);
 
 	console.log(street, city);
 
@@ -209,6 +214,8 @@ export default function CatUpdatePage() {
 			file: e.target.files[0],
 		});
 	};
+
+	console.log(catImage)
 
 	const handleChange = (selectedOption, name) => {
 		switch (name) {
@@ -308,7 +315,7 @@ export default function CatUpdatePage() {
 			formdata.set("notes", notes);
 			formdata.set("chipNr", chipNumber);
 			formdata.set("contact", contact);
-			formdata.set("reward", reward);
+			formdata.set("reward", reward === null ? "" : reward);
 			formdata.set("contact", contact);
 			formdata.set("address.postcode", postcode);
 			formdata.set("address.city", city);
@@ -321,9 +328,9 @@ export default function CatUpdatePage() {
 
 			//console.log("formdata", formdata);
 
-			// for (let pair of formdata.entries()) {
-			// 	console.log(pair[0] + ": " + pair[1]);
-			// }
+			for (let pair of formdata.entries()) {
+				console.log(pair[0] + ": " + pair[1]);
+			}
 
 			// console.log("pattern", pattern);
 			// console.log("color", color);
@@ -331,24 +338,24 @@ export default function CatUpdatePage() {
 			// console.log("coatLength", coatLength);
 			// console.log(typeof markerCoords.lng, markerCoords.lng);
 
-			const response = await axios.post("/cats/add", formdata);
+			const response = await axios.put(`/cats/updatecat/${id}`, formdata);
 			console.log("response", response);
 
 			if (response.data.success) {
 				dispatch({
-					type: "ADD_CAT",
+					type: "UPDATE_CAT",
 					payload: response.data.cat,
 				});
 
 				//RESET STATE TO EMPTY ///////////////////////////
 
-				setShowToast("Cat data was uploaded successfully!");
+				setShowToast("Cat data was updated successfully!");
 
 				setTimeout(() => {
 					navigate("/");
 				}, 3000);
 			} else {
-				setShowToast("Error while uploading the data!");
+				setShowToast("Error while updating the data!");
 			}
 		} catch (error) {
 			console.log(error);
@@ -358,6 +365,8 @@ export default function CatUpdatePage() {
 	if (!cat) {
 		return <div>Loading...</div>; // or any loading indicator you prefer
 	}
+
+	console.log(cloudinaryRoot + placeholder);
 
 	return (
 		<StyledPage display="flex" flexDirection="column">
@@ -524,10 +533,11 @@ export default function CatUpdatePage() {
 						<StyledDivSimple padding="0">
 							{catImage && (
 								<img
-									src={cloudinaryRoot + catImage.url || placeholder}
+									src={ catImage.url ||  placeholder}
 									alt="selected file"
 								/>
 							)}
+							
 							<label hrmlFor="image">
 								<input
 									type="file"
@@ -548,23 +558,26 @@ export default function CatUpdatePage() {
 							Delete photo
 						</StyledButton>
 					</StyledDivLabel>
-					{showToast === "Cat data was uploaded successfully!" && (
+					{showToast === "Cat data was updated successfully!" && (
 						<Toast type="ok" setShowToast={setShowToast}>
 							{showToast}
 						</Toast>
 					)}
-					{showToast && showToast !== "Cat data was uploaded successfully!" && (
+					{showToast && showToast !== "Cat data was updated successfully!" && (
 						<Toast type="error" setShowToast={setShowToast}>
 							{showToast}
 						</Toast>
 					)}
 					<StyledDivSimple padding="0" justify="center">
 						<StyledButton onClick={() => navigate(-1)}>Cancel</StyledButton>
-						<StyledPrimaryButton type="submit">Upload</StyledPrimaryButton>
+						<StyledPrimaryButton type="submit">Update</StyledPrimaryButton>
 					</StyledDivSimple>
 				</StyledCatUploadForm>
 			</StyledSection>
-			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_notification_udcr7h.jpg"></StyledBGSection>
+			<StyledBGSection
+				bgImg={
+					cloudinaryRoot + "catspotter-assets/BG_notification_udcr7h.jpg"
+				}></StyledBGSection>
 		</StyledPage>
 	);
 }

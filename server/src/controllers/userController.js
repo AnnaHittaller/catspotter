@@ -125,9 +125,9 @@ export const handleEmailConfirm = async (req, res) => {
 			{ new: true }
 		);
 
-		if(!user) return res.send({success: false, errorId: 1})
+		if (!user) return res.send({ success: false, errorId: 1 });
 
-		res.send({success: true});
+		res.send({ success: true });
 	} catch (error) {
 		console.log(" error at email confirm:", error.message);
 		res.send("Error in confirming the email", error.message);
@@ -196,40 +196,57 @@ export const handleChangePassword = async (req, res) => {
 };
 
 export const handleUpdateUser = async (req, res) => {
-// console.log(" handleUpdateProfile:", req.body);
-//   console.log(" handleUpdateProfile FILE:", req.file);
+	// console.log(" handleUpdateProfile:", req.body);
+	//   console.log(" handleUpdateProfile FILE:", req.file);
 
-  try {
-    //console.log(" handleUpdateUser FILENAME:", req.file.filename);
+	try {
+		//console.log(" handleUpdateUser FILENAME:", req.file.filename);
 
-    if (req.file) {
+		if (req.file) {
 			req.body.avatar = req.file.filename;
 		}
-	
-	if (req.body.password) {
-		const salt = await bcrypt.genSalt(10);
-		const hashedPass = await bcrypt.hash(password, salt);
-		req.body.password = hashedPass
-	}
 
-    const editedUser = await User.findByIdAndUpdate(req.user, req.body, {
-      new: true,
-    }); 
+		if (req.body.password) {
+			const salt = await bcrypt.genSalt(10);
+			const hashedPass = await bcrypt.hash(password, salt);
+			req.body.password = hashedPass;
+		}
 
-	const newUser = editedUser.toObject();
-	delete newUser.password;
-    console.log("updatedUser:", newUser);
-
-    res.send({
-			success: true,
-			user: newUser
+		const editedUser = await User.findByIdAndUpdate(req.user, req.body, {
+			new: true,
 		});
-  } catch (error) {
-    console.log("error handleUpdateUser", error.message);
 
-    res.send({
+		const newUser = editedUser.toObject();
+		delete newUser.password;
+		console.log("updatedUser:", newUser);
+
+		res.send({
+			success: true,
+			user: newUser,
+		});
+	} catch (error) {
+		console.log("error handleUpdateUser", error.message);
+
+		res.send({
 			success: false,
 			message: error.message,
 		});
-  }
+	}
+};
+
+export const handleBookmark = async (req, res) => {
+	try {
+		console.log("handleBookmark here")
+		const user = await User.findById(req.user)
+
+		//check if bookmark is in the bookmarks array or not, if yes get it out, if not put it there
+
+	} catch (error) {
+		console.log("error handleBookmark", error.message); 
+
+		res.send({
+			success: false,
+			message: error.message,
+		});
+	}
 };

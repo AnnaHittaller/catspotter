@@ -1,6 +1,6 @@
 import CatInfoSheetMini from "../components/CatInfoSheetMini";
 import {
-	StyledDivBorder,
+	
 	StyledDivSimple,
 	StyledDivSimpleGrid,
 } from "../styles/styled/Styled_Div";
@@ -11,8 +11,10 @@ import {
 } from "../styles/styled/Styled_Section";
 import { StyledPBig } from "../styles/styled/Styled_Text";
 import { StyledH2Underline, StyledH3 } from "../styles/styled/Styled_Title";
-import BG_notification from "../assets/bgImages/BG_notification.jpg";
+
 import DataMatchNotification from "../components/DataMatchNotification";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+
 
 export default function NotificationsPage() {
 	return (
@@ -49,7 +51,7 @@ export default function NotificationsPage() {
 					<StyledPBig>There are no new messages.</StyledPBig>
 				</StyledDivSimple> */}
 			</StyledSection>
-			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_upload_jetyme.jpg"></StyledBGSection>
+			<StyledBGSection bgImg={cloudinaryRoot + "catspotter-assets/BG_upload_jetyme.jpg"}></StyledBGSection>
 		</StyledPage>
 	);
 }

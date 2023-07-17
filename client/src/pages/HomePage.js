@@ -28,6 +28,8 @@ import Toast from "../components/Toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+
 
 export default function HomePage() {
 	const [showToast, setShowToast] = useState(false);
@@ -80,7 +82,7 @@ export default function HomePage() {
 			<StyledHero>
 				<StyledHeroData>
 					<img
-						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899573/catspotter-assets/catspotter_logo_dark_mur6nz.png"
+						src={cloudinaryRoot + "catspotter-assets/catspotter_logo_dark_mur6nz.png"}
 						alt="catspotter logo"
 					/>
 					<p>
@@ -112,7 +114,7 @@ export default function HomePage() {
 						Keep your eyes open while going about your daily routine - on your way to work, running errands, or going to school. You may have noticed any unfamiliar cat turning up in your street garden - maybe it's missing from just a few streets away.{" "}
 					</p>
 					<img
-						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/yellow_arrow_v7eq7h.png"
+						src={cloudinaryRoot + "catspotter-assets/yellow_arrow_v7eq7h.png"}
 						alt=""
 						aria-hidden="true"
 					/>
@@ -124,7 +126,7 @@ export default function HomePage() {
 					</p>
 
 					<img
-						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/yellow_arrow_v7eq7h.png"
+						src={cloudinaryRoot + "catspotter-assets/yellow_arrow_v7eq7h.png"}
 						alt=""
 						aria-hidden="true"
 					/>
@@ -136,7 +138,7 @@ export default function HomePage() {
 						When a lost cat's data matches a sighting, both the spotter and the owner receive notifications. Tthey can check the detailed infosheets, locations and photos. Be a voice for lost cats in your community and help them reunite with their worrying families!
 					</p>
 					<img
-						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/yellow_arrow_v7eq7h.png"
+						src={cloudinaryRoot + "catspotter-assets/yellow_arrow_v7eq7h.png"}
 						alt=""
 						aria-hidden="true"
 					/>

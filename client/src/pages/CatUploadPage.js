@@ -500,7 +500,7 @@ export default function CatUploadPage() {
 					</StyledDivSimple>
 				</StyledCatUploadForm>
 			</StyledSection>
-			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_notification_udcr7h.jpg"></StyledBGSection>
+			<StyledBGSection bgImg={cloudinaryRoot + "catspotter-assets/BG_notification_udcr7h.jpg"}></StyledBGSection>
 		</StyledPage>
 	);
 }

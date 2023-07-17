@@ -6,6 +6,8 @@ import {
 //import BG_upload from "../assets/bgImages/BG_upload.jpg";
 import CatInfoSheetMaxi from "../components/CatInfoSheetMaxi";
 import { useParams } from "react-router-dom";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+
 
 
 export default function CatPage() {
@@ -16,7 +18,7 @@ export default function CatPage() {
 			<StyledSection>
 				<CatInfoSheetMaxi id={id}/>
 			</StyledSection>
-			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_notification_udcr7h.jpg"></StyledBGSection>
+			<StyledBGSection bgImg={cloudinaryRoot + "catspotter-assets/BG_notification_udcr7h.jpg"}></StyledBGSection>
 		</StyledPage>
 	);
 }

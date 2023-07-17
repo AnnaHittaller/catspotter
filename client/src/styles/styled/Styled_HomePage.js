@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { v } from "../Variables";
-import BG_home from "../../assets/bgImages/BG_home.jpg";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+
 
 export const StyledHero = styled.div`
 	width: 100%;
 	padding: calc(${v.lgSpacing} * 5) calc(${v.lgSpacing} * 3);
-	background-image: url("https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_home_xee69h.jpg");
+	background-image: url(${cloudinaryRoot}catspotter-assets/BG_home_xee69h.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-color: ${v.columbiaBlue};

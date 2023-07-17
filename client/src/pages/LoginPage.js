@@ -9,7 +9,9 @@ import {
 	StyledFlipper,
 } from "../styles/styled/Styled_LoginRegisterForm";
 import { StyledSection } from "../styles/styled/Styled_Section";
-import BG_login from "../assets/bgImages/BG_login.jpg";
+//import BG_login from "../assets/bgImages/BG_login.jpg";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+
 
 export default function LoginPage() {
 	const [currentForm, setCurrentForm] = useState("login");
@@ -21,7 +23,7 @@ export default function LoginPage() {
 	return (
 		<StyledPage>
 			<StyledSection
-				bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_login_fg4txa.jpg"
+				bgImg={cloudinaryRoot + "catspotter-assets/BG_login_fg4txa.jpg"}
 				align="center"
 				padding="0"
 				minHeight="100%"

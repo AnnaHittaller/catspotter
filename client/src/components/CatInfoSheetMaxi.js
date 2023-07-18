@@ -25,14 +25,15 @@ import axios from "axios";
 import { AppContext } from "../context/AppContext";
 import { getCatSvgComponent } from "../utils/CatSvgHelper";
 import MapCatInfoSheet from "./leaflet/MapCatInfoSheet";
+import Spinner from "../features/Spinner";
 
 export default function CatInfoSheetMaxi({ id }) {
 	const { state, dispatch } = useContext(AppContext);
 	console.log(state);
 	const [cat, setCat] = useState("");
 	console.log(cat);
-	//const [bookmarked, setBookmarked] = useState(false);
 	const navigate = useNavigate()
+	const [loading, setLoading] = useState(true);
 
 	const { formattedDate } = dateFormatter(cat?.date);
 	const isBookmarked = state.user?.bookmarks?.includes(id);
@@ -61,6 +62,7 @@ export default function CatInfoSheetMaxi({ id }) {
 				console.log("response", response);
 				if (response.data.success) {
 					setCat(response.data.cat);
+					setLoading(false)
 				}
 			} catch (error) {
 				console.log(error.message);
@@ -87,9 +89,8 @@ export default function CatInfoSheetMaxi({ id }) {
 		}
 	}
 
-	//put a spinner here
-	if (!cat) {
-		return <div>Loading...</div>; 
+	if (!cat || loading) {
+		return <Spinner/>; 
 	}
 
 	const catSVG = getCatSvgComponent(
@@ -230,7 +231,7 @@ export default function CatInfoSheetMaxi({ id }) {
 					) : null}
 					{/* <StyledPrimaryButton onClick={() => setBookmarked((prev) => !prev)}> */}
 						<StyledPrimaryButton onClick={handleBookmark}>
-						{bookmarked ? "Delete bookmark" : "Add bookmark"}
+						{isBookmarked ? "Delete bookmark" : "Add bookmark"}
 					</StyledPrimaryButton>
 				</StyledDivSimple>
 			</StyledDivBorder>

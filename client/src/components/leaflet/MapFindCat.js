@@ -9,8 +9,8 @@ import {
 import { StyledMapContainer } from "../../styles/styled/Styled_MapContainer";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L, { Icon, divIcon, point } from "leaflet";
-import "leaflet/dist/leaflet.css";
-import { LuGlobe } from "react-icons/lu";
+import "leaflet/dist/leaflet.css"; 
+//import { LuGlobe } from "react-icons/lu";
 import Toast from "../../components/Toast";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import {
@@ -34,6 +34,10 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 	const [showToast, setShowToast] = useState("");
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
 	const {state, dispatch} = useContext(AppContext)
+	const center = {
+		lat: state.user.location.coordinates[1],
+		lng: state.user.location.coordinates[0],
+	};
 
 	console.log("visible cats", visibleCats);
 	// import { useMap } from "react-leaflet";
@@ -54,7 +58,7 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 			)}
 			<StyledMapContainer height={height}>
 				<MapContainer
-					center={[51.64536, -0.1534]}
+					center={center || [51.64536, -0.1534]}
 					zoom={16}
 					minZoom={2}
 					whenCreated={(mapInstance) => (mapRef.current = mapInstance)}>

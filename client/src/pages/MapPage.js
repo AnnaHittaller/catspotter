@@ -79,27 +79,27 @@ export default function MapPage() {
 	};
 	//set toast for filtering and fetching errors
 
-		// useEffect(() => {
-		// 	const fetchCats = async () => {
-		// 		try {
-		// 			const response = await axios.get("/cats/list");
-		// 			console.log("data map page:",response.data)
+		useEffect(() => {
+			const fetchCats = async () => {
+				try {
+					const response = await axios.get("/cats/list");
+					console.log("data map page:",response.data)
 
-		// 			if(response.data.success) {
-		// 				dispatch({
-		// 					type: "LIST_CATS",
-		// 					payload: response.data.cats
-		// 				})
-		// 			}
+					if(response.data.success) {
+						dispatch({
+							type: "LIST_CATS",
+							payload: response.data.cats
+						})
+					}
 
-		// 			setCats(response.data.cats); // map them directly from state contextt? then no need for passing them down as prop - TEST THIS
+					setCats(response.data.cats); // map them directly from state contextt? then no need for passing them down as prop - TEST THIS
 
-		// 		} catch (error) {
-		// 			console.log(error.message);
-		// 		}
-		// 	};
-		// 	fetchCats();
-		//}, []);
+				} catch (error) {
+					console.log(error.message);
+				}
+			};
+			fetchCats();
+		}, []);
 
 		console.log("cats", cats)
 

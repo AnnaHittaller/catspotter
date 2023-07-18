@@ -17,12 +17,6 @@ import {
 	StyledDivSimple,
 	StyledDivSimpleGrid,
 } from "../styles/styled/Styled_Div";
-// import black from "../assets/colorSamples/black.png";
-// import white from "../assets/colorSamples/white.png";
-// import orange from "../assets/colorSamples/orange.png";
-// import beige from "../assets/colorSamples/beige.png";
-// import grey from "../assets/colorSamples/grey.png";
-// import brown from "../assets/colorSamples/brown.png";
 import {
 	CatPatternBicolor,
 	CatPatternBicolorTabby,
@@ -121,7 +115,7 @@ export default function GuidesPage() {
 							<label>Tabby</label>
 							<CatPatternTabby />
 							<p>
-								Very common pattern, with stripes or spots that run along the
+								Very common pattern, with darker stripes or spots that run along the
 								cat’s body.
 							</p>
 						</StyledDivLabel>
@@ -133,12 +127,12 @@ export default function GuidesPage() {
 						<StyledDivLabel>
 							<label>Tortoiseshell</label>
 							<CatPatternTortoiseshell />
-							<p>A mix of black and orange or cream-colored fur.</p>
+							<p>A mix of black/grey and orange/cream-colored fur.</p>
 						</StyledDivLabel>
 						<StyledDivLabel>
 							<label>Calico</label>
 							<CatPatternCalico />
-							<p>A mix of white, black and orange or cream-colored fur.</p>
+							<p>A mix of white, black/grey and orange/cream-colored fur.</p>
 						</StyledDivLabel>
 					</StyledDivSimpleGrid>
 				</StyledDivBorder>

@@ -21,11 +21,10 @@ export default function BookmarksPage() {
 		<StyledPage display="flex" flexDirection="column">
 			<StyledSection>
 				<StyledH2Underline>Bookmarks</StyledH2Underline>
-				<StyledDivSimpleGrid justify="flex-start" padding="0">
+				<StyledDivSimpleGrid padding="0" min="220px" justify="start" justifyItems="center">
 					{bookmarkedCats.map((cat) => (
 						<CatInfoSheetMidi key={cat._id} cat={cat} />
 					))}
-					{/* <CatInfoSheetMidi /> */}
 				</StyledDivSimpleGrid>
 			</StyledSection>
 			<StyledBGSection

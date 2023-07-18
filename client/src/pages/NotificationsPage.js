@@ -1,6 +1,5 @@
 import CatInfoSheetMini from "../components/CatInfoSheetMini";
 import {
-	
 	StyledDivSimple,
 	StyledDivSimpleGrid,
 } from "../styles/styled/Styled_Div";
@@ -14,9 +13,44 @@ import { StyledH2Underline, StyledH3 } from "../styles/styled/Styled_Title";
 
 import DataMatchNotification from "../components/DataMatchNotification";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
-
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { AppContext } from "../context/AppContext";
 
 export default function NotificationsPage() {
+	const [filteredCatsByLocation, setFilteredCatsByLocation] = useState([]);
+	const {state} = useContext(AppContext)
+
+	useEffect(() => {
+		const filterCatsByLocation = async () => {
+			try {
+				const response = await axios.get("/cats/listbylocation");
+				console.log("response for locationfilter", response);
+
+				if (response.data.success) {
+					setFilteredCatsByLocation(response.data.cats);
+					//console.log(filteredCatsByLocation);
+				}
+			} catch (error) {
+				console.log(error.message);
+			}
+		};
+		filterCatsByLocation();
+	}, state.cats);
+
+	useEffect(()=> {
+		const fetchMatches = async () =>{
+			try {
+				const response = await axios.get("/cats/listmatches" )
+				console.log("listmatches response", response)
+
+			} catch (error) {
+				console.log(error.message)
+			}
+		}
+		fetchMatches()
+	}, state.cats)
+
 	return (
 		<StyledPage display="flex" flexDirection="column">
 			<StyledSection>
@@ -34,13 +68,16 @@ export default function NotificationsPage() {
 					flexDirection="column"
 					align="flex-start">
 					<StyledH3>Area activities</StyledH3>
-					<StyledPBig>
-						There were no activities in your area in the past 7 days.
-					</StyledPBig>
 					<StyledDivSimpleGrid min="290px" padding="1rem 0">
-						<CatInfoSheetMini />
-						<CatInfoSheetMini />
-						<CatInfoSheetMini />
+						{filteredCatsByLocation && filteredCatsByLocation.length > 0 ? (
+							filteredCatsByLocation.map((cat) => (
+								<CatInfoSheetMini key={cat._id} cat={cat} />
+							))
+						) : (
+							<StyledPBig>
+								There were no activities in your area in the past 7 days.
+							</StyledPBig>
+						)}
 					</StyledDivSimpleGrid>
 				</StyledDivSimple>
 				{/* <StyledDivSimple
@@ -51,7 +88,10 @@ export default function NotificationsPage() {
 					<StyledPBig>There are no new messages.</StyledPBig>
 				</StyledDivSimple> */}
 			</StyledSection>
-			<StyledBGSection bgImg={cloudinaryRoot + "catspotter-assets/BG_upload_jetyme.jpg"}></StyledBGSection>
+			<StyledBGSection
+				bgImg={
+					cloudinaryRoot + "catspotter-assets/BG_upload_jetyme.jpg"
+				}></StyledBGSection>
 		</StyledPage>
 	);
 }

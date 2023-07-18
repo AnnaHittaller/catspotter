@@ -17,7 +17,7 @@ export const StyledDivSimpleRounded = styled(StyledDivSimple)`
 	border-radius: ${v.borderRadius};
 `;
 
-export const StyledDivSimpleGrid = styled.div`
+export const StyledDivSimpleGrid = styled.div` 
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(${(props) => props.min}, 1fr));
 	align-content: ${(props) => props.align || "center"};

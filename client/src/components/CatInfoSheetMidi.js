@@ -12,7 +12,8 @@ import { v } from "../styles/Variables";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import { getCatSvgComponent } from "../utils/CatSvgHelper";
 import dateFormatter from "../utils/DateFormatter";
-import Link from "react-router-dom";
+import { Link } from "react-router-dom";
+
 
 export default function CatInfoSheetMidi({ cat }) {
 	const { formattedDate } = dateFormatter(cat?.date);
@@ -26,10 +27,10 @@ export default function CatInfoSheetMidi({ cat }) {
 
 	return (
 		<StyledCatInfoSheetMidi>
-			<StyledDivLabel>
+			<StyledDivLabel >
 				<label>{cat.status}</label>
 				<StyledH3>
-					{cat?.pattern.charAt(0).toUpperCase()}${cat?.pattern.slice(1)} cat in{" "}
+					{cat?.pattern.charAt(0).toUpperCase()}{cat?.pattern.slice(1)} cat in{" "}
 					{cat.address.city}
 				</StyledH3>
 				<StyledDivSimple padding="0" flexDirection="column">

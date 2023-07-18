@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { AppContext } from "../context/AppContext"
 import { Outlet, Navigate, useLocation} from "react-router-dom"
+import Spinner from "../features/Spinner"
 
 export default function ProtectedLayout (props) {
     const { state } = useContext(AppContext)
@@ -15,9 +16,8 @@ export default function ProtectedLayout (props) {
 				await new Promise((resolve) => setTimeout(resolve, 100));
 			}
 
-// 			// Perform additional checks if needed
-// 			const isValidToken = true; // Replace with your token validation logic, may not be needed
-
+ 			// Perform additional checks if needed
+ 			//const isValidToken = true;
 			setTokenChecked(true);
 		};
 
@@ -25,8 +25,8 @@ export default function ProtectedLayout (props) {
 	}, [state.user._id]);
 
 	if (!tokenChecked) {
-		// Token validation is in progress, show a loading state or skeleton screen if desired
-		return <div>Loading...</div> ; //this has to be a spinner
+		// Token validation is in progress
+		return <Spinner />; 
 	}
 
     if(state.user._id) {

@@ -23,12 +23,17 @@ export const StyledCatInfoSheetMidi = styled.div`
 	}
 
 	img {
-		height: 120px;
+		height: 150px;
 		width: 100%;
 		object-fit: cover;
 	}
 
-	svg {
+	.cat-svg svg {
+		height: 150px;
+		margin: 0 auto;
+	}
+
+	> div > svg {
 		font-size: 2rem;
 		color: ${v.sunGlow};
 		position: absolute;
@@ -36,10 +41,9 @@ export const StyledCatInfoSheetMidi = styled.div`
 		padding: 0;
 		top: -0.5rem;
 		right: 0.5rem;
-		cursor: pointer;
 	}
 
-	div {
+	div:not(:nth-of-type(1)) {
 		justify-content: center;
 		padding: 0.5rem 1rem;
 		gap: 0.5rem;

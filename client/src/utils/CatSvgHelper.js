@@ -9,10 +9,10 @@ export const getCatSvgComponent = (
 ) => {
 
 	 const defaultColors = {
-			beige: '#e4cca7',
+			beige: "#e4cca7",
 			grey: "#a6acb4",
 			orange: "#e38120",
-			brown: '#874826'
+			brown: "#7a5c40",
 			// Add more default colors as needed
 		};
 

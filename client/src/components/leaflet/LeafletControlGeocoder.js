@@ -17,8 +17,10 @@ import { useLocation } from "react-router-dom";
 export default function LeafletControlGeocoder({ mapRef, setShowToast, visibleCats, setVisibleCats, cats }) {
 	const map = useMap();
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
+	const [mapReady, setMapReady] = useState(false); // Track map readiness
+	const [bounds, setBounds] = useState(null); // Store map bounds
 	const { state, dispatch } = useContext(AppContext);
-	const location = useLocation()
+	const location = useLocation();
 
 	useEffect(() => {
 		if (map && !geocoderAdded) {
@@ -50,7 +52,6 @@ export default function LeafletControlGeocoder({ mapRef, setShowToast, visibleCa
 					locateOptions: {
 						enableHighAccuracy: true,
 					},
-					
 				})
 				.addTo(map);
 
@@ -60,58 +61,76 @@ export default function LeafletControlGeocoder({ mapRef, setShowToast, visibleCa
 				//console.log("Longitude:", e.latlng.lng);
 
 				if (e.accuracy > 1000) {
-					setShowToast("The geolocation accuracy is too low, please zoom in to your exact position.");
+					setShowToast(
+						"The geolocation accuracy is too low, please zoom in to your exact position."
+					);
 				}
 			});
 
 			setGeocoderAdded(true);
 		}
-	}, [mapRef, geocoderAdded ]);
+	}, [mapRef, geocoderAdded]);
+
+	  useEffect(() => {
+			if (map && !mapReady) {
+				setMapReady(true);
+			}
+		}, [map]);
 
 	useEffect(() => {
-		if(location.pathname = "map") {
-
+		if ((location.pathname = "map")) {
 			//console.log("state.cats geocoder", state)
 			const handleMoveEnd = () => {
-			  const bounds = map.getBounds();
-			  const filteredResults = state.cats?.filter((cat) => {
-				const catLatLng = L.latLng(
-				  cat.location.coordinates[1],
-				  cat.location.coordinates[0]
-				);
-				return bounds.contains(catLatLng);
-			  });
-			  setVisibleCats(filteredResults);
+				const bounds = map.getBounds();
+				setBounds(bounds); 
+				const filteredResults = state.cats?.filter((cat) => {
+					const catLatLng = L.latLng(
+						cat.location.coordinates[1],
+						cat.location.coordinates[0]
+					);
+					return bounds.contains(catLatLng);
+				});
+				setVisibleCats(filteredResults);
 			};
-		
+
 			handleMoveEnd(); // Initial update of visibleCats
-		
+
 			map.on("moveend", handleMoveEnd);
-		
+
 			return () => {
-			  map.off("moveend", handleMoveEnd);
+				map.off("moveend", handleMoveEnd);
 			};
 		} else {
-			return 
+			return;
 		}
+	}, [map, state]);
 
-  }, [map, state]);
-
-  
+	 useEffect(() => {
+			if (mapReady && bounds) {
+				const filteredResults = state.cats?.filter((cat) => {
+					const catLatLng = L.latLng(
+						cat.location.coordinates[1],
+						cat.location.coordinates[0]
+					);
+					return bounds.contains(catLatLng);
+				});
+				setVisibleCats(filteredResults);
+			}
+		}, [mapReady, bounds, state]);
 
 	//   function getFeaturesInView(bbox) {
-	 		// let features = [];
-			// map.eachLayer(function (layer) {
-			// 	if (layer instanceof L.Marker) {
-			// 		const latLng = layer.getLatLng();
-			// 		if (bbox.contains(latLng)) {
-			// 			features.push(layer.feature);
-			// 		}
-			// 	}
-			// });
-			// console.log("features", features)
-		// 	return features;
-		// }
+	// let features = [];
+	// map.eachLayer(function (layer) {
+	// 	if (layer instanceof L.Marker) {
+	// 		const latLng = layer.getLatLng();
+	// 		if (bbox.contains(latLng)) {
+	// 			features.push(layer.feature);
+	// 		}
+	// 	}
+	// });
+	// console.log("features", features)
+	// 	return features;
+	// }
 
 	return null;
 }

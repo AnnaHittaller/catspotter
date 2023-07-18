@@ -17,7 +17,6 @@ export default function ContextProvider({ children }) {
 					user: {},
 					//cats: [],
 				};
-
 			case "UPDATE_USER":
 				return {
 					...state,
@@ -50,6 +49,11 @@ export default function ContextProvider({ children }) {
 					...state,
 					user: action.payload,
 				};
+			// case "FILTER_BY_LOCATION":
+			// 	return {
+			// 		...state,
+			// 		filteredCats: action.payload
+			// 	}
 
 			default:
 				return state;

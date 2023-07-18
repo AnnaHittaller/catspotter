@@ -123,7 +123,7 @@ export const handleUpdateUser = async (req, res) => {
 
 	try {
 		//console.log(" handleUpdateUser FILENAME:", req.file.filename);
-		
+
 		if (req.file) {
 			req.body.avatar = req.file.filename;
 		}
@@ -158,13 +158,26 @@ export const handleUpdateUser = async (req, res) => {
 
 export const handleBookmark = async (req, res) => {
 	try {
-		console.log("handleBookmark here")
-		const user = await User.findById(req.user)
+		console.log("handleBookmark here");
 
-		//check if bookmark is in the bookmarks array or not, if yes get it out, if not put it there
+		// req.body is {cat: id}
+		const { cat } = req.body;
 
+		// Use $addToSet to add the catId if it doesn't exist or $pull to remove it if it does
+		const updatedUser = await User.findByIdAndUpdate(
+			req.user,
+			{
+				bookmarks: { $in: [cat] }
+					? { $pull: { bookmarks: cat } }
+					: { $addToSet: { bookmarks: cat} },
+			},
+			{ new: true }
+		);
+
+		return res.send({ success: true, user: updatedUser });
+		
 	} catch (error) {
-		console.log("error handleBookmark", error.message); 
+		console.log("error handleBookmark", error.message);
 
 		res.send({
 			success: false,
@@ -173,88 +186,86 @@ export const handleBookmark = async (req, res) => {
 	}
 };
 
-
 // has to be rewritten and updated with sendGrid instead of ElasticEmails *******************//
 
-			
-			export const handleEmailConfirm = async (req, res) => {
-				console.log("handleemailconfirm function", req.body);
-			
-				try {
-					const decodedToken = jwt.verify(req.body.token, process.env.JWT_TOKEN);
-			
-					const user = User.findByIdAndUpdate(
-						decodedToken._id,
-						{ emailVerified: true },
-						{ new: true }
-					);
-			
-					if (!user) return res.send({ success: false, errorId: 1 });
-			
-					res.send({ success: true });
-				} catch (error) {
-					console.log(" error at email confirm:", error.message);
-					res.send("Error in confirming the email", error.message);
-				}
-			};
-			
-			export const handleForgotPassword = async (req, res) => {
-				console.log(" handleForgotPass:", req.body);
-			
-				try {
-					const { usernameOrEmail } = req.body;
-			
-					if (!usernameOrEmail) return res.send({ success: false, errorId: 0 });
-			
-					const user = await User.findOne({
-						$or: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
-					});
-					console.log("user:", user);
-			
-					if (!user) return res.send({ success: false, errorId: 1 });
-			
-					const token = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN, {
-						expiresIn: "1d",
-					});
-					console.log("token:", token);
-			
-					sendEmail(token, "forgotPassword");
-			
-					res.send({ success: true });
-				} catch (error) {
-					console.log("🚀 ~ error handleForgotPassword:", error.message);
-			
-					res.send("Error in handleForgotPassword" + error.message);
-				}
-			};
-			
-			export const handleChangePassword = async (req, res) => {
-				console.log("handleChangePassword:", req.body);
-			
-				try {
-					const { token, password } = req.body;
-			
-					if (!token || !password) return res.send({ success: false, errorId: 0 });
-			
-					const decodedToken = jwt.verify(token, process.env.JWT_TOKEN);
-					console.log(" decodedToken:", decodedToken);
-			
-					const salt = await bcrypt.genSalt(10);
-					const hashedPass = await bcrypt.hash(password, salt);
-			
-					const user = await User.findByIdAndUpdate(
-						decodedToken._id,
-						{ password: hashedPass },
-						{ new: true }
-					);
-					console.log("user:", user);
-			
-					if (!user) return res.send({ success: false, errorId: 1 });
-			
-					res.send({ success: true });
-				} catch (error) {
-					console.log("error handleChangePassword:", error.message);
-			
-					res.send("Error in handleChangePassword" + error.message);
-				}
-			};
+export const handleEmailConfirm = async (req, res) => {
+	console.log("handleemailconfirm function", req.body);
+
+	try {
+		const decodedToken = jwt.verify(req.body.token, process.env.JWT_TOKEN);
+
+		const user = User.findByIdAndUpdate(
+			decodedToken._id,
+			{ emailVerified: true },
+			{ new: true }
+		);
+
+		if (!user) return res.send({ success: false, errorId: 1 });
+
+		res.send({ success: true });
+	} catch (error) {
+		console.log(" error at email confirm:", error.message);
+		res.send("Error in confirming the email", error.message);
+	}
+};
+
+export const handleForgotPassword = async (req, res) => {
+	console.log(" handleForgotPass:", req.body);
+
+	try {
+		const { usernameOrEmail } = req.body;
+
+		if (!usernameOrEmail) return res.send({ success: false, errorId: 0 });
+
+		const user = await User.findOne({
+			$or: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
+		});
+		console.log("user:", user);
+
+		if (!user) return res.send({ success: false, errorId: 1 });
+
+		const token = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN, {
+			expiresIn: "1d",
+		});
+		console.log("token:", token);
+
+		sendEmail(token, "forgotPassword");
+
+		res.send({ success: true });
+	} catch (error) {
+		console.log("🚀 ~ error handleForgotPassword:", error.message);
+
+		res.send("Error in handleForgotPassword" + error.message);
+	}
+};
+
+export const handleChangePassword = async (req, res) => {
+	console.log("handleChangePassword:", req.body);
+
+	try {
+		const { token, password } = req.body;
+
+		if (!token || !password) return res.send({ success: false, errorId: 0 });
+
+		const decodedToken = jwt.verify(token, process.env.JWT_TOKEN);
+		console.log(" decodedToken:", decodedToken);
+
+		const salt = await bcrypt.genSalt(10);
+		const hashedPass = await bcrypt.hash(password, salt);
+
+		const user = await User.findByIdAndUpdate(
+			decodedToken._id,
+			{ password: hashedPass },
+			{ new: true }
+		);
+		console.log("user:", user);
+
+		if (!user) return res.send({ success: false, errorId: 1 });
+
+		res.send({ success: true });
+	} catch (error) {
+		console.log("error handleChangePassword:", error.message);
+
+		res.send("Error in handleChangePassword" + error.message);
+	}
+};

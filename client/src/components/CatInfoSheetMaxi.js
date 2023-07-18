@@ -31,13 +31,28 @@ export default function CatInfoSheetMaxi({ id }) {
 	console.log(state);
 	const [cat, setCat] = useState("");
 	console.log(cat);
-	const [bookmarked, setBookmarked] = useState(false);
+	//const [bookmarked, setBookmarked] = useState(false);
 	const navigate = useNavigate()
 
 	const { formattedDate } = dateFormatter(cat?.date);
+	const isBookmarked = state.user?.bookmarks?.includes(id);
 
-	const handleBookmark = () => {};
-	//this needs to update the user in the db!
+	const handleBookmark = async () => {
+		try {
+			const response = await axios.post('/users/bookmark', {cat: id})
+			console.log("response bookmark:", response)
+
+			if(response.data.success) {
+				dispatch({
+					type: "BOOKMARK",
+					payload: response.data.user
+				})
+			}
+
+		} catch (error) {
+			console.log(error.message)
+		}
+	};
 
 	useEffect(() => {
 		const fetchCat = async () => {
@@ -74,7 +89,7 @@ export default function CatInfoSheetMaxi({ id }) {
 
 	//put a spinner here
 	if (!cat) {
-		return <div>Loading...</div>; // or any loading indicator you prefer
+		return <div>Loading...</div>; 
 	}
 
 	const catSVG = getCatSvgComponent(
@@ -88,7 +103,7 @@ export default function CatInfoSheetMaxi({ id }) {
 	return (
 		<StyledCatInfoSheetMaxi>
 			<StyledDivBorder flexDirection="column">
-				{bookmarked ? <BsBookmarkFill /> : <BsBookmark />}
+				{isBookmarked ? <BsBookmarkFill /> : <BsBookmark />}
 				{cat?.status === "Lost" && (
 					<StyledPBig>Keep an eye open for me!</StyledPBig>
 				)}
@@ -213,7 +228,8 @@ export default function CatInfoSheetMaxi({ id }) {
 							</StyledButton>
 						</>
 					) : null}
-					<StyledPrimaryButton onClick={() => setBookmarked((prev) => !prev)}>
+					{/* <StyledPrimaryButton onClick={() => setBookmarked((prev) => !prev)}> */}
+						<StyledPrimaryButton onClick={handleBookmark}>
 						{bookmarked ? "Delete bookmark" : "Add bookmark"}
 					</StyledPrimaryButton>
 				</StyledDivSimple>

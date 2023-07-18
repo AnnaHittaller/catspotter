@@ -48,13 +48,14 @@ export default function ContextProvider({ children }) {
 			case "BOOKMARK":
 				return {
 					...state,
+					user: action.payload,
 				};
 
 			default:
 				return state;
 		}
 	};
-	
+
 	const [state, dispatch] = useReducer(reducer, {
 		user: {},
 		cats: [],
@@ -62,10 +63,10 @@ export default function ContextProvider({ children }) {
 
 	const [storedState, setStoredState] = useLocalStorage("state", null);
 
-  useEffect(() => {
+	useEffect(() => {
 		if (storedState) {
 			dispatch({ type: "LOGIN", payload: storedState.user });
-			dispatch({type: "LIST_CATS", payload: storedState.cats})
+			dispatch({ type: "LIST_CATS", payload: storedState.cats });
 		}
 	}, []);
 

@@ -5,7 +5,7 @@ import dateFormatter from "../utils/DateFormatter";
  
 export default function MenuMidi({cat}) {
 	console.log("menumidi cat", cat)
-	const { formattedDate, formattedTime } = dateFormatter(cat?.date); 
+	const { formattedDate} = dateFormatter(cat?.date); 
 	return (
 		<StyledMenuMidi type={cat.status}>
 			<div>

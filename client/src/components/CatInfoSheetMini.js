@@ -1,7 +1,6 @@
 import marker_seen from "../assets/markers/marker_seen.png";
 import marker_lost from "../assets/markers/marker_lost.png";
 
-
 import {
 	StyledDivSimple,
 	StyledDivSimpleRounded,
@@ -16,27 +15,25 @@ import dateFormatter from "../utils/DateFormatter";
 import { calculateDistance } from "../utils/CalculateDistance";
 import { AppContext } from "../context/AppContext";
 
-export default function CatInfoSheetMini({cat}) {
-
+export default function CatInfoSheetMini({ cat }) {
 	const [showMenu, setShowMenu] = useState(false);
-	const { formattedDate, formattedTime } = dateFormatter(cat?.date); 
-  const [distance, setDistance] = useState(null);
-  const {state} = useContext(AppContext)
-	//separate function needed to get the distance of the points from the users location
+	const { formattedDate } = dateFormatter(cat?.date); 
+	const [distance, setDistance] = useState(null);
+	const { state } = useContext(AppContext);
 
-	 useEffect(() => {
-			// Calculate the distance between the cat's location and the user's location
-			const catLocation = cat?.location?.coordinates;
-			const userLocation = state.user?.location?.coordinates;
-			if (catLocation && userLocation) {
-				const catLat = catLocation[1]; // Latitude of the cat's location
-				const catLon = catLocation[0]; // Longitude of the cat's location
-				const userLat = userLocation[1]; // Latitude of the user's location
-				const userLon = userLocation[0]; // Longitude of the user's location
-				const dist = calculateDistance(catLat, catLon, userLat, userLon);
-				setDistance(dist);
-			}
-		}, [cat, state.user]);
+	useEffect(() => {
+		// Calculate the distance between the cat's location and the user's location
+		const catLocation = cat?.location?.coordinates;
+		const userLocation = state.user?.location?.coordinates;
+		if (catLocation && userLocation) {
+			const catLat = catLocation[1]; // Latitude of the cat's location
+			const catLon = catLocation[0]; // Longitude of the cat's location
+			const userLat = userLocation[1]; // Latitude of the user's location
+			const userLon = userLocation[0]; // Longitude of the user's location
+			const dist = calculateDistance(catLat, catLon, userLat, userLon);
+			setDistance(dist);
+		}
+	}, [cat, state.user]);
 
 	return (
 		<StyledCatInfoSheetMini>

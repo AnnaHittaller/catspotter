@@ -1,7 +1,7 @@
 const dateFormatter = (dateStr) => {
 	const dateTime = new Date(dateStr);
 
-	// Extract the date component in the desired format
+	// Extracting the date component in the desired format
 	const formattedDate = dateTime
 		.toLocaleDateString("en-US", {
 			year: "numeric",
@@ -10,7 +10,7 @@ const dateFormatter = (dateStr) => {
 		})
 		.replace(/\//g, ". ");
 
-	// Extract the time component in the desired format
+	// Extracting the time component in the desired format
 	const formattedTime = dateTime.toLocaleTimeString("en-GB", {
 		hour: "2-digit",
 		minute: "2-digit",

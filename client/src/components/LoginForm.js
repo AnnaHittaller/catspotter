@@ -54,16 +54,20 @@ export default function LoginForm({ onFormSwitch, currentForm }) {
 			if(response.data.success) {
 				dispatch({
 					type: "LOGIN",
-					payload: {...response.data.user}
-				})
+					payload: { ...response.data.user },
+				});
+				// dispatch({
+				//  type: "LIST_CATS",
+				//  payload: response.data.cats,
+				// });
 
-				const location = localStorage.getItem("abandonedAddress")
+				const location = localStorage.getItem("abandonedAddress");
 
-				if(location) {
-					localStorage.removeItem("abandonedAddress")
-					navigate(location)
+				if (location) {
+					localStorage.removeItem("abandonedAddress");
+					navigate(location);
 				} else {
-					navigate('/')
+					navigate("/");
 				}
 			}
 

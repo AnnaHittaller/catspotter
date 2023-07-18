@@ -13,9 +13,11 @@ export default function ContextProvider({ children }) {
 				};
 			case "LOGOUT":
 				return {
+					...state,
 					user: {},
-					cats: [],
+					//cats: [],
 				};
+
 			case "UPDATE_USER":
 				return {
 					...state,
@@ -43,6 +45,11 @@ export default function ContextProvider({ children }) {
 						cat._id === action.payload._id ? action.payload : cat
 					),
 				};
+			case "BOOKMARK":
+				return {
+					...state,
+				};
+
 			default:
 				return state;
 		}

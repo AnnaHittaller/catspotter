@@ -1,7 +1,6 @@
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import {
 	StyledCatInfoSheetMaxi,
-	//StyledCatInfoSheetMidi,
 } from "../styles/styled/Styled_CatInfoSheet";
 import {
 	StyledDivBorder,
@@ -18,23 +17,12 @@ import { StyledH3 } from "../styles/styled/Styled_Title";
 import { v } from "../styles/Variables";
 //import { CiMenuKebab } from "react-icons/ci";
 import MapForOneCat from "./MapForOneCat";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import dateFormatter from "../utils/DateFormatter";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
-// import {
-// 	CatPatternBicolor,
-// 	CatPatternBicolorTabby,
-// 	CatPatternCalico,
-// 	CatPatternPointed,
-// 	CatPatternSolid,
-// 	CatPatternTabby,
-// 	CatPatternTortoiseshell,
-// 	CatPatternTuxedo,
-// 	CatPatternVan,
-// } from "./CatSilhouettes";
 import { getCatSvgComponent } from "../utils/CatSvgHelper";
 import MapCatInfoSheet from "./leaflet/MapCatInfoSheet";
 
@@ -46,7 +34,7 @@ export default function CatInfoSheetMaxi({ id }) {
 	const [bookmarked, setBookmarked] = useState(false);
 	const navigate = useNavigate()
 
-	const { formattedDate, formattedTime } = dateFormatter(cat?.date);
+	const { formattedDate } = dateFormatter(cat?.date);
 
 	const handleBookmark = () => {};
 	//this needs to update the user in the db!
@@ -161,7 +149,6 @@ export default function CatInfoSheetMaxi({ id }) {
 							<StyledP>
 								On {formattedDate}, at {cat.time}
 							</StyledP>
-							{/* <StyledP>On {formattedDate}, at {formattedTime}</StyledP> */}
 						</StyledDivSimpleRounded>
 						<StyledDivSimpleRounded
 							bgColor={v.columbiaBlue}

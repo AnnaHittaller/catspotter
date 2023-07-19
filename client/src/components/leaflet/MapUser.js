@@ -4,13 +4,14 @@ import {
 	useCallback,
 	useRef,
 	useContext,
-	useEffect,
+	useEffect, 
 } from "react";
 import { useLocation } from "react-router-dom";
 import { StyledMapContainer } from "../../styles/styled/Styled_MapContainer";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import L, { Icon, divIcon, point } from "leaflet";
 import "leaflet/dist/leaflet.css";
+
 
 import { markerIconOwn } from "../../components/MapMarkers";
 import { AppContext } from "../../context/AppContext";

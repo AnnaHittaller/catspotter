@@ -5,7 +5,7 @@ import {
 	useRef,
 	useContext,
 	useEffect,
-} from "react";
+} from "react"; 
 import { StyledMapContainer } from "../../styles/styled/Styled_MapContainer";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L, { Icon, divIcon, point } from "leaflet";

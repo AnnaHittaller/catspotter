@@ -5,7 +5,7 @@ import {
 } from "../styles/styled/Styled_Section";
 
 import { StyledH2Underline } from "../styles/styled/Styled_Title";
-import { StyledDivSimpleGrid } from "../styles/styled/Styled_Div";
+import { StyledDivSimple, StyledDivSimpleGrid } from "../styles/styled/Styled_Div";
 import CatInfoSheetMidi from "../components/CatInfoSheetMidi";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import { useContext } from "react";
@@ -16,16 +16,16 @@ export default function BookmarksPage() {
 	 const bookmarkedCats = state.cats.filter((cat) =>
 			state.user?.bookmarks?.includes(cat._id)
 		);
-
+ 
 	return (
 		<StyledPage display="flex" flexDirection="column">
 			<StyledSection>
 				<StyledH2Underline>Bookmarks</StyledH2Underline>
-				<StyledDivSimpleGrid padding="0" min="220px" justify="start" justifyItems="center">
+				<StyledDivSimple padding="0" min="220px"  wrap="wrap" align="stretch" justify="flex-start">
 					{bookmarkedCats.map((cat) => (
 						<CatInfoSheetMidi key={cat._id} cat={cat} />
 					))}
-				</StyledDivSimpleGrid>
+				</StyledDivSimple>
 			</StyledSection>
 			<StyledBGSection
 				bgImg={

@@ -37,7 +37,7 @@ import MapFindCat from "../components/leaflet/MapFindCat";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot"
-
+import { filterCats } from "../utils/CatUtils";
 
 export default function MapPage() {
 
@@ -75,7 +75,7 @@ export default function MapPage() {
 				break;
 			default:
 				break;
-		}
+		} 
 	};
 	//set toast for filtering and fetching errors
 
@@ -104,51 +104,20 @@ export default function MapPage() {
 		console.log("cats", cats)
 
 useEffect(() => {
-	const filterCats = () => {
-		let filteredCats = state.cats;
 
-		if (selectedStatus) {
-			filteredCats = filteredCats.filter(
-				(cat) => cat.status === selectedStatus.value
-			);
-		}
-
-		if (selectedPattern) {
-			filteredCats = filteredCats.filter(
-				(cat) => cat.pattern === selectedPattern.value
-			);
-		}
-
-		if (selectedColor) {
-			filteredCats = filteredCats.filter((cat) => {
-				const catColors = cat.color.map((color) => color.value);
-				return selectedColor.every((color) => catColors.includes(color.value));
-			});
-		}
-
-		if (selectedCoatLength) {
-			filteredCats = filteredCats.filter(
-				(cat) => cat.coatLength === selectedCoatLength.value
-			);
-		}
-
-		if (selectedDate) {
-			const today = new Date();
-			const selectedDateValue = Number(selectedDate.value);
-			const minDate = new Date(
-				today.getTime() - selectedDateValue * 24 * 60 * 60 * 1000
-			);
-			filteredCats = filteredCats.filter(
-				(cat) => new Date(cat.date) >= minDate
-			);
-		}
+	const filteredCats = filterCats(
+		state,
+		selectedStatus,
+		selectedPattern,
+		selectedColor,
+		selectedCoatLength,
+		selectedDate
+	);
 
 		setVisibleCats(filteredCats);
-	};
 
-	filterCats();
 }, [
-	cats,
+	state,
 	selectedStatus,
 	selectedPattern,
 	selectedColor,

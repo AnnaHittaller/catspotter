@@ -17,6 +17,8 @@ export const StyledCatInfoSheetMini = styled.div`
 
 export const StyledCatInfoSheetMidi = styled.div`
 	max-width: 300px;
+	min-width: 200px;
+
 
 	h3 {
 		padding: 0.5rem 0;

@@ -3,6 +3,7 @@ import Cat from "../models/Cat.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import sendEmail from "../utils/sendEmail.js";
+import mongoose from "mongoose";
 
 export const handleRegisterUser = async (req, res) => {
 	console.log("handleRegisterUser", req.body);
@@ -71,12 +72,12 @@ export const handleLoginUser = async (req, res) => {
 
 		console.log("token:", token);
 
-		//const cats = await Cat.find().select("-__v").sort({ date: -1 });
+		const cats = await Cat.find().select("-__v").sort({ date: -1 });
 
 		res.cookie("catspotterlogin", token);
 
-		res.status(200).send({ success: true, user: newUser });
-		//res.status(200).send({ success: true, user: newUser, cats });
+		//res.status(200).send({ success: true, user: newUser });
+		res.status(200).send({ success: true, user: newUser, cats });
 	} catch (error) {
 		console.log("error logging in user:", error.message);
 
@@ -157,22 +158,35 @@ export const handleUpdateUser = async (req, res) => {
 };
 
 export const handleBookmark = async (req, res) => {
+	console.log("req.user 1", req.user);
 	try {
 		console.log("handleBookmark here");
 
 		// req.body is {cat: id}
 		const { cat } = req.body;
+		console.log("cat", cat)
+		const catId = new mongoose.Types.ObjectId(cat);
+		console.log("catId",catId)
+
+		const user = await User.findById(req.user);
 
 		// Use $addToSet to add the catId if it doesn't exist or $pull to remove it if it does
-		const updatedUser = await User.findByIdAndUpdate(
-			req.user,
-			{
-				bookmarks: { $in: [cat] }
-					? { $pull: { bookmarks: cat } }
-					: { $addToSet: { bookmarks: cat} },
-			},
-			{ new: true }
-		);
+		// Check if the catId exists in the bookmarks array
+    const isBookmarked = user.bookmarks.includes(catId);
+	console.log("req.user",user)
+
+    // Use $addToSet to add the catId if it's not bookmarked or $pull to remove it if it's already bookmarked
+    const updatedUser = isBookmarked
+			? await User.findByIdAndUpdate(
+					user,
+					{ $pull: { bookmarks: catId } },
+					{ new: true }
+			  )
+			: await User.findByIdAndUpdate(
+					user,
+					{ $addToSet: { bookmarks: catId } },
+					{ new: true }
+			  );
 
 		return res.send({ success: true, user: updatedUser });
 		

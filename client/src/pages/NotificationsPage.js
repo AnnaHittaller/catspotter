@@ -16,16 +16,22 @@ import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 export default function NotificationsPage() {
 	const [filteredCatsByLocation, setFilteredCatsByLocation] = useState([]);
 	const {state} = useContext(AppContext)
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const filterCatsByLocation = async () => {
 			try {
 				const response = await axios.get("/cats/listbylocation");
 				console.log("response for locationfilter", response);
+
+				if (!response.data.success && response.data.errorId === "jwt expired") {
+					navigate("/login");
+				}
 
 				if (response.data.success) {
 					setFilteredCatsByLocation(response.data.cats);
@@ -36,20 +42,20 @@ export default function NotificationsPage() {
 			}
 		};
 		filterCatsByLocation();
-	}, state.cats);
+	}, [state.cats]);
 
-	useEffect(()=> {
-		const fetchMatches = async () =>{
-			try {
-				const response = await axios.get("/cats/listmatches" )
-				console.log("listmatches response", response)
+	// useEffect(()=> {
+	// 	const fetchMatches = async () =>{
+	// 		try {
+	// 			const response = await axios.get("/cats/listmatches" )
+	// 			console.log("listmatches response", response)
 
-			} catch (error) {
-				console.log(error.message)
-			}
-		}
-		fetchMatches()
-	}, state.cats)
+	// 		} catch (error) {
+	// 			console.log(error.message)
+	// 		}
+	// 	}
+	// 	fetchMatches()
+	// }, [state.cats])
 
 	return (
 		<StyledPage display="flex" flexDirection="column">

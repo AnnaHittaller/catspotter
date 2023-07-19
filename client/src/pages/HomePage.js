@@ -29,6 +29,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+import { StyledPBold } from "../styles/styled/Styled_Text";
 
 
 export default function HomePage() {
@@ -82,18 +83,22 @@ export default function HomePage() {
 			<StyledHero>
 				<StyledHeroData>
 					<img
-						src={cloudinaryRoot + "catspotter-assets/catspotter_logo_dark_mur6nz.png"}
+						src={
+							cloudinaryRoot +
+							"catspotter-assets/catspotter_logo_dark_mur6nz.png"
+						}
 						alt="catspotter logo"
 					/>
 					<p>
-						Let's create a world together where no lost cat goes unnoticed. Help lost cats get safely back home! Spotted a cat? Load its data up
-						and make it easier for the worrying owner to find it.
+						Let's create a world together where no lost cat goes unnoticed -
+						help them get safely back home! 
 					</p>
 					<p>
-						Lost your cat? Upload its data and inform others in the area to be
-						on the lookout for it.
+						Spotted a cat? Register it and make it easier for the worrying owner
+						to find it. Lost your cat? Upload its data and inform others in the
+						area to be on the lookout for it.
 					</p>
-					<p>Keeping an eye open can save a life!</p>
+					<StyledPBold>Keeping an eye open can save a life!</StyledPBold>
 					<div>
 						<StyledPrimaryButton>
 							{state.user._id ? (
@@ -111,7 +116,10 @@ export default function HomePage() {
 			<StyledSection>
 				<StyledDivBorder page="home">
 					<p>
-						Keep your eyes open while going about your daily routine - on your way to work, running errands, or going to school. You may have noticed any unfamiliar cat turning up in your street garden - maybe it's missing from just a few streets away.{" "}
+						Keep your eyes open while going about your daily routine - on your
+						way to work, running errands, or going to school. You may have
+						noticed any unfamiliar cat turning up in your street garden - maybe
+						it's missing from just a few streets away.{" "}
 					</p>
 					<img
 						src={cloudinaryRoot + "catspotter-assets/yellow_arrow_v7eq7h.png"}
@@ -122,7 +130,9 @@ export default function HomePage() {
 				</StyledDivBorder>
 				<StyledDivBorder page="home">
 					<p>
-						Don't just wonder if it's a lost cat or an outdoor explorer. Take action! Load its data into the catspotter database, and you have already increased its chances of finding its way home.
+						Don't just wonder if it's a lost cat or an outdoor explorer. Take
+						action! Load its data into the catspotter database, and you have
+						already increased its chances of finding its way home.
 					</p>
 
 					<img
@@ -135,7 +145,10 @@ export default function HomePage() {
 				</StyledDivBorder>
 				<StyledDivBorder page="home">
 					<p>
-						When a lost cat's data matches a sighting, both the spotter and the owner receive notifications. Tthey can check the detailed infosheets, locations and photos. Be a voice for lost cats in your community and help them reunite with their worrying families!
+						When a lost cat's data matches a sighting, both the spotter and the
+						owner receive notifications. Tthey can check the detailed
+						infosheets, locations and photos. Be a voice for lost cats in your
+						community and help them reunite with their worrying families!
 					</p>
 					<img
 						src={cloudinaryRoot + "catspotter-assets/yellow_arrow_v7eq7h.png"}

@@ -35,7 +35,8 @@ const catSchema = new Schema({
 		type: {
 			type: String,
 			enum: ["Point"],
-			
+			required: true,
+			index: "2dsphere",
 		},
 		coordinates: {
 			type: [Number], //long, lat!!!!! in this order
@@ -48,7 +49,7 @@ const catSchema = new Schema({
 			postcode: String,
 			city: String,
 			suburb: String,
-			road: String, 
+			road: String,
 		},
 	},
 	uploader: {

@@ -14,12 +14,22 @@ import MenuMini from "./MenuMini";
 import dateFormatter from "../utils/DateFormatter";
 import { calculateDistance } from "../utils/CalculateDistance";
 import { AppContext } from "../context/AppContext";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+import { getCatSvgComponent } from "../utils/CatSvgHelper";
 
 export default function CatInfoSheetMini({ cat }) {
 	const [showMenu, setShowMenu] = useState(false);
 	const { formattedDate } = dateFormatter(cat?.date); 
 	const [distance, setDistance] = useState(null);
 	const { state } = useContext(AppContext);
+
+	const catSVG = getCatSvgComponent(
+		cat.pattern,
+		cat.color[0],
+		cat.color[1],
+		cat.color[2]
+	);
+
 
 	useEffect(() => {
 		// Calculate the distance between the cat's location and the user's location
@@ -44,6 +54,15 @@ export default function CatInfoSheetMini({ cat }) {
 						alt=""
 						aria-hidden="true"
 					/>
+					{/* {cat?.image.length > 0 ? (
+						<img
+							src={cloudinaryRoot + cat?.image}
+							alt="uploaded photo of the cat"
+							className="thumbnail"
+						/>
+					) : (
+						<StyledDivSimple className="thumbnail">{catSVG}</StyledDivSimple>
+					)} */}
 					<div>
 						<StyledPBold>
 							{cat?.pattern === "tortoiseshell" || cat?.pattern === "calico"
@@ -72,7 +91,7 @@ export default function CatInfoSheetMini({ cat }) {
 					</div>
 				</StyledDivSimple>
 				<CiMenuKebab onClick={() => setShowMenu((prev) => !prev)} />
-				{showMenu && <MenuMini cat={cat} />}
+				{showMenu && <MenuMini cat={cat} setShowMenu={setShowMenu}/>}
 			</StyledDivSimpleRounded>
 		</StyledCatInfoSheetMini>
 	);

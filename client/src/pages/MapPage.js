@@ -125,6 +125,8 @@ useEffect(() => {
 	selectedDate,
 ]);
 
+//define mapRef here, pass it down to map and infoSheetMini, and from there down to MiniMenu, and make the map flyto a location when clicking miniMenu?
+
 	return (
 		<StyledPage display="flex" flexDirection="column">
 			<StyledSection>
@@ -231,7 +233,7 @@ useEffect(() => {
 						))
 					) : (
 						<StyledH3>
-							There are no matching results in the mapped area.
+							There are no matching results in the mapped area. 
 						</StyledH3>
 					)}
 				</StyledDivSimpleGrid>

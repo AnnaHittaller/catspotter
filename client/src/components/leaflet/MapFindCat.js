@@ -40,15 +40,6 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 	};
 
 	console.log("visible cats", visibleCats);
-	// import { useMap } from "react-leaflet";
-
-	// function ShowBounds() {
-	// 	const mMap = useMap();
-	// 	let newBounds = mMap.getBounds();
-	// 	console.log(newBounds);
-
-	//or mapRef.current.leafletElement.getBounds() or just .getBounds()
-	// }
 
 	return (
 		<>

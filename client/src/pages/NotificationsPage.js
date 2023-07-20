@@ -10,18 +10,21 @@ import {
 } from "../styles/styled/Styled_Section";
 import { StyledPBig } from "../styles/styled/Styled_Text";
 import { StyledH2Underline, StyledH3 } from "../styles/styled/Styled_Title";
-
+import { calculateDistance } from "../utils/CalculateDistance";
 import DataMatchNotification from "../components/DataMatchNotification";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
+import Toast from "../components/Toast"
 
 export default function NotificationsPage() {
+	const { state } = useContext(AppContext);
 	const [filteredCatsByLocation, setFilteredCatsByLocation] = useState([]);
-	const {state} = useContext(AppContext)
-	const navigate = useNavigate()
+	const [matches, setMatches] = useState([]);
+	const [showToast, setShowToast] = useState("");
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const filterCatsByLocation = async () => {
@@ -32,6 +35,10 @@ export default function NotificationsPage() {
 				if (!response.data.success && response.data.errorId === "jwt expired") {
 					navigate("/login");
 				}
+
+				// if (!response.data.success && response.data.errorId != "jwt expired") {
+				//	setShowToast("Sorry, there was an error while fetching the area activities, please try again!")
+				//}
 
 				if (response.data.success) {
 					setFilteredCatsByLocation(response.data.cats);
@@ -50,6 +57,43 @@ export default function NotificationsPage() {
 	// 			const response = await axios.get("/cats/listmatches" )
 	// 			console.log("listmatches response", response)
 
+	// should get back an array of cardData objects, so many as many cats the user has uploaded. May have to save them in a local state to map through them
+	// and render only those pair where the distance between userCat and matchingCat is less than 1 km
+	// first check response wheter I need to get allCardData or cardData from it for the distance filtering
+
+	// if (!response.data.success && response.data.errorId === "jwt expired") {
+	// 	navigate("/login");
+	// }
+
+	// if (!response.data.success && response.data.errorId != "jwt expired") {
+	//	setShowToast("Sorry, there was an error while fetching the matches, please try again!")
+	//}
+
+	// if (response.data.success) {
+	// 		// Assuming the response contains the data in the format you expect
+	// 		// You can do the distance filtering here
+	// 		const filteredMatches = response.data.cardData.filter(
+	// 			(cardData) => {
+	// 				// Loop through matchingCatId and calculate the distance for each cat
+	// 				for (const cat of cardData.matchingCatId) {
+	// 					const distance = calculateDistance(
+	// 						cardData.usersCat.location[1],
+	// 						cardData.usersCat.location[2],
+	// 						cat.location[1],
+	// 						cat.location[2]
+	// 					);
+	// 					// If the distance is less than 1 km, keep the cat in the array
+	// 					if (distance < 1) {
+	// 						return true;
+	// 					}
+	// 				}
+	// 				return false; // If no cat matches the distance condition, filter it out
+	// 			}
+	// 		);
+
+	// 		setMatches(filteredMatches);
+	// 	}
+
 	// 		} catch (error) {
 	// 			console.log(error.message)
 	// 		}
@@ -67,6 +111,10 @@ export default function NotificationsPage() {
 					align="flex-start">
 					<StyledH3>Data matches</StyledH3>
 					<StyledPBig>There are no data matches.</StyledPBig>
+					{showToast ===
+						"Sorry, there was an error while fetching the matches, please try again!" && (
+						<Toast type="error">{showToast}</Toast>
+					)}
 					<DataMatchNotification />
 				</StyledDivSimple>
 				<StyledDivSimple
@@ -83,6 +131,10 @@ export default function NotificationsPage() {
 							<StyledPBig>
 								There were no activities in your area in the past 7 days.
 							</StyledPBig>
+						)}
+						{showToast ===
+							"Sorry, there was an error while fetching the area activities, please try again!" && (
+							<Toast type="error">{showToast}</Toast>
 						)}
 					</StyledDivSimpleGrid>
 				</StyledDivSimple>

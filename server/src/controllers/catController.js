@@ -149,91 +149,60 @@ export const handleFindMatches = async (req, res) => {
 	try {
 		console.log("handleListMatches here");
 		// Retrieve uploaded cats for the user
-		const uploadedCats = await Cat.find({ uploader: req.user }).select("-__v");
+		const usersCats = await Cat.find({ uploader: req.user }).select("-__v");
 		//console.log("uploadedcats", uploadedCats);
 
-		// Retrieve all cats
-		const allCats = await Cat.find().select("-__v");
-		//console.log("allcats", allCats);
+		// Retrieve all other cats
+		const otherCats = await Cat.find({ uploader: { $ne: req.user } }).select(
+			"-__v"
+		);
+		//console.log("other cats",otherCats);
 
-		// Array to store the card data
-		const cardData = [];
+		const allCardData = [];
 
 		// Iterate through uploaded cats
-		for (const uploadedCat of uploadedCats) {
-			const matchingCats = [];
+		for (const usersCat of usersCats) {
+			// Object to store the card data
+			let cardData = {
+				usersOwnCat: usersCat,
+				matchingCat: [],
+			};
 
-			// Iterate through all cats
-			for (const cat of allCats) {
-				// Skip if the cat is the same as the uploaded cat
+			cardData.matchingCat = otherCats.filter(
+				(cat) => cat.status != usersCat.status
+			);
 
-				// Check for matches based on properties and location
-				const matchingCatsQuery = {
-					_id: { $ne: uploadedCat._id },
-					status: uploadedCat.status === "Lost" ? "Seen" : "Lost",
-					color: { $all: uploadedCat.color, $size: uploadedCat.color.length },
-					// color: {
-					// 	$all: uploadedCat.color.filter((c) => c !== undefined),
-					// 	$size: uploadedCat.color.length,
-					// },
-					pattern: uploadedCat.pattern,
-					coatLength: uploadedCat.coatLength,
-					location: {
-						$nearSphere: {
-							$geometry: {
-								type: "Point",
-								coordinates: uploadedCat.location.coordinates,
-							},
-							$maxDistance: 1000, // Distance in meters (1 km)
-						},
-					},
-					date:
-						uploadedCat.status === "Lost"
-							? { $gt: uploadedCat.date }
-							: { $lt: uploadedCat.date },
-				};
+			cardData.matchingCat = cardData.matchingCat.filter(
+				(cat) => cat.pattern == usersCat.pattern
+			);
 
-				// function findUndefinedData(obj, parentKey = "") {
-				// 	for (const key in obj) {
-				// 		if (typeof obj[key] === "object" && obj[key] !== null) {
-				// 			// If the value is an object, recursively check its properties
-				// 			findUndefinedData(obj[key], `${parentKey}.${key}`);
-				// 		} else if (obj[key] === undefined) {
-				// 			// If the value is undefined, log the path of the undefined property
-				// 			console.log(`Undefined value found at path: ${parentKey}.${key}`);
-				// 		}
-				// 	}
-				// }
+			cardData.matchingCat = cardData.matchingCat.filter((cat) => {
+				return (
+					cat.color.every((item) => usersCat.color.includes(item)) &&
+					cat.color.length === usersCat.color.length
+				);
+			});
 
-				// Call the function to find undefined data in the matchingCatsQuery
-				//findUndefinedData(matchingCatsQuery);
+			cardData.matchingCat = cardData.matchingCat.filter((cat) => {
+				if (usersCat.status === "Lost") {
+					return cat.date >= usersCat.date;
+				} else if (usersCat.status === "Seen") {
+					return cat.date <= usersCat.date;
+				}
+			});
 
-				// console.log(
-				// 	"matchingCatsQuery:",
-				// 	JSON.stringify(matchingCatsQuery, null, 2)
-				// );
-
-				const matches = await Cat.find(matchingCatsQuery).select("-__v");
-				matchingCats.push(...matches);
-			}
-
-			// Create card data for uploaded cat and matching cats
-			if (matchingCats.length > 0) {
-				cardData.push({
-					uploadedCat,
-					matchingCats,
-				});
-				console.log(matchingCats);
-			}
+			allCardData.push(cardData);
 		}
+
+		console.log(allCardData); //object with usersCatId and an array of matching cats, not filtered for distance as it will be done on the frontend
 
 		res.send({
 			success: true,
-			cardData,
+			allCardData,
 		});
 	} catch (error) {
-		console.log("error finding matches and creating cards:", error);
-		console.log("Error in matchingCatsQuery:", matchingCatsQuery);
+		console.log("error finding matches:", error);
+
 		res.send({
 			success: false,
 			message: error.message,

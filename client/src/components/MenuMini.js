@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { StyledMenuMini } from "../styles/styled/Styled_Menu";
 import { StyledP } from "../styles/styled/Styled_Text";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export default function MenuMini({ cat, setShowMenu }) {
 	const menuRef = useRef();

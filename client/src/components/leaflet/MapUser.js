@@ -26,12 +26,24 @@ export default function MapUser({ height }) {
 		state.user.location.coordinates[0],
 	];
 	console.log(state.user.location.coordinates);
-	console.log(state.user.areaRadius)
+	console.log(state.user.areaRadius);
 
 	const ZOOM_LEVEL_DEFAULT = 16;
 
 	const markerRef = useRef(null);
+	const areaRadius = state.user.areaRadius * 1000; // Convert km to meters
 
+	// useEffect(() => {
+		// this has to go into ultimate map, first checking if the location.pathname begins with profile (and maybe use this same function to fit the map on the userUpdatePage)
+	// 	// When the component mounts and the areaRadius is greater than 0,
+	// 	// calculate the bounds of the circle and fit the map to those bounds.
+	// 	if (mapRef.current && areaRadius > 0) {
+	// 		const circleBounds = L.circle(center, {
+	// 			radius: areaRadius,
+	// 		}).getBounds();
+	// 		mapRef.current.fitBounds(circleBounds);
+	// 	}
+	// }, [areaRadius, center]);
 
 	return (
 		<>
@@ -54,11 +66,11 @@ export default function MapUser({ height }) {
 							ref={markerRef}
 							draggable={false}></Marker>
 					)}
-					{state.user.areaRadius > 0 && (
+					{areaRadius > 0 && (
 						<Circle
 							center={center}
 							fillColor="blue"
-							radius={state.user.areaRadius * 1000}
+							radius={areaRadius}
 						/>
 					)}
 				</MapContainer>

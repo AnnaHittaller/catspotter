@@ -27,11 +27,11 @@ export default function CatInfoSheetMidi({ cat }) {
 
 	return (
 		<StyledCatInfoSheetMidi>
-			<StyledDivLabel >
+			<StyledDivLabel>
 				<label>{cat.status}</label>
 				<StyledH3>
-					{cat?.pattern.charAt(0).toUpperCase()}{cat?.pattern.slice(1)} cat in{" "}
-					{cat.address.city}
+					{cat?.pattern.charAt(0).toUpperCase()}
+					{cat?.pattern.slice(1)} cat in {cat.address.city}
 				</StyledH3>
 				<StyledDivSimple padding="0" flexDirection="column">
 					{cat?.image.length > 0 ? (
@@ -40,7 +40,9 @@ export default function CatInfoSheetMidi({ cat }) {
 							alt="uploaded photo of the cat"
 						/>
 					) : (
-						<StyledDivSimple className="cat-svg">{catSVG}</StyledDivSimple>
+						<StyledDivSimple padding="0" className="cat-svg">
+							{catSVG}
+						</StyledDivSimple>
 					)}
 				</StyledDivSimple>
 				<BsBookmarkFill />

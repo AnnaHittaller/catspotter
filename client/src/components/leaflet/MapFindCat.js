@@ -34,10 +34,17 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 	const [showToast, setShowToast] = useState("");
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
 	const {state, dispatch} = useContext(AppContext)
-	const center = {
-		lat: state.user.location.coordinates[1],
-		lng: state.user.location.coordinates[0],
+	let center = {
+		lat: 51.64536,
+		lng: -0.1534,
 	};
+
+	if (state.user._id) {
+		center = {
+			lat: state.user.location.coordinates[1] ,
+			lng: state.user.location.coordinates[0] ,
+		};
+	} 
 
 	console.log("visible cats", visibleCats);
 
@@ -49,7 +56,7 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 			)}
 			<StyledMapContainer height={height}>
 				<MapContainer
-					center={center || [51.64536, -0.1534]}
+					center={center}
 					zoom={16}
 					minZoom={2}
 					whenCreated={(mapInstance) => (mapRef.current = mapInstance)}>

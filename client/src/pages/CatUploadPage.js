@@ -4,32 +4,26 @@ import {
 	StyledSection,
 } from "../styles/styled/Styled_Section";
 import {
-	//StyledPBig,
-	//StyledP,
+	
 	StyledSpan,
-	//StyledSpanBold,
+	
 	StyledPBold,
 	StyledLink,
 } from "../styles/styled/Styled_Text";
 import {
 	StyledH2Underline,
-	//StyledH3,
-	//StyledH4Underline,
+
 } from "../styles/styled/Styled_Title";
 import {
 	StyledDivBorder,
 	StyledDivLabel,
 	StyledDivSimple,
-	//StyledDivSimpleGrid,
+
 } from "../styles/styled/Styled_Div";
-//import CatInfoSheetMidi from "../components/CatInfoSheetMidi";
 import Toast from "../components/Toast";
-// import CatInfoSheetMaxi from "../components/CatInfoSheetMaxi";
-// import BG_upload from "../assets/bgImages/BG_upload.jpg";
-// import MapForUpload from "../components/MapForUpload";
 import { BsQuestionCircle } from "react-icons/bs";
 import { useContext, useEffect, useState } from "react";
-//import { LocationContext } from "../context/LocationContext";
+
 import { StyledCatUploadForm } from "../styles/styled/Styled_CatUploadForm";
 import {
 	optionsCat,
@@ -50,8 +44,6 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import { FaPlus } from "react-icons/fa";
-//import L from "leaflet";
-
 import MapCatUpload from "../components/leaflet/MapCatUpload";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -60,11 +52,11 @@ import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import { getCatSvgComponent } from "../utils/CatSvgHelper";
 
 export default function CatUploadPage() {
-	//const { location } = useContext(LocationContext);
+	
 	const { state, dispatch } = useContext(AppContext);
 	const [showToast, setShowToast] = useState("");
 	const [date, onChange] = useState(new Date());
-	//const [lost, setLost] = useState(false);
+	
 	const [status, setStatus] = useState("");
 	const [color, setColor] = useState([]);
 	const [pattern, setPattern] = useState("");
@@ -77,7 +69,7 @@ export default function CatUploadPage() {
 	const [suburb, setSuburb] = useState("");
 	const [city, setCity] = useState("");
 	const [postcode, setPostcode] = useState("");
-	//const [uploader, setUploader] = useState("");
+	
 
 	const [markerCoords, setMarkerCoords] = useState(null);
 	const navigate = useNavigate();
@@ -127,7 +119,7 @@ export default function CatUploadPage() {
 				if (response.data.address.road) setStreet(response.data.address.road);
 			} catch (error) {
 				console.log(error);
-				//setShowToast("Error while fetching the address."); //does this need to be toast?
+				
 			}
 		};
 		fetchAddress();
@@ -235,7 +227,7 @@ export default function CatUploadPage() {
 			return;
 		}
 
-		//may add more invalid combinations later
+	
 
 		try {
 			const formdata = new FormData();
@@ -275,7 +267,7 @@ export default function CatUploadPage() {
 			// console.log("color", color);
 			// console.log("status", status);
 			// console.log("coatLength", coatLength);
-			// console.log(typeof markerCoords.lng, markerCoords.lng);
+			
 
 			const response = await axios.post("/cats/add", formdata);
 			console.log("response", response);
@@ -311,7 +303,7 @@ export default function CatUploadPage() {
 				</StyledPBold>
 				<StyledCatUploadForm onSubmit={handleSubmit}>
 					<MapCatUpload
-						height="30vh"
+						height="35vh"
 						markerCoords={markerCoords}
 						setMarkerCoords={setMarkerCoords}
 					/>

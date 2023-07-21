@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const StyledCatInfoSheetMini = styled.div`
 	position: relative;
-	max-width: 400px;
+	max-width: 600px;
 
 	img {
 		height: 50px;
@@ -83,8 +83,10 @@ export const StyledCatInfoSheetMaxi = styled.div`
 
 	img:nth-of-type(1) {
 		width: 100%;
-		// max-width: 300px;
+		// max-width: 400px;
 		height: auto;
+		max-height: 400px;
+		object-fit: cover;
 		border-radius: 10px;
 	}
 

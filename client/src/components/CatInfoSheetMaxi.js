@@ -1,7 +1,5 @@
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-import {
-	StyledCatInfoSheetMaxi,
-} from "../styles/styled/Styled_CatInfoSheet";
+import { StyledCatInfoSheetMaxi } from "../styles/styled/Styled_CatInfoSheet";
 import {
 	StyledDivBorder,
 	StyledDivLabel,
@@ -32,7 +30,7 @@ export default function CatInfoSheetMaxi({ id }) {
 	console.log(state);
 	const [cat, setCat] = useState("");
 	console.log(cat);
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const [loading, setLoading] = useState(true);
 
 	const { formattedDate } = dateFormatter(cat?.date);
@@ -40,18 +38,17 @@ export default function CatInfoSheetMaxi({ id }) {
 
 	const handleBookmark = async () => {
 		try {
-			const response = await axios.post('/users/bookmark', {cat: id})
-			console.log("response bookmark:", response)
+			const response = await axios.post("/users/bookmark", { cat: id });
+			console.log("response bookmark:", response);
 
-			if(response.data.success) {
+			if (response.data.success) {
 				dispatch({
 					type: "BOOKMARK",
-					payload: response.data.user
-				})
+					payload: response.data.user,
+				});
 			}
-
 		} catch (error) {
-			console.log(error.message)
+			console.log(error.message);
 		}
 	};
 
@@ -62,7 +59,7 @@ export default function CatInfoSheetMaxi({ id }) {
 				console.log("response", response);
 				if (response.data.success) {
 					setCat(response.data.cat);
-					setLoading(false)
+					setLoading(false);
 				}
 			} catch (error) {
 				console.log(error.message);
@@ -72,25 +69,25 @@ export default function CatInfoSheetMaxi({ id }) {
 	}, id);
 
 	const handleDeleteCat = async () => {
-		const response = await axios.delete(`/cats/delete/${id}`)
-		console.log('response:', response)
+		const response = await axios.delete(`/cats/delete/${id}`);
+		console.log("response:", response);
 
-		if(!response.data.success && response.data.errorId === "jwt expired") {
-			navigate("/login")
+		if (!response.data.success && response.data.errorId === "jwt expired") {
+			navigate("/login");
 		}
 
-		if(response.data.success) {
+		if (response.data.success) {
 			dispatch({
 				type: "DELETE_CAT",
 				payload: id,
-			})
+			});
 
-			navigate("/")
+			navigate("/");
 		}
-	}
+	};
 
 	if (!cat || loading) {
-		return <Spinner/>; 
+		return <Spinner />;
 	}
 
 	const catSVG = getCatSvgComponent(
@@ -99,7 +96,6 @@ export default function CatInfoSheetMaxi({ id }) {
 		cat.color[1],
 		cat.color[2]
 	);
-
 
 	return (
 		<StyledCatInfoSheetMaxi>
@@ -229,10 +225,11 @@ export default function CatInfoSheetMaxi({ id }) {
 							</StyledButton>
 						</>
 					) : null}
-					{/* <StyledPrimaryButton onClick={() => setBookmarked((prev) => !prev)}> */}
+					{state.user._id && (
 						<StyledPrimaryButton onClick={handleBookmark}>
-						{isBookmarked ? "Delete bookmark" : "Add bookmark"}
-					</StyledPrimaryButton>
+							{isBookmarked ? "Delete bookmark" : "Add bookmark"}
+						</StyledPrimaryButton>
+					)}
 				</StyledDivSimple>
 			</StyledDivBorder>
 		</StyledCatInfoSheetMaxi>

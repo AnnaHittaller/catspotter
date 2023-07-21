@@ -1,7 +1,7 @@
 import {
-	//StyledDivBorder,
+	
 	StyledDivSimple,
-	//StyledDivSimpleGrid,
+	
 	StyledDivLabel,
 	StyledDivBorder,
 } from "../styles/styled/Styled_Div";
@@ -12,20 +12,19 @@ import {
 } from "../styles/styled/Styled_Section";
 import { StyledP, StyledPBold } from "../styles/styled/Styled_Text";
 import { StyledH2Underline, StyledH3 } from "../styles/styled/Styled_Title";
-//import BG_profile from "../assets/bgImages/BG_profile.jpg";
+
 import {
 	StyledButton,
 	StyledPrimaryButton,
 } from "../styles/styled/Styled_Button";
 import default_profile from "../assets/appImages/default_profile_big.png";
 import {
-	//StyledUserData,
+	
 	StyledUserUpdateForm,
 } from "../styles/styled/Styled_UserForms";
-//import CatInfoSheetMini from "../components/CatInfoSheetMini";
-//import AreaRangeSlider from "../components/leaflet/AreaRangeSlider";
+
 import ToggleButton from "../components/ToggleButton";
-//import MapForArea from "../components/MapForArea";
+
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 import { useContext, useEffect, useState } from "react";
 import { StyledVisibilityBtn } from "../styles/styled/Styled_LoginRegisterForm";
@@ -37,7 +36,7 @@ import axios from "axios";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 
 export default function UserUpdatePage() {
-	//const { id } = useParams();
+	
 	const { state, dispatch } = useContext(AppContext);
 	const [showPassword, setShowPassword] = useState(false);
 	const navigate = useNavigate();
@@ -46,10 +45,10 @@ export default function UserUpdatePage() {
 	const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 
 	// states adjusted by the map component, geocoder and range slider
-	const [markerCoords, setMarkerCoords] = useState([
-		state.user.location.coordinates[1],
-		state.user.location.coordinates[0],
-	]);
+	const [markerCoords, setMarkerCoords] = useState({
+		lat: state.user.location.coordinates[1],
+		lng: state.user.location.coordinates[0],
+	});
 
 	//const [rangeValue, setRangeValue] = useState([0, 0]); //this was the original after passing the state up from arearangeslider
 	const [rangeValue, setRangeValue] = useState([0, state.user.areaRadius]);
@@ -63,7 +62,7 @@ export default function UserUpdatePage() {
 	);
 	const [newUsername, setNewUsername] = useState(state.user.username);
 	const [newPassword, setNewPassword] = useState("");
-	//correct default image url to cloudinary, use cloudinary var to complete state url
+	
 	const [avatar, setAvatar] = useState({
 		url:
 			cloudinaryRoot + state.user.avatar ||
@@ -153,8 +152,11 @@ export default function UserUpdatePage() {
 			if (avatar.file) {
 				formdata.set("avatar", avatar.file, "filename");
 			}
-			formdata.set("location.coordinates[0]", [markerCoords.lng]);
-			formdata.set("location.coordinates[1]", [markerCoords.lat]);
+			if(markerCoords.lat && markerCoords.lng) {
+
+				formdata.set("location.coordinates[0]", [markerCoords.lng]);
+				formdata.set("location.coordinates[1]", [markerCoords.lat]);
+			}
 			formdata.set("address.postcode", postcode);
 			formdata.set("address.city", city);
 			formdata.set("address.suburb", suburb);

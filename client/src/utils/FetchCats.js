@@ -16,6 +16,7 @@ const FetchCats = () => {
 						type: "LIST_CATS",
 						payload: response.data.cats,
 					});
+					console.log("separate fetchCats function success")
 				}
 			} catch (error) {
 				console.log(error.message);

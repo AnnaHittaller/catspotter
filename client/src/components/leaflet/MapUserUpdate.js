@@ -21,7 +21,7 @@ import "leaflet/dist/leaflet.css";
 
 import { useLocation } from "react-router-dom";
 import ReverseGeocodeMarker from "./ReverseGeocodeMarker";
-import {markerIconOwn} from "./MapMarkers";
+import markerIconOwn from "../leaflet/MapMarkerOwn";
 //import icon from "./MapMarkerOwn";
 
 import MenuAddress from "../MenuAddress";

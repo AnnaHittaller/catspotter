@@ -43,6 +43,10 @@ export default function CatInfoSheetMaxi({ id }) {
 			const response = await axios.post('/users/bookmark', {cat: id})
 			console.log("response bookmark:", response)
 
+			if (!response.data.success && response.data.errorId === "jwt expired") {
+				navigate("/login");
+			}
+
 			if(response.data.success) {
 				dispatch({
 					type: "BOOKMARK",
@@ -51,7 +55,7 @@ export default function CatInfoSheetMaxi({ id }) {
 			}
 
 		} catch (error) {
-			console.log(error.message)
+			console.log(error.message) 
 		}
 	};
 

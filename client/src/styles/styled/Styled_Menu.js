@@ -10,16 +10,17 @@ export const StyledMenuMini = styled(StyledDivBorder)`
 	background-color: ${v.babyPowder};
 	position: absolute;
 	right: 3rem;
+	overflow: hidden;
 
 	a {
 		text-decoration: none;
 		color: ${v.charcoal};
-		transition: 0.2s ease;
+		//transition: 0.2s ease;
 	}
 
-	a:hover {
-		background-color: ${v.columbiaBlue};
-	}
+	// a:hover {
+	// 	background-color: ${v.cadetGrey};
+	// }
 
 	a p {
 		font-weight: 600;
@@ -58,11 +59,12 @@ export const StyledMenuMidi = styled(StyledDivBorder)`
 		text-decoration: none;
 		color: ${v.charcoal};
 		transition: 0.2s ease;
+		width: 100%;
 	}
 
-	a:hover {
-		background-color: ${v.columbiaBlue};
-	}
+	// a:hover {
+	// 	background-color: ${v.columbiaBlue};
+	// }
 
 	a p {
 		font-weight: 600;

@@ -26,7 +26,6 @@ import {
 	StyledSidebarButton,
 	StyledUserInfo,
 } from "../styles/styled/Styled_Sidebar";
-//import { AuthContext } from "../context/AuthContext";
 import { SidebarContext } from "../context/SidebarContext";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
@@ -36,7 +35,6 @@ export default function Sidebar() {
 	const { state, dispatch } = useContext(AppContext);
 	const { sidebaropen, setsidebaropen } = useContext(SidebarContext);
 	const { pathname } = useLocation();
-	//const { isLoggedIn, logout } = useContext(AuthContext);
 	const navigate = useNavigate();
 	console.log(state);
 

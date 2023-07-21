@@ -51,23 +51,23 @@ export default function NotificationsPage() {
 		filterCatsByLocation();
 	}, [state.cats]);
 
-	// useEffect(()=> {
-	// 	const fetchMatches = async () =>{
-	// 		try {
-	// 			const response = await axios.get("/cats/listmatches" )
-	// 			console.log("listmatches response", response)
+	useEffect(()=> {
+		const fetchMatches = async () =>{
+			try {
+				const response = await axios.get("/cats/listmatches" )
+				console.log("listmatches response", response)
 
 	// should get back an array of cardData objects, so many as many cats the user has uploaded. May have to save them in a local state to map through them
 	// and render only those pair where the distance between userCat and matchingCat is less than 1 km
 	// first check response wheter I need to get allCardData or cardData from it for the distance filtering
 
-	// if (!response.data.success && response.data.errorId === "jwt expired") {
-	// 	navigate("/login");
-	// }
+	if (!response.data.success && response.data.errorId === "jwt expired") {
+		navigate("/login");
+	}
 
-	// if (!response.data.success && response.data.errorId != "jwt expired") {
-	//	setShowToast("Sorry, there was an error while fetching the matches, please try again!")
-	//}
+	if (!response.data.success && response.data.errorId != "jwt expired") {
+		setShowToast("Sorry, there was an error while fetching the matches, please try again!")
+	}
 
 	// if (response.data.success) {
 	// 		// Assuming the response contains the data in the format you expect
@@ -80,7 +80,7 @@ export default function NotificationsPage() {
 	// 						cardData.usersCat.location[1],
 	// 						cardData.usersCat.location[2],
 	// 						cat.location[1],
-	// 						cat.location[2]
+	// 						cat.location[2] 
 	// 					);
 	// 					// If the distance is less than 1 km, keep the cat in the array
 	// 					if (distance < 1) {
@@ -94,12 +94,12 @@ export default function NotificationsPage() {
 	// 		setMatches(filteredMatches);
 	// 	}
 
-	// 		} catch (error) {
-	// 			console.log(error.message)
-	// 		}
-	// 	}
-	// 	fetchMatches()
-	// }, [state.cats])
+			} catch (error) {
+				console.log(error.message)
+			}
+		}
+		fetchMatches()
+	}, [state.cats])
 
 	return (
 		<StyledPage display="flex" flexDirection="column">

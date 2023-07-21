@@ -8,17 +8,18 @@ import {
 } from "react";
 import { useLocation } from "react-router-dom";
 import { StyledMapContainer } from "../../styles/styled/Styled_MapContainer";
-import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from "react-leaflet";
 import L, { Icon, divIcon, point } from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 
-import { markerIconOwn } from "../../components/MapMarkers";
+import  markerIconOwn  from "../leaflet/MapMarkerOwn";
 import { AppContext } from "../../context/AppContext";
 
 export default function MapUser({ height }) {
 	const { state } = useContext(AppContext);
 	const mapRef = useRef();
+
 	const { pathname } = useLocation();
 
 	const center = [
@@ -33,17 +34,30 @@ export default function MapUser({ height }) {
 	const markerRef = useRef(null);
 	const areaRadius = state.user.areaRadius * 1000; // Convert km to meters
 
+	const [isMapReady, setIsMapReady] = useState(false);
+
 	// useEffect(() => {
-		// this has to go into ultimate map, first checking if the location.pathname begins with profile (and maybe use this same function to fit the map on the userUpdatePage)
-	// 	// When the component mounts and the areaRadius is greater than 0,
-	// 	// calculate the bounds of the circle and fit the map to those bounds.
-	// 	if (mapRef.current && areaRadius > 0) {
-	// 		const circleBounds = L.circle(center, {
-	// 			radius: areaRadius,
-	// 		}).getBounds();
-	// 		mapRef.current.fitBounds(circleBounds);
-	// 	}
-	// }, [areaRadius, center]);
+	// 	const calculateZoomLevel = (map, circleBounds) => {
+	// 		const mapWidth = map.getSize().x;
+	// 		const circleWidth =
+	// 			map.latLngToLayerPoint(circleBounds.getNorthEast()).x -
+	// 			map.latLngToLayerPoint(circleBounds.getSouthWest()).x;
+	// 		const diameterZoomRatio = circleWidth / mapWidth;
+	// 		const zoomLevel = Math.log2(360 / (diameterZoomRatio * 256));
+	// 		return zoomLevel;
+	// 	};
+		
+	// // }, [isMapReady, areaRadius, center]);
+
+	// if (isMapReady && mapRef.current) {
+	// 	const circleBounds = L.circle(center, {
+	// 		radius: areaRadius,
+	// 	}).getBounds();
+	// 	const mapInstance = mapRef.current.leafletElement;
+	// 	const zoomLevel = calculateZoomLevel(mapInstance, circleBounds);
+	// 	console.log("zoomlevel", zoomLevel);
+	// 	mapInstance.setView(center, zoomLevel);
+	// }
 
 	return (
 		<>
@@ -54,6 +68,7 @@ export default function MapUser({ height }) {
 					//ref={mapRef}
 					whenReady={(mapInstance) => {
 						mapRef.current = mapInstance;
+						setIsMapReady(true);
 					}}>
 					<TileLayer
 						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -67,12 +82,9 @@ export default function MapUser({ height }) {
 							draggable={false}></Marker>
 					)}
 					{areaRadius > 0 && (
-						<Circle
-							center={center}
-							fillColor="blue"
-							radius={areaRadius}
-						/>
+						<Circle center={center} fillColor="blue" radius={areaRadius} />
 					)}
+					{/* <MapWrapper /> */}
 				</MapContainer>
 			</StyledMapContainer>
 		</>

@@ -30,6 +30,7 @@ import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import { StyledPBold } from "../styles/styled/Styled_Text";
+import FetchCats from "../utils/FetchCats";
 
 
 export default function HomePage() {
@@ -50,36 +51,34 @@ export default function HomePage() {
 		}
 	}, [showToast]);
 
-		useEffect(() => {
-			const fetchCats = async () => {
-				try {
-					const response = await axios.get("/cats/list");
-					console.log("home page:", response.data);
+		// useEffect(() => {
+		// 	const fetchCats = async () => {
+		// 		try {
+		// 			const response = await axios.get("/cats/list");
+		// 			console.log("home page:", response.data);
 
-					if (response.data.success) {
-						dispatch({
-							type: "LIST_CATS",
-							payload: response.data.cats,
-						});
-					}
+		// 			if (response.data.success) {
+		// 				dispatch({
+		// 					type: "LIST_CATS",
+		// 					payload: response.data.cats,
+		// 				});
+		// 			}
 
-					setCats(response.data.cats); // map them directly from state contextt? then no need for passing them down as prop - TEST THIS
-				} catch (error) {
-					console.log(error.message);
-				}
-			};
-			fetchCats();
-		}, []);
+		// 			setCats(response.data.cats); // map them directly from state contextt? then no need for passing them down as prop - TEST THIS
+		// 		} catch (error) {
+		// 			console.log(error.message);
+		// 		}
+		// 	};
+		// 	fetchCats();
+		// }, []);
 
-	//const redirectToUpload = () => {
-	//	navigate("/upload");
-		// logic for checking authorization and if not logged in, set showtoast to true
-	//};
+
 
 	console.log("state:", state)
 	
 	return (
 		<StyledPage>
+			<FetchCats/>
 			<StyledHero>
 				<StyledHeroData>
 					<img
@@ -170,7 +169,7 @@ export default function HomePage() {
 							<div>
 								<LuBellRing />
 							</div>
-							<p>Notifications upon matching lost and spotted data</p>
+							<p>Notifications upon matching lost and spotted cats data</p>
 						</StyledFeatureIconDiv>
 						<StyledFeatureIconDiv>
 							<div>
@@ -182,7 +181,7 @@ export default function HomePage() {
 							<div>
 								<LuMap />
 							</div>
-							<p>Specify your area and get automatic notifications </p>
+							<p>Specify your area and get notified about the activities </p>
 						</StyledFeatureIconDiv>
 						<StyledFeatureIconDiv>
 							<div>
@@ -193,14 +192,14 @@ export default function HomePage() {
 								cat
 							</p>
 						</StyledFeatureIconDiv>
-						<StyledFeatureIconDiv>
+						{/* <StyledFeatureIconDiv>
 							<div>
 								<LuEdit />
 							</div>
 							<p>
 								Adding notes to other users’ spottings and in-app messaging.
 							</p>
-						</StyledFeatureIconDiv>
+						</StyledFeatureIconDiv> */}
 					</StyledDivSimple>
 				</div>
 			</StyledSection>

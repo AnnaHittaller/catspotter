@@ -54,7 +54,7 @@ export default function CatInfoSheetMini({ cat }) {
 						alt=""
 						aria-hidden="true"
 					/>
-					{/* {cat?.image.length > 0 ? (
+					{cat?.image.length > 0 ? (
 						<img
 							src={cloudinaryRoot + cat?.image}
 							alt="uploaded photo of the cat"
@@ -62,7 +62,7 @@ export default function CatInfoSheetMini({ cat }) {
 						/>
 					) : (
 						<StyledDivSimple className="thumbnail">{catSVG}</StyledDivSimple>
-					)} */}
+					)}
 					<div>
 						<StyledPBold>
 							{cat?.pattern === "tortoiseshell" || cat?.pattern === "calico"
@@ -91,7 +91,7 @@ export default function CatInfoSheetMini({ cat }) {
 					</div>
 				</StyledDivSimple>
 				<CiMenuKebab onClick={() => setShowMenu((prev) => !prev)} />
-				{showMenu && <MenuMini cat={cat} setShowMenu={setShowMenu}/>}
+				{showMenu && <MenuMini cat={cat} setShowMenu={setShowMenu} showMenu={showMenu}/>}
 			</StyledDivSimpleRounded>
 		</StyledCatInfoSheetMini>
 	);

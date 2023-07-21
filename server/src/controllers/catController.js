@@ -191,14 +191,18 @@ export const handleFindMatches = async (req, res) => {
 				}
 			});
 
-			allCardData.push(cardData);
+			//push the cardData only when there is a match
+			if(cardData.matchingCat.length > 0) {
+				allCardData.push(cardData);
+			}
+
 		}
 
-		console.log(allCardData); //object with usersCatId and an array of matching cats, not filtered for distance as it will be done on the frontend
+		console.log(allCardData); //object with usersCat and an array of matching cats, not filtered for distance as it will be done on the frontend
 
 		res.send({
 			success: true,
-			allCardData,
+			allCardData, 
 		});
 	} catch (error) {
 		console.log("error finding matches:", error);

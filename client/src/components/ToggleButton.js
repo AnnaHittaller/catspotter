@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { StyledToggleButton } from "../styles/styled/Styled_ToggleButton";
 
-export default function ToggleButton({ value }) {
-	const [checked, setChecked] = useState(false);
+export default function ToggleButton({ value, onChange, initialState }) {
+	const [checked, setChecked] = useState(initialState);
 	console.log(checked, value);
 
 	const handleChange = (e) => {
-		setChecked(e.target.checked);
+		    const newValue = e.target.checked;
+			setChecked(newValue);
+			onChange(newValue);
 	};
 
 	return (

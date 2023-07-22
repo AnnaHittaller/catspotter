@@ -3,40 +3,36 @@ import {
 	StyledBGSection,
 	StyledSection,
 } from "../styles/styled/Styled_Section";
-import {
-	StyledPBig,
-	StyledP,
-	StyledSpan,
-	StyledSpanBold,
-} from "../styles/styled/Styled_Text";
-import {
-	StyledH2Underline,
-	StyledH3,
-	StyledH4Underline,
-} from "../styles/styled/Styled_Title";
-import {
-	StyledDivBorder,
-	StyledDivLabel,
-	StyledDivSimple,
-	StyledDivSimpleGrid,
-} from "../styles/styled/Styled_Div";
+
+import { StyledH2Underline } from "../styles/styled/Styled_Title";
+import { StyledDivSimple, StyledDivSimpleGrid } from "../styles/styled/Styled_Div";
 import CatInfoSheetMidi from "../components/CatInfoSheetMidi";
-import CatInfoSheetMaxi from "../components/CatInfoSheetMaxi";
-import BG_bookmark from "../assets/bgImages/BG_bookmark.jpg";
-import Toast from "../components/Toast";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 export default function BookmarksPage() {
+	const { state } = useContext(AppContext);
+	 const bookmarkedCats = state.cats.filter((cat) =>
+			state.user?.bookmarks?.includes(cat._id)
+		);
+ 
 	return (
 		<StyledPage display="flex" flexDirection="column">
 			<StyledSection>
 				<StyledH2Underline>Bookmarks</StyledH2Underline>
-				<StyledDivSimpleGrid justify="flex-start" padding="0">
-					<CatInfoSheetMidi />
-				</StyledDivSimpleGrid>
+				<StyledDivSimple padding="0" min="220px"  wrap="wrap" align="stretch" justify="flex-start">
+					{bookmarkedCats.map((cat) => (
+						<CatInfoSheetMidi key={cat._id} cat={cat} />
+					))}
+				</StyledDivSimple>
 			</StyledSection>
-			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_bookmark_lobxmj.jpg"></StyledBGSection>
+			<StyledBGSection
+				bgImg={
+					cloudinaryRoot + "catspotter-assets/BG_bookmark_lobxmj.jpg"
+				}></StyledBGSection>
 		</StyledPage>
 	);
 }
 
-// /assets/bgImages/filename
+

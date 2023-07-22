@@ -1,29 +1,20 @@
 
-import Map from "../components/Map";
+
 import CatInfoSheetMini from "../components/CatInfoSheetMini";
-import { v } from "../styles/Variables";
 import {
 	StyledDivSimple,
 	StyledDivSimpleGrid,
 } from "../styles/styled/Styled_Div";
 import Select from "react-select";
-import BG_map from "../assets/bgImages/BG_map.jpg";
-import {
-	StyledButton,
-	StyledPrimaryButton,
-} from "../styles/styled/Styled_Button";
 import { StyledPage } from "../styles/styled/Styled_Page";
 import {
 	StyledSection,
 	StyledBGSection,
 } from "../styles/styled/Styled_Section";
 import {
-	StyledH2,
 	StyledH2Underline,
 	StyledH3,
-	StyledH4Underline,
 } from "../styles/styled/Styled_Title";
-import { LuGlobe } from "react-icons/lu";
 import { BsQuestionCircle } from "react-icons/bs";
 import {
 	StyledP,
@@ -41,49 +32,121 @@ import {
 	optionsPattern,
 } from "../data/SelectOptions";
 import {customStyles} from "../styles/SelectCustomStyles"
-import { LocationContext } from "../context/LocationContext";
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import MenuMini from "../components/MenuMini";
-import MenuMidi from "../components/MenuMidi";
-//import AreaRangeSlider from "../components/AreaRangeSlider";
-import ToggleButton from "../components/ToggleButton";
 import MapFindCat from "../components/leaflet/MapFindCat";
 import axios from "axios";
+import { AppContext } from "../context/AppContext";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot"
+import { filterCats } from "../utils/CatUtils";
+import FetchCats from "../utils/FetchCats";
 
 export default function MapPage() {
-	//console.log("rerender from map page");
-	const { location, setLocation } = useContext(LocationContext);
+
+	const {state, dispatch} = useContext(AppContext)
 	const [cats, setCats] = useState([])
+	const [visibleCats, setVisibleCats] = useState([]);
+	const [filteredCats, setFilteredCats] = useState([])
 
-		useEffect(() => {
-			const fetchCats = async () => {
-				try {
-					const data = await axios.get("/cats/list");
-					console.log("data:",data.data)
-					setCats(data.data.cats);
-				} catch (error) {
-					console.log(error.message);
-				}
-			};
-			fetchCats();
-		}, []);
+	console.log("visible cats",visibleCats)
 
-		console.log("cats", cats)
+	const [selectedStatus, setSelectedStatus] = useState(null);
+	const [selectedPattern, setSelectedPattern] = useState(null);
+	const [selectedColor, setSelectedColor] = useState(null);
+	const [selectedDate, setSelectedDate] = useState(null);
+	const [selectedCoatLength, setSelectedCoatLength] = useState(null);
+
+	console.log(selectedStatus, selectedPattern, selectedDate, selectedCoatLength, selectedColor)
+
+	const handleSelectChange = (selectedOption, name) => {
+		switch (name) {
+			case "status":
+				setSelectedStatus(selectedOption);
+				break;
+			case "pattern":
+				setSelectedPattern(selectedOption);
+				break;
+			case "color":
+				setSelectedColor(selectedOption);
+				break;
+			case "date":
+				setSelectedDate(selectedOption);
+				break;
+			case "coatLength":
+				setSelectedCoatLength(selectedOption);
+				break;
+			default:
+				break;
+		} 
+	};
+	//set toast for filtering and fetching errors
+
+		// useEffect(() => {
+		// 	const fetchCats = async () => {
+		// 		try {
+		// 			const response = await axios.get("/cats/list");
+		// 			console.log("data map page:",response.data)
+
+		// 			if(response.data.success) {
+		// 				dispatch({
+		// 					type: "LIST_CATS",
+		// 					payload: response.data.cats
+		// 				})
+		// 			}
+
+		// 			setCats(response.data.cats); // map them directly from state contextt? then no need for passing them down as prop - TEST THIS
+
+		// 		} catch (error) {
+		// 			console.log(error.message);
+		// 		}
+		// 	};
+		// 	fetchCats();
+		// }, []);
+
+		// console.log("cats", cats)
+
+useEffect(() => {
+
+	const filteredCats = filterCats(
+		state,
+		selectedStatus,
+		selectedPattern,
+		selectedColor,
+		selectedCoatLength,
+		selectedDate
+	);
+
+		setVisibleCats(filteredCats);
+
+}, [
+	state,
+	selectedStatus,
+	selectedPattern,
+	selectedColor,
+	selectedCoatLength,
+	selectedDate,
+]);
+
+//define mapRef here, pass it down to map and infoSheetMini, and from there down to MiniMenu, and make the map flyto a location when clicking miniMenu?
 
 	return (
 		<StyledPage display="flex" flexDirection="column">
 			<StyledSection>
-				<StyledH2Underline>catspotting</StyledH2Underline>
+				<StyledH2Underline>Catspotting</StyledH2Underline>
 				<StyledDivSimple padding="0" flexDirection="column">
 					<StyledP>
 						The map shows sightings from the last 30 days as default - to view
 						older posts, please adjust the filters below.
+						<StyledP>Move or zoom the map to find more cats.</StyledP>
 					</StyledP>
-					<MapFindCat cats={cats}/>
+					<FetchCats/>
+					<MapFindCat
+						cats={cats}
+						visibleCats={visibleCats}
+						setVisibleCats={setVisibleCats}
+					/>
 				</StyledDivSimple>
 				<StyledDivSimple padding="0" flexDirection="column" align="flex-start">
-					<StyledH2>Find cats:</StyledH2>
+					<StyledH3>Find cats:</StyledH3>
 					<StyledSpan type="icon-span">
 						<StyledPBold>
 							<BsQuestionCircle />
@@ -98,6 +161,11 @@ export default function MapPage() {
 							placeholder="Select lost / seen..."
 							isClearable
 							menuPlacement="auto"
+							name="status"
+							onChange={(selectedOption) =>
+								handleSelectChange(selectedOption, "status")
+							}
+							value={selectedStatus}
 						/>
 						<Select
 							options={optionsPattern}
@@ -105,6 +173,11 @@ export default function MapPage() {
 							placeholder="Select coat pattern..."
 							isClearable
 							menuPlacement="auto"
+							onChange={(selectedOption) =>
+								handleSelectChange(selectedOption, "pattern")
+							}
+							value={selectedPattern}
+							name="pattern"
 						/>
 						<Select
 							options={optionsColor}
@@ -114,6 +187,11 @@ export default function MapPage() {
 							placeholder="Select coat color..."
 							isClearable
 							menuPlacement="auto"
+							onChange={(selectedOption) =>
+								handleSelectChange(selectedOption, "color")
+							}
+							value={selectedColor}
+							name="color"
 						/>
 						<Select
 							options={optionsCoatLength}
@@ -121,6 +199,11 @@ export default function MapPage() {
 							placeholder="Select coat length..."
 							isClearable
 							menuPlacement="auto"
+							onChange={(selectedOption) =>
+								handleSelectChange(selectedOption, "coatLength")
+							}
+							value={selectedCoatLength}
+							name="coatLength"
 						/>
 						<Select
 							options={optionsDate}
@@ -128,25 +211,39 @@ export default function MapPage() {
 							placeholder="Select timeframe..."
 							isClearable
 							menuPlacement="auto"
+							onChange={(selectedOption) =>
+								handleSelectChange(selectedOption, "date")
+							}
+							value={selectedDate}
+							name="date"
 						/>
-						<Select
+
+						{/* <Select
 							options={optionsArea}
 							styles={customStyles}
 							placeholder="Select area radius..."
 							isClearable
 							menuPlacement="auto"
-						/>
+						/> */}
 					</StyledSelectWrapper>
 				</StyledDivSimple>
+
 				<StyledDivSimpleGrid min="290px" padding="1rem 0">
-					<StyledH3>No search filters have been selected yet.</StyledH3>
-					<StyledH3>There are no matching results.</StyledH3>
-					<CatInfoSheetMini />
-					<CatInfoSheetMini />
-					<CatInfoSheetMini />
+					{visibleCats && visibleCats.length > 0 ? (
+						visibleCats.map((cat) => (
+							<CatInfoSheetMini key={cat._id} cat={cat} />
+						))
+					) : (
+						<StyledH3>
+							There are no matching results in the mapped area. 
+						</StyledH3>
+					)}
 				</StyledDivSimpleGrid>
 			</StyledSection>
-			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_map_ws93ba.jpg"></StyledBGSection>
+			<StyledBGSection
+				bgImg={
+					cloudinaryRoot + "catspotter-assets/BG_map_ws93ba.jpg"
+				}></StyledBGSection>
 		</StyledPage>
 	);
 }

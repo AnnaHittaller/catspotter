@@ -18,7 +18,8 @@ import { StyledDivSimple } from "../styles/styled/Styled_Div";
 
 export default function RegisterForm({ onFormSwitch, currentForm }) {
 	const [showPassword, setShowPassword] = useState(false);
-	const [error, setError] = useState("");
+	//const [error, setError] = useState("");
+	const [showToast, setShowToast] = useState("")
 	const navigate = useNavigate();
 
 
@@ -32,7 +33,7 @@ export default function RegisterForm({ onFormSwitch, currentForm }) {
 		e.preventDefault();
 
 		try {
-			if (!userData.email || !userData.password || !userData.username) return setError("Email, username and password are mandatory");
+			if (!userData.email || !userData.password || !userData.username) return setShowToast("Email, username and password are mandatory");
 
 			console.log("userData registration", userData);
 			const response = await axios.post(
@@ -121,9 +122,9 @@ export default function RegisterForm({ onFormSwitch, currentForm }) {
 							<span>I agree to the terms & conditions</span>
 						</label>
 					</StyledRememberForgotBox>
-					{error && (
+					{showToast && (
 						<StyledDivSimple padding="0 0 1rem 0">
-							<Toast type="error" setError={setError}>{error}</Toast>
+							<Toast type="error">{showToast}</Toast>
 						</StyledDivSimple>
 					)}
 					<StyledSubmitButton type="submit">Register</StyledSubmitButton>

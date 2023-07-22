@@ -10,7 +10,7 @@ export const StyledCatUploadForm = styled.form`
 	justify-content: center;
 	text-align: center;
 
-	button:nth-of-type(1) {
+	.delete-photo {
 		align-self: center;
 	}
 
@@ -61,7 +61,7 @@ export const StyledCatUploadForm = styled.form`
 
 	.react-date-picker__inputGroup__input:invalid,
 	.react-time-picker__inputGroup__input:invalid {
-		background: ${v.columbiaBlue};
+		background: transparent;
 
 		&:focus {
 			outline: none;
@@ -75,7 +75,6 @@ export const StyledCatUploadForm = styled.form`
 		stroke: ${v.sunGlow};
 	}
 
-	.react-date-picker__button:enabled .react-date-picker__button__icon,
 	.react-date-picker__button:enabled .react-date-picker__button__icon,
 	.react-time-picker__button:enabled svg {
 		stroke: ${v.charcoal};
@@ -108,22 +107,33 @@ export const StyledCatUploadForm = styled.form`
 		outline: none;
 	}
 
-	img {
-		max-width: 200px;
-		margin: 0 auto;
-	}
-
-	> div {
+	.select,
+	.text-input,
+	.date-time-picker {
 		align-self: center;
-		border: none;
 		width: 100%;
+		max-width: 600px;
+		border: 2px solid ${v.columbiaBlue};
 
 		label {
 			z-index: 5;
 		}
 	}
 
-	span:first-of-type {
+	.text-input span {
+		position: absolute;
+		right: 1rem;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+	.date-time-picker {
+		&:hover {
+			border: 2px solid ${v.sunGlow};
+		}
+	}
+
+	.icon-span {
 		margin: 0 auto;
 	}
 
@@ -131,25 +141,8 @@ export const StyledCatUploadForm = styled.form`
 		border: 2px solid ${v.cadetGrey};
 	}
 
-	> div:nth-of-type(3),
-	> div:nth-of-type(2),
-	> div:nth-of-type(9) {
-		border: 2px solid ${v.columbiaBlue};
-		min-width: 220px;
-		width: 100%;
-		max-width: 600px;
-
-		&:hover {
-			border: 2px solid ${v.sunGlow};
-		}
-	}
-
-	> div:nth-of-type(4),
-	> div:nth-of-type(5),
-	> div:nth-of-type(6),
-	> div:nth-of-type(7) {
-		width: 100%;
-		max-width: 600px;
+	.select {
+		border: none;
 	}
 
 	#lostSeen,
@@ -157,13 +150,19 @@ export const StyledCatUploadForm = styled.form`
 	#coatLength,
 	#coatColor {
 		width: 100%;
+		border: none;
+	}
+
+	.cat-svg svg {
+		max-width: 200px;
+		margin: 0 auto;
 	}
 
 	textarea,
 	input[type="text"] {
 		padding: 0.5rem 0.75rem;
 		outline: none;
-		border: 2px solid ${v.columbiaBlue};
+		border: none;
 		border-radius: ${v.borderRadius};
 		min-width: 220px;
 		width: 100%;
@@ -171,15 +170,34 @@ export const StyledCatUploadForm = styled.form`
 		color: ${v.charcoal};
 		font-size: 1rem;
 		background-color: ${v.babyPowder};
-
-		&:hover {
-			border: 2px solid ${v.sunGlow};
-		}
 	}
 
 	.photo-upload {
+		max-width: 600px;
+		width: 100%;
+		margin: 0 auto;
+
+		> div {
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+
+		input[type="file"] {
+			display: none;
+		}
+
+		img {
+			width: 120px;
+			height: 120px;
+			object-fit: cover;
+			margin: 0;
+		}
+	}
+
+	.photo-upload-icon {
 		width: 120px;
 		height: 120px;
+
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -189,23 +207,5 @@ export const StyledCatUploadForm = styled.form`
 		svg {
 			font-size: 3rem;
 		}
-	}
-
-	> div:nth-of-type(9) {
-
-		> div {
-			justify-content: center;
-			flex-wrap: wrap;
-		}
-		
-		input[type="file"] {
-			display: none;
-		}
-
-		img {
-			width: 120px;
-			margin: 0;
-		}
-
 	}
 `;

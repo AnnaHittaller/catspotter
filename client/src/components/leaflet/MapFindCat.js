@@ -5,16 +5,12 @@ import {
 	useRef,
 	useContext,
 	useEffect,
-} from "react";
+} from "react"; 
 import { StyledMapContainer } from "../../styles/styled/Styled_MapContainer";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-
 import L, { Icon, divIcon, point } from "leaflet";
-import "leaflet/dist/leaflet.css";
-import { LuGlobe } from "react-icons/lu";
-//import { StyledPrimaryButton } from "../styles/styled/Styled_Button";
-//import { LocationContext } from "../context/LocationContext";
-//import useGeolocation from "../customHooks/useGeolocation";
+import "leaflet/dist/leaflet.css"; 
+//import { LuGlobe } from "react-icons/lu";
 import Toast from "../../components/Toast";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import {
@@ -23,66 +19,48 @@ import {
 	markerIconLost,
 	createCustomClusterIcon,
 } from "./MapMarkers";
-
 import MenuMidi from "../MenuMidi";
-
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import { useMapEvents } from "react-leaflet";
+import { AppContext } from "../../context/AppContext";
 
-export default function MapFindCat({ height, cats }) {
+
+
+export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }) {
 	console.log("rerender from mapnew component");
 	const mapRef = useRef();
-	const [showToast, setShowToast] = useState(false);
+	const [showToast, setShowToast] = useState("");
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
+	const {state, dispatch} = useContext(AppContext)
+	let center = {
+		lat: 51.64536,
+		lng: -0.1534,
+	};
 
-	console.log("map4", cats);
-
-	//maybe pass the state up to the page?
-	const [visibleCats, setVisibleCats] = useState([]);
-
-	useEffect(() => {
-		if (!mapRef.current) return;
-		const updateVisibleCats = () => {
-			const bounds = mapRef.current.getBounds();
-			const filteredCats = cats.filter((cat) => {
-				const catLatLng = L.latLng(
-					cat.location.coordinates[1],
-					cat.location.coordinates[0]
-				);
-				return bounds.contains(catLatLng);
-			});
-			setVisibleCats(filteredCats);
+	if (state.user._id) {
+		center = {
+			lat: state.user.location.coordinates[1] ,
+			lng: state.user.location.coordinates[0] ,
 		};
+	} 
 
-		updateVisibleCats();
-
-		const handleMoveEnd = () => {
-			updateVisibleCats();
-		};
-
-		mapRef.current.on("moveend", handleMoveEnd);
-
-		return () => {
-			mapRef.current.off("moveend", handleMoveEnd);
-		};
-	}, [cats]);
+	console.log("visible cats", visibleCats);
 
 	return (
 		<>
 			{showToast && (
-				<Toast type="error" setShowToast={setShowToast}>
-					The geolocation accuracy is too low, please zoom in to your exact
-					position.
+				<Toast type="error" setShowToast={setShowToast}>{showToast}
 				</Toast>
 			)}
 			<StyledMapContainer height={height}>
 				<MapContainer
-					center={[51.64536, -0.1534]}
+					center={center}
 					zoom={16}
 					minZoom={2}
 					whenCreated={(mapInstance) => (mapRef.current = mapInstance)}>
+				{/* getBounds= */}
 					<TileLayer
 						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -90,24 +68,25 @@ export default function MapFindCat({ height, cats }) {
 					<MarkerClusterGroup
 						chunkedLoading
 						iconCreateFunction={createCustomClusterIcon}
-						//disableClusteringAtZoom={13}
+						disableClusteringAtZoom={13}
 						zoomToBoundsOnClick>
-						{cats.length > 0 &&
-							cats &&
-							cats.map((cat) => (
+						{state.cats?.length > 0 &&
+							state.cats &&
+							state.cats.map((cat) => (
 								<Marker
 									key={cat._id}
-									//add popup with menu
-									icon={cat.status === "lost" ? markerIconLost : markerIconSeen}
+									icon={cat.status === "Lost" ? markerIconLost : markerIconSeen}
 									position={[
 										cat.location.coordinates[1],
 										cat.location.coordinates[0],
 									]}>
-									{" "}
+									<Popup>
+										<MenuMidi cat={cat}/>
+									</Popup>
 								</Marker>
 							))}
 					</MarkerClusterGroup>
-					<LeafletControlGeocoder mapRef={mapRef} setShowToast={setShowToast} />
+					<LeafletControlGeocoder mapRef={mapRef} setShowToast={setShowToast} visibleCats={visibleCats} setVisibleCats={setVisibleCats} cats={cats} />
 				</MapContainer>
 			</StyledMapContainer>
 		</>

@@ -1,7 +1,7 @@
 import {
 	useState,
-	useMemo,
-	useCallback,
+	//useMemo,
+	//useCallback, 
 	useRef,
 	useContext,
 	useEffect,
@@ -10,9 +10,9 @@ import { StyledMapContainer } from "../../styles/styled/Styled_MapContainer";
 import {
 	MapContainer,
 	TileLayer,
-	Marker,
-	Popup,
-	useMap,
+	// Marker,
+	// Popup,
+	// useMap,
 	useMapEvents,
 	Circle,
 } from "react-leaflet";
@@ -21,7 +21,7 @@ import "leaflet/dist/leaflet.css";
 
 import { useLocation } from "react-router-dom";
 import ReverseGeocodeMarker from "./ReverseGeocodeMarker";
-import {markerIconOwn} from "./MapMarkers";
+import markerIconOwn from "../leaflet/MapMarkerOwn";
 //import icon from "./MapMarkerOwn";
 
 import MenuAddress from "../MenuAddress";
@@ -30,29 +30,41 @@ import LeafletControlGeocoder from "./LeafletControlGeocoder";
 import AreaRangeSlider from "./AreaRangeSlider";
 import { AppContext } from "../../context/AppContext";
 
-export default function MapUserUpdate({ height }) {
-	
-	const {state} = useContext(AppContext)
+export default function MapUserUpdate({
+	height,
+	markerCoords,
+	setMarkerCoords,
+	rangeValue,
+	setRangeValue,
+	cats,
+	visibleCats,
+	setVisibleCats, 
+}) {
+	const { state } = useContext(AppContext);
 	const mapRef = useRef();
-	const [markerCoords, setMarkerCoords] = useState([
-		state.user.location.coordinates[1],
-		state.user.location.coordinates[0],
-	]);
-	console.log("markerCoords,", markerCoords);
-	const { pathname } = useLocation();
+	// const [markerCoords, setMarkerCoords] = useState([
+	// 	state.user.location.coordinates[1],
+	// 	state.user.location.coordinates[0],
+	// ]);
+	console.log("markerCoords from userupdatemap,", markerCoords);
+	const { pathname } = useLocation(); //is this used? probs not
 	const [showToast, setShowToast] = useState(false);
 
 	//const [circleRadius, setCircleRadius] = useState(0);
+
+	// center is just for initial map center, not for circle
 	const center = [
 		state.user.location.coordinates[1],
 		state.user.location.coordinates[0],
 	];
 
-	const [rangeValue, setRangeValue] = useState([0, 0]);
+	//pass up rangeValue to page & form ////////////////////////
+	//const [rangeValue, setRangeValue] = useState([0, 0]);
 
 	const handleMapClick = (e) => {
 		const { lat, lng } = e.latlng;
 		setMarkerCoords({ lat, lng });
+		console.log("newmarkercoords", markerCoords)
 		console.log(rangeValue, "rangevalue");
 	};
 	const MapClickHandler = () => {
@@ -91,6 +103,9 @@ export default function MapUserUpdate({ height }) {
 					<LeafletControlGeocoder
 						mapRef={mapRef}
 						setShowToast={setShowToast}
+						visibleCats={visibleCats}
+						setVisibleCats={setVisibleCats}
+						cats={cats}
 					/>
 				</MapContainer>
 			</StyledMapContainer>

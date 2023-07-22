@@ -27,11 +27,17 @@ import { useContext, useEffect, useState } from "react";
 import Toast from "../components/Toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import axios from "axios";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+import { StyledPBold } from "../styles/styled/Styled_Text";
+import FetchCats from "../utils/FetchCats";
+
 
 export default function HomePage() {
 	const [showToast, setShowToast] = useState(false);
 	const navigate = useNavigate();
-	const { state } = useContext(AppContext);
+	const { state, dispatch } = useContext(AppContext);
+	const [cats, setCats] = useState([]);
 
 	useEffect(() => {
 		if (showToast) {
@@ -45,30 +51,53 @@ export default function HomePage() {
 		}
 	}, [showToast]);
 
-	const redirectToUpload = () => {
-		navigate("/upload");
-		// logic for checking authorization and if not logged in, set showtoast to true
-	};
+		// useEffect(() => {
+		// 	const fetchCats = async () => {
+		// 		try {
+		// 			const response = await axios.get("/cats/list");
+		// 			console.log("home page:", response.data);
+
+		// 			if (response.data.success) {
+		// 				dispatch({
+		// 					type: "LIST_CATS",
+		// 					payload: response.data.cats,
+		// 				});
+		// 			}
+
+		// 			setCats(response.data.cats); // map them directly from state contextt? then no need for passing them down as prop - TEST THIS
+		// 		} catch (error) {
+		// 			console.log(error.message);
+		// 		}
+		// 	};
+		// 	fetchCats();
+		// }, []);
+
+
 
 	console.log("state:", state)
 	
 	return (
 		<StyledPage>
+			<FetchCats/>
 			<StyledHero>
 				<StyledHeroData>
 					<img
-						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899573/catspotter-assets/catspotter_logo_dark_mur6nz.png"
+						src={
+							cloudinaryRoot +
+							"catspotter-assets/catspotter_logo_dark_mur6nz.png"
+						}
 						alt="catspotter logo"
 					/>
 					<p>
-						Help lost cats get safely back home! Spotted a cat? Load its data up
-						and make it easier for the worrying owner to find it.
+						Let's create a world together where no lost cat goes unnoticed -
+						help them get safely back home! 
 					</p>
 					<p>
-						Lost your cat? Upload its data and inform others in the area to be
-						on the lookout for it.
+						Spotted a cat? Register it and make it easier for the worrying owner
+						to find it. Lost your cat? Upload its data and inform others in the
+						area to be on the lookout for it.
 					</p>
-					<p>Keeping an eye open can save a life!</p>
+					<StyledPBold>Keeping an eye open can save a life!</StyledPBold>
 					<div>
 						<StyledPrimaryButton>
 							{state.user._id ? (
@@ -86,12 +115,13 @@ export default function HomePage() {
 			<StyledSection>
 				<StyledDivBorder page="home">
 					<p>
-						Seen a cat while on your way to the workplace, running errands or
-						going to school? Or an unfamiliar cat started to turn up in your
-						garden?{" "}
+						Keep your eyes open while going about your daily routine - on your
+						way to work, running errands, or going to school. You may have
+						noticed any unfamiliar cat turning up in your street garden - maybe
+						it's missing from just a few streets away.{" "}
 					</p>
 					<img
-						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/yellow_arrow_v7eq7h.png"
+						src={cloudinaryRoot + "catspotter-assets/yellow_arrow_v7eq7h.png"}
 						alt=""
 						aria-hidden="true"
 					/>
@@ -99,27 +129,28 @@ export default function HomePage() {
 				</StyledDivBorder>
 				<StyledDivBorder page="home">
 					<p>
-						Don’t just worry about whether it’s an outside cat or actually lost:
-						load it up to the database and you already made it’s chances to get
-						home higher.
+						Don't just wonder if it's a lost cat or an outdoor explorer. Take
+						action! Load its data into the catspotter database, and you have
+						already increased its chances of finding its way home.
 					</p>
 
 					<img
-						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/yellow_arrow_v7eq7h.png"
+						src={cloudinaryRoot + "catspotter-assets/yellow_arrow_v7eq7h.png"}
 						alt=""
 						aria-hidden="true"
 					/>
 
-					<StyledH2Underline page="home">2. Upload it</StyledH2Underline>
+					<StyledH2Underline page="home">2. Register it</StyledH2Underline>
 				</StyledDivBorder>
 				<StyledDivBorder page="home">
 					<p>
-						If the data of a lost cat and a spotted cat match, both the spotter
-						and the owner gets notified, so they can check the detailed
-						infosheet, location and photos.
+						When a lost cat's data matches a sighting, both the spotter and the
+						owner receive notifications. Tthey can check the detailed
+						infosheets, locations and photos. Be a voice for lost cats in your
+						community and help them reunite with their worrying families!
 					</p>
 					<img
-						src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/yellow_arrow_v7eq7h.png"
+						src={cloudinaryRoot + "catspotter-assets/yellow_arrow_v7eq7h.png"}
 						alt=""
 						aria-hidden="true"
 					/>
@@ -138,7 +169,7 @@ export default function HomePage() {
 							<div>
 								<LuBellRing />
 							</div>
-							<p>Notifications upon matching lost and spotted data</p>
+							<p>Notifications upon matching lost and spotted cats data</p>
 						</StyledFeatureIconDiv>
 						<StyledFeatureIconDiv>
 							<div>
@@ -150,7 +181,7 @@ export default function HomePage() {
 							<div>
 								<LuMap />
 							</div>
-							<p>Specify your area and get automatic notifications </p>
+							<p>Specify your area and get notified about the activities </p>
 						</StyledFeatureIconDiv>
 						<StyledFeatureIconDiv>
 							<div>
@@ -161,14 +192,14 @@ export default function HomePage() {
 								cat
 							</p>
 						</StyledFeatureIconDiv>
-						<StyledFeatureIconDiv>
+						{/* <StyledFeatureIconDiv>
 							<div>
 								<LuEdit />
 							</div>
 							<p>
 								Adding notes to other users’ spottings and in-app messaging.
 							</p>
-						</StyledFeatureIconDiv>
+						</StyledFeatureIconDiv> */}
 					</StyledDivSimple>
 				</div>
 			</StyledSection>

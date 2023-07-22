@@ -21,8 +21,8 @@ import { Link } from "react-router-dom";
 
 export default function LoginForm({ onFormSwitch, currentForm }) {
 	const [showPassword, setShowPassword] = useState(false);
-	const [error, setError] = useState("")
-	const [showToast, setShowToast] = useState(false)
+	//const [error, setError] = useState("")
+	const [showToast, setShowToast] = useState("")
 	const navigate = useNavigate();
 
 	const {dispatch} = useContext(AppContext)
@@ -37,7 +37,7 @@ export default function LoginForm({ onFormSwitch, currentForm }) {
 
 		try {
 
-			if(!userData.usernameoremail) return setError("Email or username and password are mandatory")
+			if(!userData.usernameoremail) return setShowToast("Email or username and password are mandatory")
 
 			//console.log("User data:", userData);
 
@@ -48,15 +48,27 @@ export default function LoginForm({ onFormSwitch, currentForm }) {
 			console.log("response:", response);
 
 			if(!response.data.success) {
-				return setError("Incorrect username or password")
+				return setShowToast("Incorrect username or password");
 			}
 
 			if(response.data.success) {
 				dispatch({
 					type: "LOGIN",
-					payload: {...response.data.user}
-				})
-				navigate('/')
+					payload: { ...response.data.user },
+				});
+				// dispatch({
+				//  type: "LIST_CATS",
+				//  payload: response.data.cats,
+				// });
+
+				const location = localStorage.getItem("abandonedAddress");
+
+				if (location) {
+					localStorage.removeItem("abandonedAddress");
+					navigate(location);
+				} else {
+					navigate("/");
+				}
 			}
 
 		} catch (error) {
@@ -113,10 +125,10 @@ export default function LoginForm({ onFormSwitch, currentForm }) {
 							<Link to="/forgotpassword">Forgot password?</Link>
 						</button>
 					</StyledRememberForgotBox>
-					{error && (
+					{showToast && (
 						<StyledDivSimple padding="0 0 1rem 0">
-							<Toast type="error" setError={setError}>
-								{error}
+							<Toast type="error" >
+								{showToast}
 							</Toast>
 						</StyledDivSimple>
 					)}

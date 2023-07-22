@@ -4,32 +4,26 @@ import {
 	StyledSection,
 } from "../styles/styled/Styled_Section";
 import {
-	//StyledPBig,
-	//StyledP,
+	
 	StyledSpan,
-	//StyledSpanBold,
+	
 	StyledPBold,
 	StyledLink,
 } from "../styles/styled/Styled_Text";
 import {
 	StyledH2Underline,
-	//StyledH3,
-	//StyledH4Underline,
+
 } from "../styles/styled/Styled_Title";
 import {
 	StyledDivBorder,
 	StyledDivLabel,
 	StyledDivSimple,
-	//StyledDivSimpleGrid,
+
 } from "../styles/styled/Styled_Div";
-//import CatInfoSheetMidi from "../components/CatInfoSheetMidi";
 import Toast from "../components/Toast";
-// import CatInfoSheetMaxi from "../components/CatInfoSheetMaxi";
-// import BG_upload from "../assets/bgImages/BG_upload.jpg";
-// import MapForUpload from "../components/MapForUpload";
 import { BsQuestionCircle } from "react-icons/bs";
 import { useContext, useEffect, useState } from "react";
-import { LocationContext } from "../context/LocationContext";
+
 import { StyledCatUploadForm } from "../styles/styled/Styled_CatUploadForm";
 import {
 	optionsCat,
@@ -50,19 +44,19 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import { FaPlus } from "react-icons/fa";
-//import L from "leaflet";
-
 import MapCatUpload from "../components/leaflet/MapCatUpload";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+import { getCatSvgComponent } from "../utils/CatSvgHelper";
 
 export default function CatUploadPage() {
-	//const { location } = useContext(LocationContext);
-	const { state } = useContext(AppContext);
-	const [toast, setToast] = useState("");
+	
+	const { state, dispatch } = useContext(AppContext);
+	const [showToast, setShowToast] = useState("");
 	const [date, onChange] = useState(new Date());
-	const [lost, setLost] = useState(false);
+	
 	const [status, setStatus] = useState("");
 	const [color, setColor] = useState([]);
 	const [pattern, setPattern] = useState("");
@@ -75,7 +69,7 @@ export default function CatUploadPage() {
 	const [suburb, setSuburb] = useState("");
 	const [city, setCity] = useState("");
 	const [postcode, setPostcode] = useState("");
-	//const [uploader, setUploader] = useState("");
+	
 
 	const [markerCoords, setMarkerCoords] = useState(null);
 	const navigate = useNavigate();
@@ -83,22 +77,28 @@ export default function CatUploadPage() {
 	const currentTime = new Date();
 	const formattedTime = currentTime.toTimeString().slice(0, 5);
 	const [time, setTime] = useState(formattedTime);
+	console.log(time, date)
+
+	const [whiteColorDisabled, setWhiteColorDisabled] = useState(false);
 
 	const placeholder =
-		"https://res.cloudinary.com/dgum1eu6e/image/upload/v1688906503/placeholder_sfuu70.png";
+		"https://res.cloudinary.com/dgum1eu6e/image/upload/v1688906503/placeholder_sfuu70.png"; /// check url, put it into a folder + add cloudinary root
 
 	const [catImage, setCatImage] = useState({
 		url: placeholder,
 		file: null,
 	});
 
-	// const handleLostSeenChange = (selectedOption) => {
-	// 	if (selectedOption && selectedOption.value === "lost") {
-	// 		setLost(true);
-	// 	} else {
-	// 		setLost(false);
-	// 	}
-	// };
+	const catSVG = getCatSvgComponent(
+		pattern?.value || "solid",
+		color[0]?.value,
+		color[1]?.value,
+		color[2]?.value
+	);
+	console.log(pattern?.value);
+	console.log(color[0]?.value, color[1]?.value, color[2]?.value);
+
+	console.log(date, time)
 
 	useEffect(() => {
 		const fetchAddress = async () => {
@@ -109,17 +109,23 @@ export default function CatUploadPage() {
 				console.log("nominatim", response.data.address);
 				if (response.data.address.postcode)
 					setPostcode(response.data.address.postcode);
+				//check village-Town-city
+				if (response.data.address.village)
+					setCity(response.data.address.village);
+				if (response.data.address.town) setCity(response.data.address.town);
 				if (response.data.address.city) setCity(response.data.address.city);
 				if (response.data.address.suburb)
 					setSuburb(response.data.address.suburb);
 				if (response.data.address.road) setStreet(response.data.address.road);
 			} catch (error) {
 				console.log(error);
-				setToast("Error while uploading the data.");
+				
 			}
 		};
 		fetchAddress();
 	}, [markerCoords]);
+
+	//toast has to be set in the page!!!
 
 	const handleImageChange = (e) => {
 		if (!e.target.files[0]) {
@@ -142,24 +148,86 @@ export default function CatUploadPage() {
 	const handleChange = (selectedOption, name) => {
 		switch (name) {
 			case "status":
-				setStatus(selectedOption);
+				setStatus(selectedOption || "");
 				break;
 			case "coatLength":
-				setCoatLength(selectedOption);
+				setCoatLength(selectedOption || "");
 				break;
 			case "coatPattern":
-				setPattern(selectedOption);
+			 if (selectedOption) {
+					if (
+						selectedOption.value === "bicolor" ||
+						selectedOption.value === "van" ||
+						selectedOption.value === "tuxedo" ||
+						selectedOption.value === "bicolorTabby"
+					) {
+						if (color.length === 0) {
+							setColor([{ value: "white", label: "White" }]);
+						} else {
+							setColor([{ value: "white", label: "White" }, ...color.slice(1)]);
+						}
+					} else if (selectedOption.value === "tortoiseshell") {
+						setColor([
+							{ value: "orange", label: "Orange" },
+							{ value: "black", label: "Black" },
+						]);
+					} else if (selectedOption.value === "calico") {
+						setColor([
+							{ value: "black", label: "Black" },
+							{ value: "orange", label: "Orange" },
+							{ value: "white", label: "White" },
+						]);
+					} else {
+						setColor([]);
+					}
+					setPattern(selectedOption);
+				} else {
+					setColor([]);
+					setPattern(selectedOption || "");
+				}
 				break;
 			case "coatColor":
-				setColor(selectedOption);
+				setColor(selectedOption || []);
 				break;
 			default:
 				break;
 		}
 	};
 
+	console.log("color",color)
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+
+		//take out required values and add toast instead
+
+		if (pattern.value === "solid" && color.length > 1) {
+			setShowToast("Solid colored cats can only have one coat color.");
+			return;
+		}
+
+		if (
+			(pattern.value === "bicolor" && color.length > 2) ||
+			(pattern.value === "tuxedo" && color.length > 2) ||
+			(pattern.value === "tortoiseshell" && color.length > 2) ||
+			(pattern.value === "van" && color.length > 2) ||
+			(pattern.value === "pointed" && color.length > 2)
+		) {
+			setShowToast("Bicolor cats can only have two coat colors.");
+			return;
+		}
+
+		if (pattern.value === "calico" && color.length != 3) {
+			setShowToast("Calico cats must have three coat colors.");
+			return;
+		}
+
+		if (color.length > 3) {
+			setShowToast("Invalid color combination.");
+			return;
+		}
+
+	
 
 		try {
 			const formdata = new FormData();
@@ -189,20 +257,37 @@ export default function CatUploadPage() {
 				formdata.set("image", catImage.file, "filename");
 			}
 
-			console.log("formdata", formdata);
+			//console.log("formdata", formdata);
 
 			for (let pair of formdata.entries()) {
 				console.log(pair[0] + ": " + pair[1]);
 			}
 
-			console.log("pattern", pattern);
-			console.log("color", color);
-			console.log("status", status);
-			console.log("coatLength", coatLength);
-			console.log(typeof markerCoords.lng, markerCoords.lng);
+			// console.log("pattern", pattern);
+			// console.log("color", color);
+			// console.log("status", status);
+			// console.log("coatLength", coatLength);
+			
 
 			const response = await axios.post("/cats/add", formdata);
 			console.log("response", response);
+
+			if (response.data.success) {
+				dispatch({
+					type: "ADD_CAT",
+					payload: response.data.cat,
+				});
+
+				//RESET STATE TO EMPTY ///////////////////////////
+
+				setShowToast("Cat data was uploaded successfully!");
+
+				setTimeout(() => {
+					navigate("/");
+				}, 3000);
+			} else {
+				setShowToast("Error while uploading the data!");
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -218,11 +303,11 @@ export default function CatUploadPage() {
 				</StyledPBold>
 				<StyledCatUploadForm onSubmit={handleSubmit}>
 					<MapCatUpload
-						height="30vh"
+						height="35vh"
 						markerCoords={markerCoords}
 						setMarkerCoords={setMarkerCoords}
 					/>
-					<StyledSpan type="icon-span">
+					<StyledSpan type="icon-span" className="icon-span">
 						<StyledPBold>
 							{" "}
 							<BsQuestionCircle />
@@ -230,11 +315,11 @@ export default function CatUploadPage() {
 							detailed description of coat patterns and colors.
 						</StyledPBold>
 					</StyledSpan>
-					<StyledDivLabel padding="0">
+					<StyledDivLabel padding="0" className="date-time-picker">
 						<label>Pick a date</label>
-						<DatePicker onChange={onChange} value={date} locale="en-EN" />
+						<DatePicker onChange={onChange} value={date} locale="en-EN" maxDate={new Date()}/>
 					</StyledDivLabel>
-					<StyledDivLabel padding="0">
+					<StyledDivLabel padding="0" className="date-time-picker">
 						<label>Pick a time</label>
 						<TimePicker
 							onChange={setTime}
@@ -245,7 +330,7 @@ export default function CatUploadPage() {
 							required="true"
 						/>
 					</StyledDivLabel>
-					<StyledDivLabel padding="0" textAlign="left">
+					<StyledDivLabel padding="0" textAlign="left" className="select">
 						<label>Lost / seen *</label>
 						<Select
 							id="lostSeen"
@@ -259,9 +344,10 @@ export default function CatUploadPage() {
 							onChange={(selectedOption) =>
 								handleChange(selectedOption, "status")
 							}
+							required
 						/>
 					</StyledDivLabel>
-					<StyledDivLabel padding="0" textAlign="left">
+					<StyledDivLabel padding="0" textAlign="left" className="select">
 						<label>Coat length *</label>
 						<Select
 							id="coatLength"
@@ -275,9 +361,10 @@ export default function CatUploadPage() {
 							onChange={(selectedOption) =>
 								handleChange(selectedOption, "coatLength")
 							}
+							required
 						/>
 					</StyledDivLabel>
-					<StyledDivLabel padding="0" textAlign="left">
+					<StyledDivLabel padding="0" textAlign="left" className="select">
 						<label>Coat pattern *</label>
 						<Select
 							id="coatPattern"
@@ -291,9 +378,10 @@ export default function CatUploadPage() {
 							onChange={(selectedOption) =>
 								handleChange(selectedOption, "coatPattern")
 							}
+							required
 						/>
 					</StyledDivLabel>
-					<StyledDivLabel padding="0" textAlign="left">
+					<StyledDivLabel padding="0" textAlign="left" className="select">
 						<label>Coat color *</label>
 						<Select
 							id="coatColor"
@@ -309,12 +397,13 @@ export default function CatUploadPage() {
 							onChange={(selectedOption) =>
 								handleChange(selectedOption, "coatColor")
 							}
+							required
 						/>
 					</StyledDivLabel>
-					<img src="https://picsum.photos/300/200" alt="cat illustration" />
-					{status.value === "lost" && (
+					<StyledDivSimple className="cat-svg">{catSVG}</StyledDivSimple>
+					{status.value === "Lost" && (
 						<>
-							<StyledDivLabel padding="0">
+							<StyledDivLabel padding="0" className="text-input">
 								<label>Chip number</label>
 								<input
 									type="text"
@@ -325,18 +414,20 @@ export default function CatUploadPage() {
 									onChange={(e) => setChipNumber(e.target.value)}
 								/>
 							</StyledDivLabel>
-							<StyledDivLabel padding="0">
+							<StyledDivLabel padding="0" className="text-input">
 								<label>Finder's reward</label>
 								<input
 									type="text"
-									placeholder="Amount of reward..."
+									placeholder="Amount of reward in euro..."
 									id="reward"
 									name="reward"
 									value={reward}
 									onChange={(e) => setReward(e.target.value)}
 								/>
+								{/* this has to be styled yet: */}
+								<StyledSpan className="euro">€</StyledSpan>
 							</StyledDivLabel>
-							<StyledDivLabel padding="0">
+							<StyledDivLabel padding="0" className="text-input">
 								<label>Contact phone</label>
 								<input
 									type="text"
@@ -349,7 +440,7 @@ export default function CatUploadPage() {
 							</StyledDivLabel>
 						</>
 					)}
-					<StyledDivLabel padding="0">
+					<StyledDivLabel padding="0" className="text-input">
 						<label>Notes</label>
 						<textarea
 							id="notes"
@@ -360,7 +451,7 @@ export default function CatUploadPage() {
 							onChange={(e) => setNotes(e.target.value)}
 						/>
 					</StyledDivLabel>{" "}
-					<StyledDivLabel>
+					<StyledDivLabel className="photo-upload">
 						<label>Photo upload</label>
 						<StyledDivSimple padding="0">
 							{catImage && (
@@ -374,24 +465,35 @@ export default function CatUploadPage() {
 									accept="image/*"
 									onChange={handleImageChange}
 								/>
-								<StyledDivBorder className="photo-upload">
+								<StyledDivBorder className="photo-upload-icon">
 									<FaPlus />
 								</StyledDivBorder>
 							</label>
 						</StyledDivSimple>
 						<StyledButton
 							type="button"
+							className="delete-photo"
 							onClick={() => setCatImage({ url: "", file: null })}>
 							Delete photo
 						</StyledButton>
 					</StyledDivLabel>
+					{showToast === "Cat data was uploaded successfully!" && (
+						<Toast type="ok" setShowToast={setShowToast}>
+							{showToast}
+						</Toast>
+					)}
+					{showToast && showToast !== "Cat data was uploaded successfully!" && (
+						<Toast type="error" setShowToast={setShowToast}>
+							{showToast}
+						</Toast>
+					)}
 					<StyledDivSimple padding="0" justify="center">
-						<StyledButton>Go back</StyledButton>
+						<StyledButton onClick={() => navigate(-1)}>Cancel</StyledButton>
 						<StyledPrimaryButton type="submit">Upload</StyledPrimaryButton>
 					</StyledDivSimple>
 				</StyledCatUploadForm>
 			</StyledSection>
-			<StyledBGSection bgImg="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899663/catspotter-assets/BG_notification_udcr7h.jpg"></StyledBGSection>
+			<StyledBGSection bgImg={cloudinaryRoot + "catspotter-assets/BG_notification_udcr7h.jpg"}></StyledBGSection>
 		</StyledPage>
 	);
 }

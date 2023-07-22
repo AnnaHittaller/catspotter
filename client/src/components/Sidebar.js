@@ -26,16 +26,15 @@ import {
 	StyledSidebarButton,
 	StyledUserInfo,
 } from "../styles/styled/Styled_Sidebar";
-//import { AuthContext } from "../context/AuthContext";
 import { SidebarContext } from "../context/SidebarContext";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 
 export default function Sidebar() {
 	const { state, dispatch } = useContext(AppContext);
 	const { sidebaropen, setsidebaropen } = useContext(SidebarContext);
 	const { pathname } = useLocation();
-	//const { isLoggedIn, logout } = useContext(AuthContext);
 	const navigate = useNavigate();
 	console.log(state);
 
@@ -58,15 +57,17 @@ export default function Sidebar() {
 				<img
 					src={
 						sidebaropen
-							? "https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899573/catspotter-assets/catspotter_logo_light_eoazpt.png"
-							: "https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899573/catspotter-assets/catspotter_logo_small_mohq1r.png"
+							? cloudinaryRoot +
+							  "catspotter-assets/catspotter_logo_light_eoazpt.png"
+							: cloudinaryRoot +
+							  "catspotter-assets/catspotter_logo_small_mohq1r.png"
 					}
 					alt="catspotter logo"
 				/>
 			</StyledLogo>
 			<StyledUserInfo>
 				<img
-					src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1688899559/catspotter-assets/default_profile_small_g8rp1h.png"
+					src={state.user.avatar ? cloudinaryRoot + state.user.avatar : cloudinaryRoot + "catspotter-assets/default_profile_small_g8rp1h.png"}
 					alt="user avatar"
 				/>
 				{sidebaropen && (
@@ -200,14 +201,14 @@ export default function Sidebar() {
 			{state.user.username && (
 				<StyledLinkContainer isActive={pathname === "/profile/:userId"}>
 					<StyledLink
-						to="/profile/:userId"
-						isActive={pathname === "/profile/:userId"}
+						to="/profile"
+						isActive={pathname === "/profile"}
 						onClick={() => setsidebaropen(false)}>
-						<StyledLinkIcon isActive={pathname === "/profile/:userId"}>
+						<StyledLinkIcon isActive={pathname === "/profile"}>
 							<BsPerson />
 						</StyledLinkIcon>
 						{sidebaropen && (
-							<StyledLinkLabel isActive={pathname === "/profile/:userId"}>
+							<StyledLinkLabel isActive={pathname === "/profile"}>
 								Profile
 							</StyledLinkLabel>
 						)}

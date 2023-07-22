@@ -1,4 +1,5 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
+import useLocalStorage from "../customHooks/useLocalStorage";
 
 export const AppContext = createContext();
 
@@ -10,21 +11,72 @@ export default function ContextProvider({ children }) {
 					...state,
 					user: action.payload,
 				};
-
 			case "LOGOUT":
 				return {
+					...state,
 					user: {},
-					//posts: [], // what should come here
+					//cats: [],
 				};
+			case "UPDATE_USER":
+				return {
+					...state,
+					user: action.payload,
+				};
+			case "LIST_CATS":
+				return {
+					...state,
+					cats: action.payload,
+				};
+			case "ADD_CAT":
+				return {
+					...state,
+					cats: [...state.cats, action.payload],
+				};
+			case "DELETE_CAT":
+				return {
+					...state,
+					cats: [...state.cats.filter((cat) => cat._id !== action.payload)],
+				};
+			case "UPDATE_CAT":
+				return {
+					...state,
+					cats: state.cats.map((cat) =>
+						cat._id === action.payload._id ? action.payload : cat
+					),
+				};
+			case "BOOKMARK":
+				return {
+					...state,
+					user: action.payload,
+				};
+			// case "FILTER_BY_LOCATION":
+			// 	return {
+			// 		...state,
+			// 		filteredCats: action.payload
+			// 	}
+
 			default:
 				return state;
 		}
 	};
-	
+
 	const [state, dispatch] = useReducer(reducer, {
 		user: {},
-		//posts: [],
+		cats: [],
 	});
+
+	const [storedState, setStoredState] = useLocalStorage("state", null);
+
+	useEffect(() => {
+		if (storedState) {
+			dispatch({ type: "LOGIN", payload: storedState.user });
+			dispatch({ type: "LIST_CATS", payload: storedState.cats });
+		}
+	}, []);
+
+	useEffect(() => {
+		setStoredState(state);
+	}, [state, setStoredState]);
 
 	return (
 		<AppContext.Provider value={{ state, dispatch }}>

@@ -1,7 +1,9 @@
 import User from "../models/User.js";
+import Cat from "../models/Cat.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import sendEmail from "../utils/sendEmail.js";
+import mongoose from "mongoose";
 
 export const handleRegisterUser = async (req, res) => {
 	console.log("handleRegisterUser", req.body);
@@ -70,9 +72,12 @@ export const handleLoginUser = async (req, res) => {
 
 		console.log("token:", token);
 
+		const cats = await Cat.find().select("-__v").sort({ date: -1 });
+
 		res.cookie("catspotterlogin", token);
 
-		res.status(200).send({ success: true, user: newUser });
+		//res.status(200).send({ success: true, user: newUser });
+		res.status(200).send({ success: true, user: newUser, cats });
 	} catch (error) {
 		console.log("error logging in user:", error.message);
 
@@ -95,29 +100,8 @@ export const handleLogoutUser = async (req, res) => {
 	}
 };
 
-export const handleEmailConfirm = async (req, res) => {
-	console.log("handleemailconfirm function", req.body);
-
-	try {
-		const decodedToken = jwt.verify(req.body.token, process.env.JWT_TOKEN);
-
-		const user = User.findByIdAndUpdate(
-			decodedToken._id,
-			{ emailVerified: true },
-			{ new: true }
-		);
-
-		if(!user) return res.send({success: false, errorId: 1})
-
-		res.send({success: true});
-	} catch (error) {
-		console.log(" error at email confirm:", error.message);
-		res.send("Error in confirming the email", error.message);
-	}
-};
-
 export const handleDeleteUser = async (req, res) => {
-	console.log("handleDeleteUser:", req.params);
+	//console.log("handleDeleteUser:", req.params);
 
 	try {
 		const deletedUser = await User.findByIdAndDelete(req.params.id);
@@ -134,6 +118,110 @@ export const handleDeleteUser = async (req, res) => {
 	}
 };
 
+export const handleUpdateUser = async (req, res) => {
+	// console.log(" handleUpdateProfile:", req.body);
+	//   console.log(" handleUpdateProfile FILE:", req.file);
+
+	try {
+		//console.log(" handleUpdateUser FILENAME:", req.file.filename);
+
+		if (req.file) {
+			req.body.avatar = req.file.filename;
+		}
+
+		if (req.body.password) {
+			const salt = await bcrypt.genSalt(10);
+			const hashedPass = await bcrypt.hash(password, salt);
+			req.body.password = hashedPass;
+		}
+
+		const editedUser = await User.findByIdAndUpdate(req.user, req.body, {
+			new: true,
+		});
+
+		const newUser = editedUser.toObject();
+		delete newUser.password;
+		console.log("updatedUser:", newUser);
+
+		res.send({
+			success: true,
+			user: newUser,
+		});
+	} catch (error) {
+		console.log("error handleUpdateUser", error.message);
+
+		res.send({
+			success: false,
+			message: error.message,
+		});
+	}
+};
+
+export const handleBookmark = async (req, res) => {
+	console.log("req.user 1", req.user);
+	try {
+		console.log("handleBookmark here");
+
+		// req.body is {cat: id}
+		const { cat } = req.body;
+		console.log("cat", cat)
+		const catId = new mongoose.Types.ObjectId(cat);
+		console.log("catId",catId)
+
+		const user = await User.findById(req.user);
+
+		// Use $addToSet to add the catId if it doesn't exist or $pull to remove it if it does
+		// Check if the catId exists in the bookmarks array
+    const isBookmarked = user.bookmarks.includes(catId);
+	console.log("req.user",user)
+
+    // Use $addToSet to add the catId if it's not bookmarked or $pull to remove it if it's already bookmarked
+    const updatedUser = isBookmarked
+			? await User.findByIdAndUpdate(
+					user,
+					{ $pull: { bookmarks: catId } },
+					{ new: true }
+			  )
+			: await User.findByIdAndUpdate(
+					user,
+					{ $addToSet: { bookmarks: catId } },
+					{ new: true }
+			  );
+
+		return res.send({ success: true, user: updatedUser });
+		
+	} catch (error) {
+		console.log("error handleBookmark", error.message);
+
+		res.send({
+			success: false,
+			message: error.message,
+		});
+	}
+};
+
+// has to be rewritten and updated with sendGrid instead of ElasticEmails *******************//
+
+export const handleEmailConfirm = async (req, res) => {
+	console.log("handleemailconfirm function", req.body);
+
+	try {
+		const decodedToken = jwt.verify(req.body.token, process.env.JWT_TOKEN);
+
+		const user = User.findByIdAndUpdate(
+			decodedToken._id,
+			{ emailVerified: true },
+			{ new: true }
+		);
+
+		if (!user) return res.send({ success: false, errorId: 1 });
+
+		res.send({ success: true });
+	} catch (error) {
+		console.log(" error at email confirm:", error.message);
+		res.send("Error in confirming the email", error.message);
+	}
+};
 
 export const handleForgotPassword = async (req, res) => {
 	console.log(" handleForgotPass:", req.body);
@@ -164,6 +252,7 @@ export const handleForgotPassword = async (req, res) => {
 		res.send("Error in handleForgotPassword" + error.message);
 	}
 };
+
 export const handleChangePassword = async (req, res) => {
 	console.log("handleChangePassword:", req.body);
 
@@ -194,6 +283,3 @@ export const handleChangePassword = async (req, res) => {
 		res.send("Error in handleChangePassword" + error.message);
 	}
 };
-
-
-export const handleUpdateUser = async (req, res) => {};

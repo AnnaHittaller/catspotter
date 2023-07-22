@@ -3,9 +3,38 @@ import styled from "styled-components";
 
 export const StyledCatInfoSheetMini = styled.div`
 	position: relative;
+	max-width: 600px;
 
-	img {
+	img:nth-child(1) {
 		height: 50px;
+	}
+
+	.thumbnail-wrapper {
+		align-self: flex-start;
+		max-width: 70px;
+	}
+
+	.thumbnail {
+		height: 50px;
+		width: 70px;
+		object-fit: cover;
+		padding: 0;
+		border-radius: ${v.borderRadius};
+		border: 1px solid ${v.cadetGrey};
+	}
+	
+	.thumbnail-svg {
+		height: 50px;
+		width: 70px;
+		object-fit: cover;
+	}
+
+	.thumbnail-svg svg {
+		height: 50px;
+		width: 70px;
+		object-fit: cover;
+		margin: 0;
+		border: none;
 	}
 
 	svg {
@@ -17,18 +46,25 @@ export const StyledCatInfoSheetMini = styled.div`
 
 export const StyledCatInfoSheetMidi = styled.div`
 	max-width: 300px;
+	min-width: 200px;
+
 
 	h3 {
 		padding: 0.5rem 0;
 	}
 
 	img {
-		height: 120px;
+		height: 150px;
 		width: 100%;
 		object-fit: cover;
 	}
 
-	svg {
+	.cat-svg svg {
+		height: 150px;
+		margin: 0 auto;
+	}
+
+	> div > svg {
 		font-size: 2rem;
 		color: ${v.sunGlow};
 		position: absolute;
@@ -36,10 +72,9 @@ export const StyledCatInfoSheetMidi = styled.div`
 		padding: 0;
 		top: -0.5rem;
 		right: 0.5rem;
-		cursor: pointer;
 	}
 
-	div {
+	div:not(:nth-of-type(1)) {
 		justify-content: center;
 		padding: 0.5rem 1rem;
 		gap: 0.5rem;
@@ -60,6 +95,7 @@ export const StyledCatInfoSheetMaxi = styled.div`
 
 	div > svg + p:nth-child(2) {
 		color: ${v.sunGlow};
+		font-size: 2rem;
 		margin-bottom: -1rem;
 	}
 
@@ -75,15 +111,15 @@ export const StyledCatInfoSheetMaxi = styled.div`
 
 	img:nth-of-type(1) {
 		width: 100%;
+		// max-width: 400px;
+		height: auto;
+		max-height: 400px;
+		object-fit: cover;
 		border-radius: 10px;
 	}
 
-	img:nth-of-type(2) {
-		width: 100%;
-		max-width: 200px;
-	}
-
-	svg:nth-child(1) {
+	
+	svg:nth-of-type(1) {
 		font-size: 2rem;
 		color: ${v.sunGlow};
 		position: absolute;
@@ -91,6 +127,14 @@ export const StyledCatInfoSheetMaxi = styled.div`
 		padding: 0;
 		top: -0.25rem;
 		right: 0.5rem;
+	}
+
+	.cat-svg svg {
+		width: 100%;
+		max-width: 200px;
+		height: auto;
+		position: unset;
+		margin: 0 auto;
 	}
 
 	a {

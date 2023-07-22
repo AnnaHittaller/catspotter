@@ -23,6 +23,7 @@ const catSchema = new Schema({
 		type: Date,
 		required: true,
 	},
+	time: String,
 	image: {
 		type: [String],
 	},
@@ -34,7 +35,7 @@ const catSchema = new Schema({
 		type: {
 			type: String,
 			enum: ["Point"],
-			
+			index: "2dsphere",
 		},
 		coordinates: {
 			type: [Number], //long, lat!!!!! in this order

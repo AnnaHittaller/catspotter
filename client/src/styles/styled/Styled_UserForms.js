@@ -21,7 +21,7 @@ export const StyledUserData = styled.div`
 			text-align: center;
 		}
 
-		@media (max-width: 1000px) {
+		@media (max-width: 1200px) {
 			flex-direction: column;
 		}
 	}
@@ -86,6 +86,14 @@ export const StyledUserUpdateForm = styled(StyledForm)`
 		svg path {
 			stroke: ${v.charcoal};
 		}
+	}
+
+	.delete-avatar-btn {
+		position: relative;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%)
+		
 	}
 
 	input[type="password"] {

@@ -1,6 +1,6 @@
 export const optionsCat = [
-	{ value: "lost", label: "Lost" },
-	{ value: "seen", label: "Seen" },
+	{ value: "Lost", label: "Lost" },
+	{ value: "Seen", label: "Seen" },
 ];
 
 export const optionsPattern = [
@@ -17,10 +17,10 @@ export const optionsPattern = [
 
 export const optionsColor = [
 	{ value: "black", label: "Black" },
-	{ value: "white", label: "White" },
+	{ value: "white", label: "White"},
 	{ value: "orange", label: "Orange" },
 	{ value: "beige", label: "Beige" },
-	{ value: "greyBlue", label: "Grey / Blue" },
+	{ value: "grey", label: "Grey / Blue" },
 	{ value: "brown", label: "Brown" },
 ];
 
@@ -45,6 +45,6 @@ export const optionsArea = [
 
 export const optionsCoatLength = [
 	{ value: "hairless", label: "Hairless" },
-	{ value: "short", label: "Short-haired" },
-	{ value: "long", label: "Long-haired" },
+	{ value: "short-haired", label: "Short-haired" },
+	{ value: "long-haired", label: "Long-haired" },
 ];

@@ -47,8 +47,10 @@ export default function CatInfoSheetMini({ cat }) {
 
 	return (
 		<StyledCatInfoSheetMini>
-			<StyledDivSimpleRounded bgColor={v.columbiaBlue} padding=".5rem 1rem">
+			<StyledDivSimpleRounded bgColor={v.columbiaBlue} padding="1rem 1rem">
 				<StyledDivSimple padding="0" justify="flex-start">
+					<StyledDivSimple padding="0" flexDirection="column" justify="flex-end" gap=".25rem" className="thumbnail-wrapper">
+
 					<img
 						src={cat?.status === "Lost" ? marker_lost : marker_seen}
 						alt=""
@@ -61,8 +63,9 @@ export default function CatInfoSheetMini({ cat }) {
 							className="thumbnail"
 						/>
 					) : (
-						<StyledDivSimple className="thumbnail">{catSVG}</StyledDivSimple>
+						<StyledDivSimple className="thumbnail-svg" padding="0">{catSVG}</StyledDivSimple>
 					)}
+					</StyledDivSimple>
 					<div>
 						<StyledPBold>
 							{cat?.pattern === "tortoiseshell" || cat?.pattern === "calico"
@@ -80,9 +83,7 @@ export default function CatInfoSheetMini({ cat }) {
 											return color.toLowerCase();
 										})
 										.join(" ") +
-								  ` ${cat?.pattern.charAt(0).toUpperCase()}${cat?.pattern.slice(
-										1
-								  )}`}{" "}
+								  ` ${cat?.pattern}`}{" "}
 							cat in {cat?.address.city}
 						</StyledPBold>
 						<StyledP>{distance} km away from you</StyledP>

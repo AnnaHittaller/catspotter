@@ -28,9 +28,7 @@ export default function MenuMidi({cat}) {
 									return color.toLowerCase();
 								})
 								.join(" ") +
-						  ` ${cat?.pattern.charAt(0).toUpperCase()}${cat?.pattern.slice(
-								1
-						  )}`}{" "}
+						  ` ${cat?.pattern}`}{" "}
 					cat
 				</StyledP>
 				<StyledP>{formattedDate}</StyledP>

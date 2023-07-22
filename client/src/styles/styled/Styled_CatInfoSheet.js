@@ -5,10 +5,38 @@ export const StyledCatInfoSheetMini = styled.div`
 	position: relative;
 	max-width: 600px;
 
-	img {
+	img:nth-child(1) {
 		height: 50px;
 	}
- 
+
+	.thumbnail-wrapper {
+		align-self: flex-start;
+		max-width: 70px;
+	}
+
+	.thumbnail {
+		height: 50px;
+		width: 70px;
+		object-fit: cover;
+		padding: 0;
+		border-radius: ${v.borderRadius};
+		border: 1px solid ${v.cadetGrey};
+	}
+	
+	.thumbnail-svg {
+		height: 50px;
+		width: 70px;
+		object-fit: cover;
+	}
+
+	.thumbnail-svg svg {
+		height: 50px;
+		width: 70px;
+		object-fit: cover;
+		margin: 0;
+		border: none;
+	}
+
 	svg {
 		font-size: 2rem;
 		cursor: pointer;

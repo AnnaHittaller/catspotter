@@ -87,20 +87,20 @@ export default function ProfilePage() {
 											"No address and area have been specified yet"
 										</StyledPBold>
 									)}
-									{state.user.address.road && (
+									{state.user.address?.road ?  (
 										<StyledPBold>{state.user.address.road}</StyledPBold>
-									)}
-									{state.user.address.suburb && (
-										<StyledPBold>{state.user.address.suburb}</StyledPBold>
-									)}
+									) : null}
+									{state.user.address?.suburb ? (
+										<StyledPBold>{state.user.address?.suburb}</StyledPBold>
+									) : null}
 									<StyledSpanBold>
 
-									{state.user.address.city && 
-										state.user.address.city
-									}, {" "}
-									{state.user.address.postcode && 
-										state.user.address.postcode
-									}
+									{state.user.address?.city ? 
+										state.user.address?.city : null
+									} {" "}
+									{state.user.address?.postcode ? 
+										state.user.address.postcode : null
+									} 
 									</StyledSpanBold>
 								</StyledDivSimple>
 								<StyledP>

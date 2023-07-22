@@ -95,6 +95,10 @@ export const StyledDivBorder = styled(StyledDivSimple)`
       max-width: 450px;
       font-weight: 500;
     }
+
+    h2:nth-child(3) {
+      margin: 0 2rem;
+    }
     
      @media (max-width: 1000px) {
         justify-content: space-between;

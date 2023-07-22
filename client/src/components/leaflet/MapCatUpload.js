@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { StyledMapContainer } from "../../styles/styled/Styled_MapContainer";
 import {
 	MapContainer,
@@ -16,6 +16,7 @@ import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import ReverseGeocodeMarker from "./ReverseGeocodeMarker";
 //import icon from "./MapMarkerOwn"; 
 import { markerIconOwn } from "./MapMarkers";
+import { AppContext } from "../../context/AppContext";
 //import MenuAddress from "./MenuAddress";
 
 export default function MapCatUpload({
@@ -24,6 +25,7 @@ export default function MapCatUpload({
 	setMarkerCoords,
 }) {
 	//console.log("rerender from mapnew component");
+	const { state, dispatch } = useContext(AppContext);
 	const mapRef = useRef();
 	const [showToast, setShowToast] = useState("");
 	const [cats, setCats] = useState([]);
@@ -31,6 +33,19 @@ export default function MapCatUpload({
 	//const [geocoderAdded, setGeocoderAdded] = useState(false);
 	//const [markerCoords, setMarkerCoords] = useState(null);
 	console.log("markerCoords,", markerCoords);
+
+	let center = {
+		lat: 51.64536,
+		lng: -0.1534,
+	};
+
+	if (state.user._id) {
+		center = {
+			lat: state.user.location.coordinates[1],
+			lng: state.user.location.coordinates[0],
+		};
+	} 
+
 
 	const handleMapClick = (e) => {
 		const { lat, lng } = e.latlng;
@@ -52,7 +67,7 @@ export default function MapCatUpload({
 			)}
 			<StyledMapContainer height={height}>
 				<MapContainer
-					center={[51.64536, -0.1534]}
+					center={center}
 					zoom={16}
 					minZoom={2}
 					whenCreated={(mapInstance) => (mapRef.current = mapInstance)}

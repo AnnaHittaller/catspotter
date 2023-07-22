@@ -35,7 +35,6 @@ const catSchema = new Schema({
 		type: {
 			type: String,
 			enum: ["Point"],
-			required: true,
 			index: "2dsphere",
 		},
 		coordinates: {

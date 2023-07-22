@@ -17,7 +17,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
-import Toast from "../components/Toast"
+import Toast from "../components/Toast";
 
 export default function NotificationsPage() {
 	const { state } = useContext(AppContext);
@@ -25,6 +25,8 @@ export default function NotificationsPage() {
 	const [matches, setMatches] = useState([]);
 	const [showToast, setShowToast] = useState("");
 	const navigate = useNavigate();
+
+	console.log("matches:", matches)
 
 	useEffect(() => {
 		const filterCatsByLocation = async () => {
@@ -51,55 +53,65 @@ export default function NotificationsPage() {
 		filterCatsByLocation();
 	}, [state.cats]);
 
-	useEffect(()=> {
-		const fetchMatches = async () =>{
+	useEffect(() => {
+		const fetchMatches = async () => {
 			try {
-				const response = await axios.get("/cats/listmatches" )
-				console.log("listmatches response", response)
+				const response = await axios.get("/cats/listmatches");
+				console.log("listmatches response", response);
 
-	// should get back an array of cardData objects, so many as many cats the user has uploaded. May have to save them in a local state to map through them
-	// and render only those pair where the distance between userCat and matchingCat is less than 1 km
-	// first check response wheter I need to get allCardData or cardData from it for the distance filtering
+				// should get back an array of cardData objects, so many as many cats the user has uploaded. May have to save them in a local state to map through them
+				// and render only those pair where the distance between userCat and matchingCat is less than 1 km
+				// first check response wheter I need to get allCardData or cardData from it for the distance filtering
 
-	if (!response.data.success && response.data.errorId === "jwt expired") {
-		navigate("/login");
-	}
+				if (!response.data.success && response.data.errorId === "jwt expired") {
+					navigate("/login");
+				}
 
-	if (!response.data.success && response.data.errorId != "jwt expired") {
-		setShowToast("Sorry, there was an error while fetching the matches, please try again!")
-	}
+				if (!response.data.success && response.data.errorId != "jwt expired") {
+					setShowToast(
+						"Sorry, there was an error while fetching the matches, please try again!"
+					);
+				}
 
-	// if (response.data.success) {
-	// 		// Assuming the response contains the data in the format you expect
-	// 		// You can do the distance filtering here
-	// 		const filteredMatches = response.data.cardData.filter(
-	// 			(cardData) => {
-	// 				// Loop through matchingCatId and calculate the distance for each cat
-	// 				for (const cat of cardData.matchingCatId) {
-	// 					const distance = calculateDistance(
-	// 						cardData.usersCat.location[1],
-	// 						cardData.usersCat.location[2],
-	// 						cat.location[1],
-	// 						cat.location[2] 
-	// 					);
-	// 					// If the distance is less than 1 km, keep the cat in the array
-	// 					if (distance < 1) {
-	// 						return true;
-	// 					}
-	// 				}
-	// 				return false; // If no cat matches the distance condition, filter it out
-	// 			}
-	// 		);
+				 if (response.data.success) {
+				// 		// Assuming the response contains the data in the format you expect
+				// 		// You can do the distance filtering here
+				 		const filteredMatches = response.data.allCardData.filter(
+				 			(cardData) => {
+				// 				// Loop through matchingCatId and calculate the distance for each cat
+								for (const cat of cardData.matchingCat) {
+									const distance = calculateDistance(
+										cardData.usersOwnCat.location.coordinates[1],
+										cardData.usersOwnCat.location.coordinates[0],
+										cat.location.coordinates[1],
+										cat.location.coordinates[0]
+									);
+				// 					// If the distance is less than 1 km, keep the cat in the array
+										if (isNaN(distance)) {
+											console.log(
+												"Invalid distance calculation: ",
+												cardData.usersOwnCat.location,
+												cat.location
+											);
+										} else {
+											console.log("Distance: ", distance);
+										}
+				 					if (distance < 1) {
+				 						return true;
+				 					}
+				 				}
+				 				return false; // If no cat matches the distance condition, filter it out
+				 			}
+				 		);
 
-	// 		setMatches(filteredMatches);
-	// 	}
-
+				 		setMatches(filteredMatches);
+				 	}
 			} catch (error) {
-				console.log(error.message)
+				console.log(error.message);
 			}
-		}
-		fetchMatches()
-	}, [state.cats])
+		};
+		fetchMatches();
+	}, [state.cats]);
 
 	return (
 		<StyledPage display="flex" flexDirection="column">

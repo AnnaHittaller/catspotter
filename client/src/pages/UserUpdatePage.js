@@ -64,9 +64,9 @@ export default function UserUpdatePage() {
 	const [newPassword, setNewPassword] = useState("");
 	
 	const [avatar, setAvatar] = useState({
-		url:
-			cloudinaryRoot + state.user.avatar ||
-			cloudinaryRoot + "catspotter-assets/default_profile_big_wetzpy.png",
+		url: state.user.avatar
+			? cloudinaryRoot + state.user.avatar
+			: cloudinaryRoot + "catspotter-assets/default_profile_big_wetzpy.png",
 		file: null,
 	});
 	const [newEmail, setNewEmail] = useState(state.user.email);

@@ -4,6 +4,11 @@ import styled from "styled-components";
 export const StyledCatInfoSheetMini = styled.div`
 	position: relative;
 	max-width: 600px;
+	height: 100%;
+
+	> div {
+		height: 100%;
+	}
 
 	img:nth-child(1) {
 		height: 50px;
@@ -48,6 +53,10 @@ export const StyledCatInfoSheetMidi = styled.div`
 	max-width: 300px;
 	min-width: 200px;
 
+	> div {
+		height: 100%;
+		
+	}
 
 	h3 {
 		padding: 0.5rem 0;
@@ -82,6 +91,11 @@ export const StyledCatInfoSheetMidi = styled.div`
 
 	div > div {
 		gap: 0;
+	}
+
+	button {
+		justify-self: flex-end;
+		margin-top: auto;
 	}
 `;
 
@@ -173,6 +187,11 @@ export const StyledCatInfoSheetNotification = styled.div`
 	.data-wrapper {
 		flex-direction: row;
 		align-items: stretch;
+		> div > div{
+
+			height: 100%;
+			
+		}
 
 		@media (max-width: 800px) {
 			flex-direction: column;

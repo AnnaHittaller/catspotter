@@ -27,7 +27,7 @@ export default function CatInfoSheetMidi({ cat }) {
 
 	return (
 		<StyledCatInfoSheetMidi>
-			<StyledDivLabel>
+			<StyledDivLabel >
 				<label>{cat.status}</label>
 				<StyledH3>
 					{cat?.pattern.charAt(0).toUpperCase()}

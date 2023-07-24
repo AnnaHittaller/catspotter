@@ -16,7 +16,7 @@ import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Toast from "../components/Toast";
 
 export default function NotificationsPage() {
@@ -26,7 +26,7 @@ export default function NotificationsPage() {
 	const [showToast, setShowToast] = useState("");
 	const navigate = useNavigate();
 
-	console.log("matches:", matches)
+	console.log("matches:", matches) 
 
 	useEffect(() => {
 		const filterCatsByLocation = async () => {
@@ -38,9 +38,9 @@ export default function NotificationsPage() {
 					navigate("/login");
 				}
 
-				// if (!response.data.success && response.data.errorId != "jwt expired") {
-				//	setShowToast("Sorry, there was an error while fetching the area activities, please try again!")
-				//}
+				if (!response.data.success && response.data.errorId != "jwt expired" && state.user.areaNotification ) {
+					setShowToast("Sorry, there was an error while fetching the area activities, please try again!")
+				}
 
 				if (response.data.success) {
 					setFilteredCatsByLocation(response.data.cats);
@@ -67,7 +67,7 @@ export default function NotificationsPage() {
 					navigate("/login");
 				}
 
-				if (!response.data.success && response.data.errorId != "jwt expired") {
+				if (!response.data.success && response.data.errorId != "jwt expired" && state.user.dataMatchNotification) {
 					setShowToast(
 						"Sorry, there was an error while fetching the matches, please try again!"
 					);
@@ -122,12 +122,26 @@ export default function NotificationsPage() {
 					flexDirection="column"
 					align="flex-start">
 					<StyledH3>Data matches</StyledH3>
-					<StyledPBig>There are no data matches.</StyledPBig>
 					{showToast ===
 						"Sorry, there was an error while fetching the matches, please try again!" && (
 						<Toast type="error">{showToast}</Toast>
 					)}
-					<DataMatchNotification />
+					{state.user.dataMatchNotification && matches && matches.length > 0 ? (
+						matches.map((match) => (
+							<DataMatchNotification
+								key={match.usersOwnCat._id}
+								match={match}
+							/>
+						))
+					) : (
+						<StyledPBig>There are no data matches.</StyledPBig>
+					)}
+					{!state.user.dataMatchNotification && (
+						<StyledPBig>
+							Notifications are turned off. You can turn them on{" "}
+							<Link to="/updateprofile">here</Link>
+						</StyledPBig>
+					)}
 				</StyledDivSimple>
 				<StyledDivSimple
 					padding="1rem 0 0 0"
@@ -135,7 +149,7 @@ export default function NotificationsPage() {
 					align="flex-start">
 					<StyledH3>Area activities</StyledH3>
 					<StyledDivSimpleGrid min="290px" padding="1rem 0">
-						{filteredCatsByLocation && filteredCatsByLocation.length > 0 ? (
+						{state.user.areaNotification && filteredCatsByLocation && filteredCatsByLocation.length > 0 ? (
 							filteredCatsByLocation.map((cat) => (
 								<CatInfoSheetMini key={cat._id} cat={cat} />
 							))
@@ -149,6 +163,12 @@ export default function NotificationsPage() {
 							<Toast type="error">{showToast}</Toast>
 						)}
 					</StyledDivSimpleGrid>
+					{!state.user.areaNotification && (
+						<StyledPBig>
+							Notifications are turned off. You can turn them on{" "}
+							<Link to="/updateprofile">here</Link>
+						</StyledPBig>
+					)}
 				</StyledDivSimple>
 				{/* <StyledDivSimple
 					padding="1rem 0 0 0"

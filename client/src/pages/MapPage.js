@@ -39,6 +39,7 @@ import { AppContext } from "../context/AppContext";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot"
 import { filterCats } from "../utils/CatUtils";
 import FetchCats from "../utils/FetchCats";
+import { StyledInput } from "../styles/styled/Styled_Input";
 
 export default function MapPage() {
 
@@ -46,6 +47,8 @@ export default function MapPage() {
 	const [cats, setCats] = useState([])
 	const [visibleCats, setVisibleCats] = useState([]);
 	const [filteredCats, setFilteredCats] = useState([])
+	const [chipNr, setChipNr] = useState("")
+	const [notesText, setNotesText] = useState("");
 
 	console.log("visible cats",visibleCats)
 
@@ -54,6 +57,7 @@ export default function MapPage() {
 	const [selectedColor, setSelectedColor] = useState(null);
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [selectedCoatLength, setSelectedCoatLength] = useState(null);
+	
 
 	console.log(selectedStatus, selectedPattern, selectedDate, selectedCoatLength, selectedColor)
 
@@ -138,7 +142,7 @@ useEffect(() => {
 						older posts, please adjust the filters below.
 						<StyledP>Move or zoom the map to find more cats.</StyledP>
 					</StyledP>
-					<FetchCats/>
+					<FetchCats />
 					<MapFindCat
 						cats={cats}
 						visibleCats={visibleCats}
@@ -225,6 +229,8 @@ useEffect(() => {
 							isClearable
 							menuPlacement="auto"
 						/> */}
+						<StyledInput type="text" placeholder="Chip number..." />
+						<StyledInput type="text" placeholder="Search in notes..." />
 					</StyledSelectWrapper>
 				</StyledDivSimple>
 
@@ -235,7 +241,7 @@ useEffect(() => {
 						))
 					) : (
 						<StyledH3>
-							There are no matching results in the mapped area. 
+							There are no matching results in the mapped area.
 						</StyledH3>
 					)}
 				</StyledDivSimpleGrid>

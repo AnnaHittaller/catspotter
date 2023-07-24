@@ -14,7 +14,6 @@ import { StyledP, StyledPBig, StyledPBold } from "../styles/styled/Styled_Text";
 import { StyledH3 } from "../styles/styled/Styled_Title";
 import { v } from "../styles/Variables";
 //import { CiMenuKebab } from "react-icons/ci";
-import MapForOneCat from "./MapForOneCat";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import dateFormatter from "../utils/DateFormatter";
@@ -150,7 +149,7 @@ export default function CatInfoSheetMaxi({ id }) {
 						<StyledDivSimpleRounded
 							bgColor={v.columbiaBlue}
 							justify="center"
-							padding=".5rem">
+							padding=".5rem"> 
 							<StyledP>
 								{cat?.address?.road + ", "}
 								{cat?.address?.suburb && cat?.address.suburb + ", "}

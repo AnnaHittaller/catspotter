@@ -1,15 +1,15 @@
-
 import { getDaysFromSelectedDate } from "./GetDaysFromSelectedDate";
 
 export const filterCats = (
-    state,
+	state,
 	selectedStatus,
 	selectedPattern,
 	selectedColor,
 	selectedCoatLength,
-	selectedDate
+	selectedDate,
+	chipNr,
+	notesText
 ) => {
-
 	let filteredCats = state.cats;
 
 	if (selectedStatus) {
@@ -50,6 +50,16 @@ export const filterCats = (
 			const catDate = new Date(cat.date);
 			return cat.date >= minDate;
 		});
+	}
+
+	if (chipNr) {
+		filteredCats = filteredCats.filter(
+			(cat) => cat.chipNr.includes(chipNr)
+		);
+	}
+
+	if (notesText) {
+		filteredCats = filteredCats.filter((cat) => cat.notes.toLowerCase().split(" ").includes(notesText));
 	}
 
 	return filteredCats;

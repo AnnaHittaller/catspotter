@@ -131,7 +131,7 @@ export const handleUpdateUser = async (req, res) => {
 
 		if (req.body.password) {
 			const salt = await bcrypt.genSalt(10);
-			const hashedPass = await bcrypt.hash(password, salt);
+			const hashedPass = await bcrypt.hash(req.body.password, salt);
 			req.body.password = hashedPass;
 		}
 

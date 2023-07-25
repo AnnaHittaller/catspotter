@@ -9,6 +9,11 @@ export const StyledCatInfoSheetMini = styled.div`
 	> div {
 		height: 100%;
 	}
+	
+	> div > div:nth-of-type(1) {
+		height: 100%;
+
+	}
 
 	img:nth-child(1) {
 		height: 50px;
@@ -17,6 +22,7 @@ export const StyledCatInfoSheetMini = styled.div`
 	.thumbnail-wrapper {
 		align-self: flex-start;
 		max-width: 70px;
+		
 	}
 
 	.thumbnail {

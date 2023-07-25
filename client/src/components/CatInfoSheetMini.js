@@ -50,7 +50,6 @@ export default function CatInfoSheetMini({ cat }) {
 			<StyledDivSimpleRounded bgColor={v.columbiaBlue} padding="1rem 1rem">
 				<StyledDivSimple padding="0" justify="flex-start">
 					<StyledDivSimple padding="0" flexDirection="column" justify="flex-end" gap=".25rem" className="thumbnail-wrapper">
-
 					<img
 						src={cat?.status === "Lost" ? marker_lost : marker_seen}
 						alt=""

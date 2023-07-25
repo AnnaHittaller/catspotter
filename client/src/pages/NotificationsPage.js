@@ -148,7 +148,7 @@ export default function NotificationsPage() {
 					flexDirection="column"
 					align="flex-start">
 					<StyledH3>Area activities</StyledH3>
-					<StyledDivSimpleGrid min="290px" padding="1rem 0">
+					<StyledDivSimpleGrid min="350px" padding="1rem 0">
 						{state.user.areaNotification && filteredCatsByLocation && filteredCatsByLocation.length > 0 ? (
 							filteredCatsByLocation.map((cat) => (
 								<CatInfoSheetMini key={cat._id} cat={cat} />

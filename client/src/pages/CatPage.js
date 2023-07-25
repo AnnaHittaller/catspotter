@@ -7,6 +7,7 @@ import {
 import CatInfoSheetMaxi from "../components/CatInfoSheetMaxi";
 import { useParams } from "react-router-dom";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+import { StyledH2Underline } from "../styles/styled/Styled_Title";
 
 
 
@@ -16,9 +17,13 @@ export default function CatPage() {
 	return (
 		<StyledPage display="flex" flexDirection="column">
 			<StyledSection>
-				<CatInfoSheetMaxi id={id}/>
+				<StyledH2Underline>Infosheet</StyledH2Underline>
+				<CatInfoSheetMaxi id={id} />
 			</StyledSection>
-			<StyledBGSection bgImg={cloudinaryRoot + "catspotter-assets/BG_notification_udcr7h.jpg"}></StyledBGSection>
+			<StyledBGSection
+				bgImg={
+					cloudinaryRoot + "catspotter-assets/BG_notification_udcr7h.jpg"
+				}></StyledBGSection>
 		</StyledPage>
 	);
 }

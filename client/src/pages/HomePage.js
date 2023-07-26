@@ -7,12 +7,12 @@ import { StyledDivSimple, StyledDivBorder } from "../styles/styled/Styled_Div";
 import { StyledSection } from "../styles/styled/Styled_Section";
 import { StyledPage } from "../styles/styled/Styled_Page";
 import { StyledH2, StyledH2Underline } from "../styles/styled/Styled_Title";
-import logo_dark from "../assets/logos/catspotter_logo_dark.png";
+//import logo_dark from "../assets/logos/catspotter_logo_dark.png";
 import {
 	StyledButton,
 	StyledPrimaryButton,
 } from "../styles/styled/Styled_Button";
-import arrow from "../assets/appImages/yellow_arrow.png";
+//import arrow from "../assets/appImages/yellow_arrow.png";
 import { v } from "../styles/Variables";
 import { IoMapOutline, IoBookmarkOutline } from "react-icons/io5";
 import {

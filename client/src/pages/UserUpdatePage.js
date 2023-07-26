@@ -15,7 +15,6 @@ import {
 	StyledButton,
 	StyledPrimaryButton,
 } from "../styles/styled/Styled_Button";
-import default_profile from "../assets/appImages/default_profile_big.png";
 import { StyledUserUpdateForm } from "../styles/styled/Styled_UserForms";
 
 import ToggleButton from "../components/ToggleButton";

@@ -4,32 +4,28 @@ import {
 	StyledSection,
 } from "../styles/styled/Styled_Section";
 import {
-	//StyledPBig,
-	//StyledP,
+
 	StyledSpan,
-	//StyledSpanBold,
+
 	StyledPBold,
 	StyledLink,
 } from "../styles/styled/Styled_Text";
 import {
 	StyledH2Underline,
-	//StyledH3,
-	//StyledH4Underline,
+
 } from "../styles/styled/Styled_Title";
 import {
 	StyledDivBorder,
 	StyledDivLabel,
 	StyledDivSimple,
-	//StyledDivSimpleGrid,
+
 } from "../styles/styled/Styled_Div";
-//import CatInfoSheetMidi from "../components/CatInfoSheetMidi";
+
 import Toast from "../components/Toast";
-// import CatInfoSheetMaxi from "../components/CatInfoSheetMaxi";
-// import BG_upload from "../assets/bgImages/BG_upload.jpg";
-// import MapForUpload from "../components/MapForUpload";
+
 import { BsQuestionCircle } from "react-icons/bs";
 import { useContext, useEffect, useState } from "react";
-//import { LocationContext } from "../context/LocationContext";
+
 import { StyledCatUploadForm } from "../styles/styled/Styled_CatUploadForm";
 import {
 	optionsCat,
@@ -50,7 +46,7 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import { FaPlus } from "react-icons/fa";
-//import L from "leaflet";
+
 
 import MapCatUpdate from "../components/leaflet/MapCatUpdate";
 import axios from "axios";

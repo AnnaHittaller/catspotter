@@ -12,9 +12,9 @@ import { LuBell, LuCat } from "react-icons/lu";
 import { IoSettingsOutline } from "react-icons/io5";
 import { AiOutlineLogout, AiOutlineLogin, AiOutlineHome } from "react-icons/ai";
 import { FiSearch, FiMapPin } from "react-icons/fi";
-import logo_light from "../assets/logos/catspotter_logo_light.png";
-import logo_small from "../assets/logos/catspotter_logo_small.png";
-import default_profile from "../assets/appImages/default_profile_small.png";
+//import logo_light from "../assets/logos/catspotter_logo_light.png";
+//import logo_small from "../assets/logos/catspotter_logo_small.png";
+//import default_profile from "../assets/appImages/default_profile_small.png";
 import {
 	StyledDivider,
 	StyledLink,

@@ -61,14 +61,17 @@ export default function LoginForm({ onFormSwitch, currentForm }) {
 				//  payload: response.data.cats,
 				// });
 
-				const location = localStorage.getItem("abandonedAddress");
+				// const location = localStorage.getItem("abandonedAddress");
 
-				if (location) {
-					localStorage.removeItem("abandonedAddress");
-					navigate(location);
-				} else {
-					navigate("/");
-				}
+				// if (location) {
+				// 	localStorage.removeItem("abandonedAddress");
+				// 	navigate(location);
+					
+				// } else {
+				// 	navigate("/");
+				// }
+
+				navigate("/");
 			}
 
 		} catch (error) {

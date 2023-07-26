@@ -1,5 +1,3 @@
-
-
 import CatInfoSheetMini from "../components/CatInfoSheetMini";
 import {
 	StyledDivSimple,
@@ -11,10 +9,7 @@ import {
 	StyledSection,
 	StyledBGSection,
 } from "../styles/styled/Styled_Section";
-import {
-	StyledH2Underline,
-	StyledH3,
-} from "../styles/styled/Styled_Title";
+import { StyledH2Underline, StyledH3 } from "../styles/styled/Styled_Title";
 import { BsQuestionCircle } from "react-icons/bs";
 import {
 	StyledP,
@@ -31,35 +26,40 @@ import {
 	optionsDate,
 	optionsPattern,
 } from "../data/SelectOptions";
-import {customStyles} from "../styles/SelectCustomStyles"
+import { customStyles } from "../styles/SelectCustomStyles";
 import { useContext, useEffect, useState } from "react";
 import MapFindCat from "../components/leaflet/MapFindCat";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
-import { cloudinaryRoot } from "../utils/ImageUrlRoot"
+import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import { filterCats } from "../utils/CatUtils";
 import FetchCats from "../utils/FetchCats";
 import { StyledInput } from "../styles/styled/Styled_Input";
+import { v } from "../styles/Variables";
 
 export default function MapPage() {
-
-	const {state, dispatch} = useContext(AppContext)
-	const [cats, setCats] = useState([])
+	const { state, dispatch } = useContext(AppContext);
+	const [cats, setCats] = useState([]);
 	const [visibleCats, setVisibleCats] = useState([]);
-	const [filteredCats, setFilteredCats] = useState([])
-	const [chipNr, setChipNr] = useState("")
+	const [filteredCats, setFilteredCats] = useState([]);
+	const [chipNr, setChipNr] = useState("");
 	const [notesText, setNotesText] = useState("");
 
-	console.log("visible cats",visibleCats)
+	console.log("visible cats", visibleCats);
 
 	const [selectedStatus, setSelectedStatus] = useState(null);
 	const [selectedPattern, setSelectedPattern] = useState(null);
 	const [selectedColor, setSelectedColor] = useState(null);
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [selectedCoatLength, setSelectedCoatLength] = useState(null);
-	
 
-	console.log(selectedStatus, selectedPattern, selectedDate, selectedCoatLength, selectedColor)
+	console.log(
+		selectedStatus,
+		selectedPattern,
+		selectedDate,
+		selectedCoatLength,
+		selectedColor
+	);
 
 	const handleSelectChange = (selectedOption, name) => {
 		switch (name) {
@@ -80,57 +80,59 @@ export default function MapPage() {
 				break;
 			default:
 				break;
-		} 
+		}
 	};
 	//set toast for filtering and fetching errors
 
-		// useEffect(() => {
-		// 	const fetchCats = async () => {
-		// 		try {
-		// 			const response = await axios.get("/cats/list");
-		// 			console.log("data map page:",response.data)
+	// useEffect(() => {
+	// 	const fetchCats = async () => {
+	// 		try {
+	// 			const response = await axios.get("/cats/list");
+	// 			console.log("data map page:",response.data)
 
-		// 			if(response.data.success) {
-		// 				dispatch({
-		// 					type: "LIST_CATS",
-		// 					payload: response.data.cats
-		// 				})
-		// 			}
+	// 			if(response.data.success) {
+	// 				dispatch({
+	// 					type: "LIST_CATS",
+	// 					payload: response.data.cats
+	// 				})
+	// 			}
 
-		// 			setCats(response.data.cats); // map them directly from state contextt? then no need for passing them down as prop - TEST THIS
+	// 			setCats(response.data.cats); // map them directly from state contextt? then no need for passing them down as prop - TEST THIS
 
-		// 		} catch (error) {
-		// 			console.log(error.message);
-		// 		}
-		// 	};
-		// 	fetchCats();
-		// }, []);
+	// 		} catch (error) {
+	// 			console.log(error.message);
+	// 		}
+	// 	};
+	// 	fetchCats();
+	// }, []);
 
-		// console.log("cats", cats)
+	// console.log("cats", cats)
 
-useEffect(() => {
+	useEffect(() => {
+		const filteredCats = filterCats(
+			state,
+			selectedStatus,
+			selectedPattern,
+			selectedColor,
+			selectedCoatLength,
+			selectedDate,
+			chipNr,
+			notesText
+		);
 
-	const filteredCats = filterCats(
+		setVisibleCats(filteredCats);
+	}, [
 		state,
 		selectedStatus,
 		selectedPattern,
 		selectedColor,
 		selectedCoatLength,
-		selectedDate
-	);
+		selectedDate,
+		chipNr,
+		notesText,
+	]);
 
-		setVisibleCats(filteredCats);
-
-}, [
-	state,
-	selectedStatus,
-	selectedPattern,
-	selectedColor,
-	selectedCoatLength,
-	selectedDate,
-]);
-
-//define mapRef here, pass it down to map and infoSheetMini, and from there down to MiniMenu, and make the map flyto a location when clicking miniMenu?
+	//define mapRef here, pass it down to map and infoSheetMini, and from there down to MiniMenu, and make the map flyto a location when clicking miniMenu?
 
 	return (
 		<StyledPage display="flex" flexDirection="column">
@@ -229,12 +231,30 @@ useEffect(() => {
 							isClearable
 							menuPlacement="auto"
 						/> */}
-						<StyledInput type="text" placeholder="Chip number..." />
-						<StyledInput type="text" placeholder="Search in notes..." />
+						<StyledInput
+							type="text"
+							placeholder="Chip number..."
+							value={chipNr}
+							onChange={(e) => setChipNr(e.target.value)}
+							name="chipNr"
+							style={{
+								border: chipNr ? `2px solid ${v.sunGlow}` : null,
+							}}
+						/>
+						<StyledInput
+							type="text"
+							placeholder="Search in notes..."
+							value={notesText}
+							onChange={(e) => setNotesText(e.target.value)}
+							name="notesText"
+							style={{
+								border: notesText ? `2px solid ${v.sunGlow}` : null,
+							}}
+						/>
 					</StyledSelectWrapper>
 				</StyledDivSimple>
 
-				<StyledDivSimpleGrid min="290px" padding="1rem 0">
+				<StyledDivSimpleGrid min="350px" padding="1rem 0">
 					{visibleCats && visibleCats.length > 0 ? (
 						visibleCats.map((cat) => (
 							<CatInfoSheetMini key={cat._id} cat={cat} />

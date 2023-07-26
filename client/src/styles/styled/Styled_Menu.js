@@ -11,6 +11,7 @@ export const StyledMenuMini = styled(StyledDivBorder)`
 	position: absolute;
 	right: 3rem;
 	overflow: hidden;
+	height: unset;
 
 	a {
 		text-decoration: none;

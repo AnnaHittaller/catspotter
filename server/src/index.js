@@ -20,7 +20,7 @@ const corsOptions = {
 	optionsSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions)) 
 app.use(cookieParser()); // reads cookies in every request
 app.use(express.json()) // handle body object from requests
 

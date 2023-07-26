@@ -74,7 +74,11 @@ export const handleLoginUser = async (req, res) => {
 
 		const cats = await Cat.find().select("-__v").sort({ date: -1 });
 
-		res.cookie("catspotterlogin", token);
+		res.cookie("catspotterlogin", token, {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === "production" ? true : false, // the cookie will be sent only over HTTPS in production
+			sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+		});
 
 		//res.status(200).send({ success: true, user: newUser });
 		res.status(200).send({ success: true, user: newUser, cats });

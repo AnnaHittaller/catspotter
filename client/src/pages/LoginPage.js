@@ -9,7 +9,6 @@ import {
 	StyledFlipper,
 } from "../styles/styled/Styled_LoginRegisterForm";
 import { StyledSection } from "../styles/styled/Styled_Section";
-//import BG_login from "../assets/bgImages/BG_login.jpg";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 
 

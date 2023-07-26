@@ -1,5 +1,5 @@
-import marker_seen from "../assets/markers/marker_seen.png";
-import marker_lost from "../assets/markers/marker_lost.png";
+//import {markerIconLost, markerIconSeen} from "./leaflet/MapMarkers";
+
 
 import {
 	StyledDivSimple,
@@ -49,21 +49,32 @@ export default function CatInfoSheetMini({ cat }) {
 		<StyledCatInfoSheetMini>
 			<StyledDivSimpleRounded bgColor={v.columbiaBlue} padding="1rem 1rem">
 				<StyledDivSimple padding="0" justify="flex-start">
-					<StyledDivSimple padding="0" flexDirection="column" justify="flex-end" gap=".25rem" className="thumbnail-wrapper">
-					<img
-						src={cat?.status === "Lost" ? marker_lost : marker_seen}
-						alt=""
-						aria-hidden="true"
-					/>
-					{cat?.image.length > 0 ? (
+					<StyledDivSimple
+						padding="0"
+						flexDirection="column"
+						justify="flex-end"
+						gap=".25rem"
+						className="thumbnail-wrapper">
 						<img
-							src={cloudinaryRoot + cat?.image}
-							alt="uploaded photo of the cat"
-							className="thumbnail"
+							src={
+								cat?.status === "Lost"
+									? cloudinaryRoot + "catspotter-assets/marker_lost_mpfwgq.png"
+									: cloudinaryRoot + "catspotter-assets/marker_seen_fjynd6.png"
+							}
+							alt=""
+							aria-hidden="true"
 						/>
-					) : (
-						<StyledDivSimple className="thumbnail-svg" padding="0">{catSVG}</StyledDivSimple>
-					)}
+						{cat?.image.length > 0 ? (
+							<img
+								src={cloudinaryRoot + cat?.image}
+								alt="uploaded photo of the cat"
+								className="thumbnail"
+							/>
+						) : (
+							<StyledDivSimple className="thumbnail-svg" padding="0">
+								{catSVG}
+							</StyledDivSimple>
+						)}
 					</StyledDivSimple>
 					<div>
 						<StyledPBold>
@@ -81,8 +92,7 @@ export default function CatInfoSheetMini({ cat }) {
 											}
 											return color.toLowerCase();
 										})
-										.join(" ") +
-								  ` ${cat?.pattern}`}{" "}
+										.join(" ") + ` ${cat?.pattern}`}{" "}
 							cat in {cat?.address.city}
 						</StyledPBold>
 						<StyledP>{distance} km away from you</StyledP>
@@ -91,7 +101,9 @@ export default function CatInfoSheetMini({ cat }) {
 					</div>
 				</StyledDivSimple>
 				<CiMenuKebab onClick={() => setShowMenu((prev) => !prev)} />
-				{showMenu && <MenuMini cat={cat} setShowMenu={setShowMenu} showMenu={showMenu}/>}
+				{showMenu && (
+					<MenuMini cat={cat} setShowMenu={setShowMenu} showMenu={showMenu} />
+				)}
 			</StyledDivSimpleRounded>
 		</StyledCatInfoSheetMini>
 	);

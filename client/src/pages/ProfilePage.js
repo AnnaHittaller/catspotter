@@ -16,18 +16,14 @@ import {
 	StyledSpanBold,
 } from "../styles/styled/Styled_Text";
 import { StyledH2Underline, StyledH3, StyledH4Underline } from "../styles/styled/Styled_Title";
-// import Map from "../components/Map";
-// import BG_profile from "../assets/bgImages/BG_profile.jpg";
+
 import {
-	//StyledButton,
+
 	StyledPrimaryButton,
 } from "../styles/styled/Styled_Button";
-import default_profile from "../assets/appImages/default_profile_big.png";
+//import default_profile from "../assets/appImages/default_profile_big.png";
 import { StyledUserData } from "../styles/styled/Styled_UserForms";
-// import CatInfoSheetMini from "../components/CatInfoSheetMini";
-// import AreaRangeSlider from "../components/leaflet/AreaRangeSlider";
-// import ToggleButton from "../components/ToggleButton";
-// import MapForArea from "../components/MapForArea";
+
 import { Link, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";

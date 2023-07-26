@@ -65,7 +65,9 @@ export default function ContactPage() {
 		console.log("submit", message);
 
 		try {
-			await axios.post("https://formspree.io/f/mzblpvwo", message);
+			await axios.post("https://formspree.io/f/mzblpvwo", message, {
+				withCredentials: true,
+			});
 
 			// Reset the form
 			setMessage({ name: "", email: "", text: "" });

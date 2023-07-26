@@ -18,6 +18,7 @@ import Toast from "./Toast";
 import { StyledDivSimple } from "../styles/styled/Styled_Div";
 import { AppContext } from "../context/AppContext";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../baseurl";
 
 export default function LoginForm({ onFormSwitch, currentForm }) {
 	const [showPassword, setShowPassword] = useState(false);
@@ -41,10 +42,9 @@ export default function LoginForm({ onFormSwitch, currentForm }) {
 
 			//console.log("User data:", userData);
 
-			const response = await axios.post(
-				"/users/login",
-				userData
-			);
+			const response = await axios.post(baseUrl + "/users/login", userData, {
+				withCredentials: true,
+			});
 			console.log("response:", response);
 
 			if(!response.data.success) {

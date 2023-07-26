@@ -50,6 +50,7 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import { getCatSvgComponent } from "../utils/CatSvgHelper";
+import { baseUrl } from "../baseurl";
 
 export default function CatUploadPage() {
 	
@@ -103,8 +104,11 @@ export default function CatUploadPage() {
 	useEffect(() => {
 		const fetchAddress = async () => {
 			try {
-				const response = await axios.get(
-					`https://nominatim.openstreetmap.org/reverse?lat=${markerCoords.lat}&lon=${markerCoords.lng}&format=json`
+				const response = await axios.get( baseUrl +
+					`https://nominatim.openstreetmap.org/reverse?lat=${markerCoords.lat}&lon=${markerCoords.lng}&format=json`,
+					{
+						withCredentials: true,
+					}
 				);
 				console.log("nominatim", response.data.address);
 				if (response.data.address.postcode)
@@ -269,7 +273,9 @@ export default function CatUploadPage() {
 			// console.log("coatLength", coatLength);
 			
 
-			const response = await axios.post("/cats/add", formdata);
+			const response = await axios.post(baseUrl + "/cats/add", formdata, {
+				withCredentials: true,
+			});
 			console.log("response", response);
 
 			if (response.data.success) {

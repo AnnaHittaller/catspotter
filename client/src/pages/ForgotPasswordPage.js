@@ -12,6 +12,7 @@ import ForgotPasswordForm from "../components/ForgotPasswordForm";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import { baseUrl } from "../baseurl";
 
 function ForgotPasswordPage(props) {
 	const [usernameOrEmail, setUsernameOrEmail] = useState("");
@@ -23,7 +24,13 @@ function ForgotPasswordPage(props) {
 
 		if (!usernameOrEmail) return;
 
-		const response = await axios.post("/users/forgotpass", { usernameOrEmail });
+		const response = await axios.post( baseUrl +
+			"/users/forgotpass",
+			{ usernameOrEmail },
+			{
+				withCredentials: true,
+			}
+		);
 		console.log("response:", response);
 
 		//make a toaster out of this instead of alert**********

@@ -18,6 +18,7 @@ import axios from "axios";
 import { AppContext } from "../context/AppContext";
 import { Link, useNavigate } from "react-router-dom";
 import Toast from "../components/Toast";
+import { baseUrl } from "../baseurl";
 
 export default function NotificationsPage() {
 	const { state } = useContext(AppContext);
@@ -31,7 +32,9 @@ export default function NotificationsPage() {
 	useEffect(() => {
 		const filterCatsByLocation = async () => {
 			try {
-				const response = await axios.get("/cats/listbylocation");
+				const response = await axios.get(baseUrl + "/cats/listbylocation", {
+					withCredentials: true,
+				});
 				console.log("response for locationfilter", response);
 
 				if (!response.data.success && response.data.errorId === "jwt expired") {
@@ -56,7 +59,9 @@ export default function NotificationsPage() {
 	useEffect(() => {
 		const fetchMatches = async () => {
 			try {
-				const response = await axios.get("/cats/listmatches");
+				const response = await axios.get(baseUrl + "/cats/listmatches", {
+					withCredentials: true,
+				});
 				console.log("listmatches response", response);
 
 				// should get back an array of cardData objects, so many as many cats the user has uploaded. May have to save them in a local state to map through them

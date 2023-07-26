@@ -30,6 +30,7 @@ import { AppContext } from "../context/AppContext";
 import MapUser from "../components/leaflet/MapUser";
 import axios from "axios";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+import { baseUrl } from "../baseurl";
 
 export default function ProfilePage() {
 	//const {id} = useParams()
@@ -41,7 +42,9 @@ export default function ProfilePage() {
 
 	const handleDeleteProfile = async () => {
 		try {
-			const response = await axios.delete(`/users/delete/${state.user._id}`);
+			const response = await axios.delete(baseUrl + `/users/delete/${state.user._id}`, {
+				withCredentials: true,
+			});
 			console.log("delete response", response);
 
 			//dispatch({ type: "LOGOUT" });

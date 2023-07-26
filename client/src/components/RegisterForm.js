@@ -15,6 +15,7 @@ import {
 import axios from "axios";
 import Toast from "./Toast";
 import { StyledDivSimple } from "../styles/styled/Styled_Div";
+import { baseUrl } from "../baseurl";
 
 export default function RegisterForm({ onFormSwitch, currentForm }) {
 	const [showPassword, setShowPassword] = useState(false);
@@ -36,10 +37,9 @@ export default function RegisterForm({ onFormSwitch, currentForm }) {
 			if (!userData.email || !userData.password || !userData.username) return setShowToast("Email, username and password are mandatory");
 
 			console.log("userData registration", userData);
-			const response = await axios.post(
-				"/users/register",
-				userData
-			);
+			const response = await axios.post(baseUrl + "/users/register", userData, {
+				withCredentials: true,
+			});
 
 			console.log(response.data);
 

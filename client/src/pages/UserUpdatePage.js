@@ -29,6 +29,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import Toast from "../components/Toast";
+import { baseUrl } from "../baseurl";
 
 export default function UserUpdatePage() {
 	const { state, dispatch } = useContext(AppContext);
@@ -75,7 +76,9 @@ export default function UserUpdatePage() {
 
 	const handleDeleteProfile = async () => {
 		try {
-			const response = await axios.delete(`/users/delete/${state.user._id}`);
+			const response = await axios.delete(baseUrl + `/users/delete/${state.user._id}`, {
+				withCredentials: true,
+			});
 			console.log("delete response", response);
 
 			dispatch({ type: "LOGOUT" });
@@ -108,7 +111,11 @@ export default function UserUpdatePage() {
 		const fetchAddress = async () => {
 			try {
 				const response = await axios.get(
-					`https://nominatim.openstreetmap.org/reverse?lat=${markerCoords.lat}&lon=${markerCoords.lng}&format=json`
+					baseUrl +
+						`https://nominatim.openstreetmap.org/reverse?lat=${markerCoords.lat}&lon=${markerCoords.lng}&format=json`,
+					{
+						withCredentials: true,
+					}
 				);
 				console.log("nominatim userupdate", response.data.address);
 				if (response.data.address.postcode)
@@ -164,7 +171,13 @@ export default function UserUpdatePage() {
 				console.log(pair[0] + ": " + pair[1]);
 			}
 
-			const response = await axios.put("/users/updateprofile", formdata);
+			const response = await axios.put(
+				baseUrl + "/users/updateprofile",
+				formdata,
+				{
+					withCredentials: true,
+				}
+			);
 			console.log("response", response);
 
 			if (response.data.success) {

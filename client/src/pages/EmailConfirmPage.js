@@ -11,6 +11,7 @@ import {
 } from "../styles/styled/Styled_Section";
 import { StyledFormBox, StyledFormWrapper } from "../styles/styled/Styled_LoginRegisterForm";
 import { StyledPBig } from "../styles/styled/Styled_Text";
+import { baseUrl } from "../baseurl";
 
 function EmailConfirmPage() {
 	const { token } = useParams();
@@ -18,7 +19,13 @@ function EmailConfirmPage() {
 
 	useEffect(() => {
 	 async function sendData() {
-	   const response = await axios.post("/users/emailconfirm", { token });
+	   const response = await axios.post( baseUrl +
+				"/users/emailconfirm",
+				{ token },
+				{
+					withCredentials: true,
+				}
+			);
 	   console.log("response:", response);
 
 	   if (response.data.success) {

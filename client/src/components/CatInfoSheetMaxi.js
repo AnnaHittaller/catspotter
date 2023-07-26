@@ -23,6 +23,7 @@ import { AppContext } from "../context/AppContext";
 import { getCatSvgComponent } from "../utils/CatSvgHelper";
 import MapCatInfoSheet from "./leaflet/MapCatInfoSheet";
 import Spinner from "../features/Spinner";
+import { baseUrl } from "../baseurl";
 
 export default function CatInfoSheetMaxi({ id }) {
 	const { state, dispatch } = useContext(AppContext);
@@ -37,7 +38,13 @@ export default function CatInfoSheetMaxi({ id }) {
 
 	const handleBookmark = async () => {
 		try {
-			const response = await axios.post('/users/bookmark', {cat: id})
+			const response = await axios.post( baseUrl +
+				"/users/bookmark",
+				{ cat: id },
+				{
+					withCredentials: true,
+				}
+			);
 			console.log("response bookmark:", response)
 
 			if (!response.data.success && response.data.errorId === "jwt expired") {
@@ -58,7 +65,9 @@ export default function CatInfoSheetMaxi({ id }) {
 	useEffect(() => {
 		const fetchCat = async () => {
 			try {
-				const response = await axios.get(`/cats/listone/${id}`);
+				const response = await axios.get(baseUrl + `/cats/listone/${id}`, {
+					withCredentials: true,
+				});
 				console.log("response", response);
 				if (response.data.success) {
 					setCat(response.data.cat);
@@ -72,7 +81,9 @@ export default function CatInfoSheetMaxi({ id }) {
 	}, id);
 
 	const handleDeleteCat = async () => {
-		const response = await axios.delete(`/cats/delete/${id}`);
+		const response = await axios.delete( baseUrl + `/cats/delete/${id}`, {
+			withCredentials: true,
+		});
 		console.log("response:", response);
 
 		if (!response.data.success && response.data.errorId === "jwt expired") {

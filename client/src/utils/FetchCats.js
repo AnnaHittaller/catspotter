@@ -1,6 +1,7 @@
 import { useEffect, useContext } from "react";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
+import { baseUrl } from "../baseurl";
 
 const FetchCats = () => {
 	const { dispatch } = useContext(AppContext);
@@ -8,7 +9,9 @@ const FetchCats = () => {
 	useEffect(() => {
 		const fetchCats = async () => {
 			try {
-				const response = await axios.get("/cats/list");
+				const response = await axios.get( baseUrl + "/cats/list", {
+					withCredentials: true,
+				});
 				console.log("fetchCats:", response.data);
 
 				if (response.data.success) {

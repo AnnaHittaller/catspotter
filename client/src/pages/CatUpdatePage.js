@@ -55,6 +55,7 @@ import { AppContext } from "../context/AppContext";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
 import { getCatSvgComponent } from "../utils/CatSvgHelper";
 import { marker } from "leaflet";
+import { baseUrl } from "../baseurl";
 
 export default function CatUpdatePage() {
 	const { id } = useParams();
@@ -103,7 +104,9 @@ export default function CatUpdatePage() {
 	useEffect(() => {
 		const fetchCat = async () => {
 			try {
-				const response = await axios.get(`/cats/listone/${id}`);
+				const response = await axios.get(baseUrl + `/cats/listone/${id}`, {
+					withCredentials: true,
+				});
 				console.log("response", response);
 				if (response.data.success) {
 					setCat(response.data.cat);
@@ -168,7 +171,11 @@ export default function CatUpdatePage() {
 				return; // Exit early if markerCoords is invalid
 			}
 				const response = await axios.get(
-					`https://nominatim.openstreetmap.org/reverse?lat=${markerCoords.lat}&lon=${markerCoords.lng}&format=json`
+					baseUrl +
+						`https://nominatim.openstreetmap.org/reverse?lat=${markerCoords.lat}&lon=${markerCoords.lng}&format=json`,
+					{
+						withCredentials: true,
+					}
 				);
 				console.log("nominatim", response.data.address);
 				if (response.data.address.postcode)
@@ -334,7 +341,13 @@ export default function CatUpdatePage() {
 			// console.log("coatLength", coatLength);
 			// console.log(typeof markerCoords.lng, markerCoords.lng);
 
-			const response = await axios.put(`/cats/updatecat/${id}`, formdata);
+			const response = await axios.put(
+				baseUrl + `/cats/updatecat/${id}`,
+				formdata,
+				{
+					withCredentials: true,
+				}
+			);
 			console.log("response", response);
 
 			if (response.data.success) {

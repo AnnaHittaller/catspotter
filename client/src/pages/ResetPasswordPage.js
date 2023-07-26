@@ -11,6 +11,7 @@ import {
 import ResetPasswordForm from "../components/ResetPasswordForm";
 import { useState } from "react";
 import axios from "axios";
+import { baseUrl } from "../baseurl";
 
 function ResetPasswordPage(props) {
 	const { token } = useParams();
@@ -24,10 +25,16 @@ function ResetPasswordPage(props) {
 		if (!password.newPass || password.newPass !== password.retyped)
 			return alert("Passes don't match");
 
-		const response = await axios.post("/users/changepass", {
-			token,
-			password: password.newPass,
-		});
+		const response = await axios.post( baseUrl +
+			"/users/changepass",
+			{
+				token,
+				password: password.newPass,
+			},
+			{
+				withCredentials: true,
+			}
+		);
 		console.log("response:", response);
 	};
 

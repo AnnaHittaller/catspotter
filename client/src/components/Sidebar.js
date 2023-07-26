@@ -30,6 +30,7 @@ import { SidebarContext } from "../context/SidebarContext";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+import { baseUrl } from "../baseurl";
 
 export default function Sidebar() {
 	const { state, dispatch } = useContext(AppContext);
@@ -39,7 +40,9 @@ export default function Sidebar() {
 	console.log(state);
 
 	const handleLogout = async () => {
-		const response = await axios.post("/users/logout");
+		const response = await axios.post(baseUrl + "/users/logout", {
+			withCredentials: true,
+		});
 		console.log("response:", response.data);
 
 		dispatch({ type: "LOGOUT" });

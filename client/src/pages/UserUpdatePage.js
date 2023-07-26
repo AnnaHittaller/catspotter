@@ -1,7 +1,5 @@
 import {
-	
 	StyledDivSimple,
-	
 	StyledDivLabel,
 	StyledDivBorder,
 } from "../styles/styled/Styled_Div";
@@ -18,10 +16,7 @@ import {
 	StyledPrimaryButton,
 } from "../styles/styled/Styled_Button";
 import default_profile from "../assets/appImages/default_profile_big.png";
-import {
-	
-	StyledUserUpdateForm,
-} from "../styles/styled/Styled_UserForms";
+import { StyledUserUpdateForm } from "../styles/styled/Styled_UserForms";
 
 import ToggleButton from "../components/ToggleButton";
 
@@ -34,11 +29,12 @@ import { AppContext } from "../context/AppContext";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { cloudinaryRoot } from "../utils/ImageUrlRoot";
+import Toast from "../components/Toast";
 
 export default function UserUpdatePage() {
-	
 	const { state, dispatch } = useContext(AppContext);
 	const [showPassword, setShowPassword] = useState(false);
+	const [showToast, setShowToast] = useState("");
 	const navigate = useNavigate();
 	const [cats, setCats] = useState([]);
 	const [visibleCats, setVisibleCats] = useState([]);
@@ -62,7 +58,7 @@ export default function UserUpdatePage() {
 	);
 	const [newUsername, setNewUsername] = useState(state.user.username);
 	const [newPassword, setNewPassword] = useState("");
-	
+
 	const [avatar, setAvatar] = useState({
 		url: state.user.avatar
 			? cloudinaryRoot + state.user.avatar
@@ -152,8 +148,7 @@ export default function UserUpdatePage() {
 			if (avatar.file) {
 				formdata.set("avatar", avatar.file, "filename");
 			}
-			if(markerCoords.lat && markerCoords.lng) {
-
+			if (markerCoords.lat && markerCoords.lng) {
 				formdata.set("location.coordinates[0]", [markerCoords.lng]);
 				formdata.set("location.coordinates[1]", [markerCoords.lat]);
 			}
@@ -178,11 +173,15 @@ export default function UserUpdatePage() {
 					type: "UPDATE_USER",
 					payload: response.data.user,
 				});
+
+				setShowToast("User data was updated successfully!");
+
+				setTimeout(() => {
+					navigate("/");
+				}, 3000);
+			} else {
+				setShowToast("Error while updating the data!");
 			}
-
-			//set toast here
-
-			navigate("/");
 		} catch (error) {
 			console.log(error);
 		}
@@ -307,6 +306,17 @@ export default function UserUpdatePage() {
 								/>
 							</StyledDivSimple>
 						</StyledDivLabel>
+						{showToast === "User data was updated successfully!" && (
+							<Toast type="ok" setShowToast={setShowToast}>
+								{showToast}
+							</Toast>
+						)}
+						{showToast &&
+							showToast !== "User data was updated successfully!" && (
+								<Toast type="error" setShowToast={setShowToast}>
+									{showToast}
+								</Toast>
+							)}
 						<StyledPrimaryButton type="submit">
 							Update user data
 						</StyledPrimaryButton>
@@ -334,7 +344,10 @@ export default function UserUpdatePage() {
 					</StyledButton>
 				</StyledDivSimple>
 			</StyledSection>
-			<StyledBGSection bgImg={cloudinaryRoot + "catspotter-assets/BG_profile_cdrhze.jpg"}></StyledBGSection>
+			<StyledBGSection
+				bgImg={
+					cloudinaryRoot + "catspotter-assets/BG_profile_cdrhze.jpg"
+				}></StyledBGSection>
 		</StyledPage>
 	);
 }

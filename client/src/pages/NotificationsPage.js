@@ -8,7 +8,7 @@ import {
 	StyledBGSection,
 	StyledSection,
 } from "../styles/styled/Styled_Section";
-import { StyledPBig } from "../styles/styled/Styled_Text";
+import { StyledLink, StyledPBig } from "../styles/styled/Styled_Text";
 import { StyledH2Underline, StyledH3 } from "../styles/styled/Styled_Title";
 import { calculateDistance } from "../utils/CalculateDistance";
 import DataMatchNotification from "../components/DataMatchNotification";
@@ -126,20 +126,24 @@ export default function NotificationsPage() {
 						"Sorry, there was an error while fetching the matches, please try again!" && (
 						<Toast type="error">{showToast}</Toast>
 					)}
-					{state.user.dataMatchNotification && matches && matches.length > 0 ? (
+					{state.user.dataMatchNotification &&
+						matches &&
+						matches?.length > 0 &&
 						matches.map((match) => (
 							<DataMatchNotification
 								key={match.usersOwnCat._id}
 								match={match}
 							/>
-						))
-					) : (
-						<StyledPBig>There are no data matches.</StyledPBig>
-					)}
+						))}
+					{state.user.dataMatchNotification &&
+						matches &&
+						matches?.length === 0 && (
+							<StyledPBig>There are no data matches.</StyledPBig>
+						)}
 					{!state.user.dataMatchNotification && (
 						<StyledPBig>
 							Notifications are turned off. You can turn them on{" "}
-							<Link to="/updateprofile">here</Link>
+							<StyledLink to="/updateprofile">here</StyledLink>.
 						</StyledPBig>
 					)}
 				</StyledDivSimple>
@@ -149,13 +153,24 @@ export default function NotificationsPage() {
 					align="flex-start">
 					<StyledH3>Area activities</StyledH3>
 					<StyledDivSimpleGrid min="350px" padding="1rem 0">
-						{state.user.areaNotification && filteredCatsByLocation && filteredCatsByLocation.length > 0 ? (
+						{state.user.areaNotification &&
+						filteredCatsByLocation &&
+						filteredCatsByLocation?.length > 0 && (
 							filteredCatsByLocation.map((cat) => (
 								<CatInfoSheetMini key={cat._id} cat={cat} />
 							))
-						) : (
+						)}
+						{state.user.areaNotification &&
+						filteredCatsByLocation &&
+						filteredCatsByLocation?.length === 0 && (
 							<StyledPBig>
 								There were no activities in your area in the past 7 days.
+							</StyledPBig>
+						)}
+						{!state.user.areaNotification && (
+							<StyledPBig>
+								Notifications are turned off. You can turn them on{" "}
+								<StyledLink to="/updateprofile">here</StyledLink>.
 							</StyledPBig>
 						)}
 						{showToast ===
@@ -163,12 +178,7 @@ export default function NotificationsPage() {
 							<Toast type="error">{showToast}</Toast>
 						)}
 					</StyledDivSimpleGrid>
-					{!state.user.areaNotification && (
-						<StyledPBig>
-							Notifications are turned off. You can turn them on{" "}
-							<Link to="/updateprofile">here</Link>
-						</StyledPBig>
-					)}
+					
 				</StyledDivSimple>
 				{/* <StyledDivSimple
 					padding="1rem 0 0 0"

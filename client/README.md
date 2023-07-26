@@ -12,12 +12,12 @@ Imagine a world where no lost cat goes unnoticed. This is what **catspotter** tr
 Created as the final project at the end of the WBS Coding School web- and app developer bootcamp. Solo work, created and designed by yours truly, and expecting upcoming changes, further development and additional functions to be added.
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
+<img src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1690365456/map_e8rome.png" alt="App Screenshot" style="max-width: 350px;" />
+<img src="https://res.cloudinary.com/dgum1eu6e/image/upload/v1690365781/infosheet2_dxyckf.jpg" alt="App Screenshot" style="max-width: 350px;" />
 
 ## Demo
 
-Insert gif or link to demo
+Deployment link coming soon!
 
 
 ## Tech Stack
@@ -38,9 +38,9 @@ Insert gif or link to demo
 - **User-defined Location Preferences**: Users can customize their preferred location and area radius to receive relevant notifications based on their proximity to reported sightings.
 
 
-## License
-
-This project is licensed under the [MIT](https://choosealicense.com/licenses/mit/) License.
+## Notes
 
 👋 Feel free to reach out with any questions or suggestions. Let's work together to bring lost cats back home quickly!
+
+Anna Hittaller © 2023
 

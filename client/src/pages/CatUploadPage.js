@@ -282,7 +282,7 @@ export default function CatUploadPage() {
 
 				setShowToast("Cat data was uploaded successfully!");
 
-				setTimeout(() => {
+				setTimeout(() => { 
 					navigate("/");
 				}, 3000);
 			} else {

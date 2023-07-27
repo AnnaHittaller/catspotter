@@ -27,7 +27,19 @@ const corsOptions = {
 // 	optionsSuccessStatus: 200,
 // };
 
-app.use(cors(corsOptions)) 
+//app.use(cors(corsOptions)) 
+
+app.use((req, res, next) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+	res.header(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Accept, Authorization"
+	);
+	res.header("Access-Control-Allow-Credentials", true);
+	next();
+});
+
 app.use(cookieParser()); // reads cookies in every request
 app.use(express.json()) // handle body object from requests
 

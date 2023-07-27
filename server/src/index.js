@@ -11,14 +11,21 @@ dbConnect()
 const app = express()
 
 const corsOptions = {
-	origin:
-		process.env.NODE_ENV === "production"
-			? process.env.CLIENT
-			: "http://localhost:3000",
+	origin:"*",
 	credentials: true,
 	preflightContinue: true,
 	optionsSuccessStatus: 200,
 };
+
+// const corsOptions = {
+// 	origin:
+// 		process.env.NODE_ENV === "production"
+// 			? process.env.CLIENT
+// 			: "http://localhost:3000",
+// 	credentials: true,
+// 	preflightContinue: true,
+// 	optionsSuccessStatus: 200,
+// };
 
 app.use(cors(corsOptions)) 
 app.use(cookieParser()); // reads cookies in every request

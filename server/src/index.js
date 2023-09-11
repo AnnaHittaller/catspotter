@@ -23,8 +23,8 @@ const corsOptions = {
 			? process.env.CLIENT
 			: "http://localhost:3000",
 	credentials: true,
-	preflightContinue: true,
-	optionsSuccessStatus: 200,
+	//preflightContinue: true,
+	//optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions)) 

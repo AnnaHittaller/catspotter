@@ -119,6 +119,12 @@ export const StyledCatInfoSheetMaxi = styled.div`
 		margin-bottom: -1rem;
 	}
 
+	.lostP {
+		color: ${v.sunGlow};
+		font-size: 2rem;
+		margin-bottom: -1rem;
+	}
+
 	> div > div:nth-of-type(2) {
 		align-items: flex-start;
 		gap: 2rem;
@@ -138,7 +144,6 @@ export const StyledCatInfoSheetMaxi = styled.div`
 		border-radius: 10px;
 	}
 
-	
 	svg:nth-of-type(1) {
 		font-size: 2rem;
 		color: ${v.sunGlow};

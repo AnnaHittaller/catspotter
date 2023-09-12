@@ -147,14 +147,14 @@ export default function ContactPage() {
 						<Toast type="error">Please fill in all required fields.</Toast>
 					)}
 					{formSubmitted && showToast && (
-						<Toast type="ok">Form submitted successfully.</Toast>
+						<Toast type="ok">Message sent successfully.</Toast>
 					)}
 					<StyledPrimaryButton type="submit">Send message</StyledPrimaryButton>
 				</StyledForm>
 			</StyledSection>
 			<StyledBGSection
 				bgImg={
-					cloudinaryRoot + "catspotter-assets/BG_contact2_rnmpis.jpg" // or import the cloudinaryRoot to styled section directly?
+					cloudinaryRoot + "catspotter-assets/BG_contact2_rnmpis.jpg" 
 				}></StyledBGSection>
 		</StyledPage>
 	);

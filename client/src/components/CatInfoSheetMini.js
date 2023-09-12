@@ -1,5 +1,3 @@
-//import {markerIconLost, markerIconSeen} from "./leaflet/MapMarkers";
-
 
 import {
 	StyledDivSimple,
@@ -82,6 +80,12 @@ export default function CatInfoSheetMini({ cat }) {
 								? `${cat?.pattern.charAt(0).toUpperCase()}${cat?.pattern.slice(
 										1
 								  )}`
+								: cat?.pattern === "bicolorTabby"
+								? `${cat?.color[0].charAt(0).toUpperCase()}${cat?.color[0]
+										.slice(1)
+										.toLowerCase()} ${cat?.color
+										.slice(1)
+										.join(" ")} bicolor tabby`
 								: cat?.color
 										?.map((color, index) => {
 											if (index === 0) {
@@ -95,7 +99,9 @@ export default function CatInfoSheetMini({ cat }) {
 										.join(" ") + ` ${cat?.pattern}`}{" "}
 							cat in {cat?.address.city}
 						</StyledPBold>
-						<StyledP>{distance} km away from you</StyledP>
+						{state.user.username && (
+							<StyledP>{distance} km away from you</StyledP>
+						)}
 						<StyledSpan>{formattedDate}, </StyledSpan>
 						<StyledSpan>at {cat.time}</StyledSpan>
 					</div>

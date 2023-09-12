@@ -103,7 +103,7 @@ export default function HomePage() {
 							{state.user._id ? (
 								<Link to="/upload">Register a cat</Link>
 							) : (
-								<Link to="/login">Login to register a cat</Link>
+								<Link to="/login">Log in to register a cat</Link>
 							)}
 						</StyledPrimaryButton>
 					</div>

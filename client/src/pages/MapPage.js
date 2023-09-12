@@ -142,8 +142,8 @@ export default function MapPage() {
 					<StyledP>
 						The map shows sightings from the last 30 days as default - to view
 						older posts, please adjust the filters below.
-						<StyledP>Move or zoom the map to find more cats.</StyledP>
 					</StyledP>
+					<StyledP>Move or zoom the map to find more cats.</StyledP>
 					<FetchCats />
 					<MapFindCat
 						cats={cats}

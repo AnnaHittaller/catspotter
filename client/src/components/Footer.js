@@ -9,12 +9,12 @@ export default function Footer() {
 
 	return (
 		<StyledFooter sidebaropen={sidebaropen}>
-			<Link mailto="hittaller.anna@gmail.com">
+			<a href="hittaller.anna@gmail.com">
 				<span>
 					<BsEnvelope />
 					hittaller.anna@gmail.com
 				</span>
-			</Link>
+			</a>
 			<span>
 				<span>Created and desgined with</span>
 				<span>

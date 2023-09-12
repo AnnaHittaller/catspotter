@@ -114,9 +114,15 @@ export default function CatInfoSheetMaxi({ id }) {
 	return (
 		<StyledCatInfoSheetMaxi>
 			<StyledDivBorder flexDirection="column">
-				{isBookmarked ? <BsBookmarkFill /> : <BsBookmark />}
+				{state.user.username ? (
+					isBookmarked ? (
+						<BsBookmarkFill />
+					) : (
+						<BsBookmark />
+					)
+				) : null}
 				{cat?.status === "Lost" && (
-					<StyledPBig>Keep an eye open for me!</StyledPBig>
+					<StyledPBig className="lostP">Keep an eye open for me!</StyledPBig>
 				)}
 
 				<StyledDivLabel>
@@ -160,7 +166,7 @@ export default function CatInfoSheetMaxi({ id }) {
 						<StyledDivSimpleRounded
 							bgColor={v.columbiaBlue}
 							justify="center"
-							padding=".5rem"> 
+							padding=".5rem">
 							<StyledP>
 								{cat?.address?.road + ", "}
 								{cat?.address?.suburb && cat?.address.suburb + ", "}

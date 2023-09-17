@@ -104,11 +104,8 @@ export default function CatUploadPage() {
 	useEffect(() => {
 		const fetchAddress = async () => {
 			try {
-				const response = await axios.get( baseUrl +
+				const response = await axios.get(
 					`https://nominatim.openstreetmap.org/reverse?lat=${markerCoords.lat}&lon=${markerCoords.lng}&format=json`,
-					{
-						withCredentials: true,
-					}
 				);
 				console.log("nominatim", response.data.address);
 				if (response.data.address.postcode)

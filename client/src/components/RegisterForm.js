@@ -116,12 +116,12 @@ export default function RegisterForm({ onFormSwitch, currentForm }) {
 						)}
 						<FaLock />
 					</StyledInputBox>
-					<StyledRememberForgotBox currentForm={currentForm}>
+					{/* <StyledRememberForgotBox currentForm={currentForm}>
 						<label>
 							<input type="checkbox" />
 							<span>I agree to the terms & conditions</span>
 						</label>
-					</StyledRememberForgotBox>
+					</StyledRememberForgotBox> */}
 					{showToast && (
 						<StyledDivSimple padding="0 0 1rem 0">
 							<Toast type="error">{showToast}</Toast>

@@ -31,7 +31,7 @@ export const handleRegisterUser = async (req, res) => {
 		res.status(201).send({
 			success: true,
 		});
-		console.log("new user:", newUser);
+		//console.log("new user:", newUser);
 	} catch (error) {
 		console.log("error registering user:", error.message);
 		res.send({
@@ -79,6 +79,8 @@ export const handleLoginUser = async (req, res) => {
 			secure: process.env.NODE_ENV === "production" ? true : false, // the cookie will be sent only over HTTPS in production
 			sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 		});
+
+		//res.cookie("catspotterlogin", token);
 
 		//res.status(200).send({ success: true, user: newUser });
 		res.status(200).send({ success: true, user: newUser, cats });

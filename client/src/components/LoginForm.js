@@ -119,7 +119,7 @@ export default function LoginForm({ onFormSwitch, currentForm }) {
 						)}
 						<FaLock /> 
 					</StyledInputBox>
-					<StyledRememberForgotBox currentForm={currentForm}>
+					{/* <StyledRememberForgotBox currentForm={currentForm}>
 						<label>
 							<input type="checkbox" />
 							Remember me
@@ -127,7 +127,7 @@ export default function LoginForm({ onFormSwitch, currentForm }) {
 						<button type="button">
 							<Link to="/forgotpassword">Forgot password?</Link>
 						</button>
-					</StyledRememberForgotBox>
+					</StyledRememberForgotBox> */}
 					{showToast && (
 						<StyledDivSimple padding="0 0 1rem 0">
 							<Toast type="error" >

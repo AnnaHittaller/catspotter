@@ -29,7 +29,7 @@ import { AppContext } from "../../context/AppContext";
 
 
 export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }) {
-	console.log("rerender from mapnew component");
+	//console.log("rerender from mapnew component");
 	const mapRef = useRef();
 	const [showToast, setShowToast] = useState("");
 	const [geocoderAdded, setGeocoderAdded] = useState(false);
@@ -46,7 +46,7 @@ export default function MapFindCat({ height, cats, visibleCats, setVisibleCats }
 		};
 	} 
 
-	console.log("visible cats", visibleCats);
+	//console.log("visible cats", visibleCats);
 
 	return (
 		<>

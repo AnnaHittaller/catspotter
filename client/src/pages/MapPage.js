@@ -45,7 +45,7 @@ export default function MapPage() {
 	const [chipNr, setChipNr] = useState("");
 	const [notesText, setNotesText] = useState("");
 
-	console.log("visible cats", visibleCats);
+	//console.log("visible cats", visibleCats);
 
 	const [selectedStatus, setSelectedStatus] = useState(null);
 	const [selectedPattern, setSelectedPattern] = useState(null);
@@ -53,13 +53,13 @@ export default function MapPage() {
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [selectedCoatLength, setSelectedCoatLength] = useState(null);
 
-	console.log(
-		selectedStatus,
-		selectedPattern,
-		selectedDate,
-		selectedCoatLength,
-		selectedColor
-	);
+	// console.log(
+	// 	selectedStatus,
+	// 	selectedPattern,
+	// 	selectedDate,
+	// 	selectedCoatLength,
+	// 	selectedColor
+	// );
 
 	const handleSelectChange = (selectedOption, name) => {
 		switch (name) {

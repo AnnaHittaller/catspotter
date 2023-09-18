@@ -37,9 +37,6 @@ password: 123456
 
 ...or just register as a new user. :) 
 
-(https://i.pinimg.com/originals/52/96/58/5296589c1784e39f7e54655505e76d63.jpg) This will be the user profile picture.
-
-
 ## Tech Stack
 
 **Client:** 

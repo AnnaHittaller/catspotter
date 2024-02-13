@@ -139,10 +139,10 @@ export default function MapPage() {
 			<StyledSection>
 				<StyledH2Underline>Catspotting</StyledH2Underline>
 				<StyledDivSimple padding="0" flexDirection="column">
-					<StyledP>
+					{/* <StyledP>
 						The map shows sightings from the last 30 days as default - to view
 						older posts, please adjust the filters below.
-					</StyledP>
+					</StyledP>  */}
 					<StyledP>Move or zoom the map to find more cats.</StyledP>
 					<FetchCats />
 					<MapFindCat

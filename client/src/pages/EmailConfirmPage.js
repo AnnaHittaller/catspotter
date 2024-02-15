@@ -26,7 +26,7 @@ function EmailConfirmPage() {
 					withCredentials: true,
 				}
 			);
-	   console.log("response:", response);
+	   //console.log("response:", response);
 
 	   if (response.data.success) {
 	     setTimeout(() => navigate("/"), 3000);

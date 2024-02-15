@@ -24,10 +24,10 @@ import { markerIconOwn } from "./MapMarkers";
 import MenuAddress from "../MenuAddress";
 
 export default function MapCatUpdate({ height, markerCoords, setMarkerCoords }) {
-	console.log("rerender from mapuploadedit component");
+	//console.log("rerender from mapuploadedit component");
 	const mapRef = useRef();
 	
-	console.log("markerCoords,", markerCoords);
+	//console.log("markerCoords,", markerCoords);
 	//const [visibleCats, setVisibleCats] = useState("")
 
 	const handleMapClick = (e) => {

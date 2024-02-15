@@ -26,8 +26,8 @@ export default function MapUser({ height }) {
 		state.user.location.coordinates[1],
 		state.user.location.coordinates[0],
 	];
-	console.log(state.user.location.coordinates);
-	console.log(state.user.areaRadius);
+	//console.log(state.user.location.coordinates);
+	//console.log(state.user.areaRadius);
 
 	const ZOOM_LEVEL_DEFAULT = 16;
 

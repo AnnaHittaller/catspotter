@@ -20,7 +20,7 @@ export default function BookmarksPage() {
 	const bookmarkedCats = state.cats.filter((cat) =>
 		state.user?.bookmarks?.includes(cat._id)
 	);
-	console.log("bookmark", bookmarkedCats)
+	//console.log("bookmark", bookmarkedCats)
 
 	return (
 		<StyledPage display="flex" flexDirection="column">

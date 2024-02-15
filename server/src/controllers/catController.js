@@ -3,8 +3,8 @@ import User from "../models/User.js";
 
 export const handleAddCat = async (req, res) => {
 	try {
-		console.log("req.file:", req.file);
-		console.log("req.body for test", req.body);
+		//console.log("req.file:", req.file);
+		//console.log("req.body for test", req.body);
 
 		//if(!req.body.pattern || ) return res.send({success: false, errrorId: 2}) all required fields but needs testing what they are
 
@@ -12,7 +12,7 @@ export const handleAddCat = async (req, res) => {
 			req.body.image = req.file.filename;
 		}
 		const newCat = await Cat.create(req.body);
-		console.log(newCat);
+		//console.log(newCat);
 
 		//const updatedUser = await User.findByIdAndUpdate(req.body.uploader, {uploads: newCat._id})
 
@@ -63,14 +63,14 @@ export const handleListCat = async (req, res) => {
 };
 
 export const handleDeleteCat = async (req, res) => {
-	console.log("delete cat");
-	console.log(req.params.id, req.user);
+	//console.log("delete cat");
+	//console.log(req.params.id, req.user);
 	try {
 		const catToDelete = await Cat.findOneAndDelete({
 			_id: req.params.id,
 			uploader: req.user,
 		});
-		console.log("deleted cat", catToDelete);
+		//console.log("deleted cat", catToDelete);
 		res.send({ success: true });
 	} catch (error) {
 		console.log("error deleting a cat:", error.message);
@@ -91,7 +91,7 @@ export const handleUpdateCat = async (req, res) => {
 			new: true,
 		});
 
-		console.log("updatedCat:", editedCat);
+		//console.log("updatedCat:", editedCat);
 
 		res.send({
 			success: true,
@@ -109,7 +109,7 @@ export const handleUpdateCat = async (req, res) => {
 
 export const handleFilterCatsByLocation = async (req, res) => {
 	try {
-		console.log("handleListByLocation here");
+		//console.log("handleListByLocation here");
 		const user = await User.findById(req.user);
 		const areaRadius = user.areaRadius;
 		const { coordinates } = user.location;
@@ -147,7 +147,7 @@ export const handleFilterCatsByLocation = async (req, res) => {
 
 export const handleFindMatches = async (req, res) => {
 	try {
-		console.log("handleListMatches here");
+		//console.log("handleListMatches here");
 		// Retrieve uploaded cats for the user
 		const usersCats = await Cat.find({ uploader: req.user }).select("-__v");
 		//console.log("uploadedcats", uploadedCats);
@@ -198,7 +198,7 @@ export const handleFindMatches = async (req, res) => {
 
 		}
 
-		console.log(allCardData); //object with usersCat and an array of matching cats, not filtered for distance as it will be done on the frontend
+		//console.log(allCardData); //object with usersCat and an array of matching cats, not filtered for distance as it will be done on the frontend
 
 		res.send({
 			success: true,

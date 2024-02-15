@@ -78,7 +78,7 @@ export default function CatUploadPage() {
 	const currentTime = new Date();
 	const formattedTime = currentTime.toTimeString().slice(0, 5);
 	const [time, setTime] = useState(formattedTime);
-	console.log(time, date)
+	//console.log(time, date)
 
 	const [whiteColorDisabled, setWhiteColorDisabled] = useState(false);
 
@@ -96,10 +96,10 @@ export default function CatUploadPage() {
 		color[1]?.value,
 		color[2]?.value
 	);
-	console.log(pattern?.value);
-	console.log(color[0]?.value, color[1]?.value, color[2]?.value);
+	//console.log(pattern?.value);
+	//console.log(color[0]?.value, color[1]?.value, color[2]?.value);
 
-	console.log(date, time)
+	//console.log(date, time)
 
 	useEffect(() => {
 		const fetchAddress = async () => {
@@ -107,7 +107,7 @@ export default function CatUploadPage() {
 				const response = await axios.get(
 					`https://nominatim.openstreetmap.org/reverse?lat=${markerCoords.lat}&lon=${markerCoords.lng}&format=json`,
 				);
-				console.log("nominatim", response.data.address);
+				//console.log("nominatim", response.data.address);
 				if (response.data.address.postcode)
 					setPostcode(response.data.address.postcode);
 				//check village-Town-city
@@ -195,7 +195,7 @@ export default function CatUploadPage() {
 		}
 	};
 
-	console.log("color",color)
+	//console.log("color",color)
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -261,7 +261,7 @@ export default function CatUploadPage() {
 			//console.log("formdata", formdata);
 
 			for (let pair of formdata.entries()) {
-				console.log(pair[0] + ": " + pair[1]);
+				//console.log(pair[0] + ": " + pair[1]);
 			}
 
 			// console.log("pattern", pattern);
@@ -273,7 +273,7 @@ export default function CatUploadPage() {
 			const response = await axios.post(baseUrl + "/cats/add", formdata, {
 				withCredentials: true,
 			});
-			console.log("response", response);
+			//console.log("response", response);
 
 			if (response.data.success) {
 				dispatch({

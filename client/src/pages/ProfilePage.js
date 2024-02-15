@@ -45,7 +45,7 @@ export default function ProfilePage() {
 			const response = await axios.delete(baseUrl + `/users/delete/${state.user._id}`, {
 				withCredentials: true,
 			});
-			console.log("delete response", response);
+			//console.log("delete response", response);
 
 			//dispatch({ type: "LOGOUT" });
 		} catch (error) {

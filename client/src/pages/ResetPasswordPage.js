@@ -35,7 +35,7 @@ function ResetPasswordPage(props) {
 				withCredentials: true,
 			}
 		);
-		console.log("response:", response);
+		//console.log("response:", response);
 	};
 
 	return (

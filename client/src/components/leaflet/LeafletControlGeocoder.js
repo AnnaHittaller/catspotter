@@ -36,7 +36,7 @@ export default function LeafletControlGeocoder({ mapRef, setShowToast, visibleCa
 					var latlng = e.geocode.center;
 					let markerLatLng;
 					map.fitBounds(e.geocode.bbox);
-					console.log("new latlng", latlng);
+					//console.log("new latlng", latlng);
 				})
 				.addTo(map);
 

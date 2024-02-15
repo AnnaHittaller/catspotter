@@ -32,7 +32,7 @@ export default function MapCatUpload({
 	const [visibleCats, setVisibleCats] = useState([]);
 	//const [geocoderAdded, setGeocoderAdded] = useState(false);
 	//const [markerCoords, setMarkerCoords] = useState(null);
-	console.log("markerCoords,", markerCoords);
+	//console.log("markerCoords,", markerCoords);
 
 	let center = {
 		lat: 51.64536,

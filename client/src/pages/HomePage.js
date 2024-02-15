@@ -74,7 +74,7 @@ export default function HomePage() {
 
 
 
-	console.log("state:", state)
+	//console.log("state:", state)
 	
 	return (
 		<StyledPage>

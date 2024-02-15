@@ -62,7 +62,7 @@ export default function ContactPage() {
 		}
 
 		//submission logic comes here
-		console.log("submit", message);
+		//console.log("submit", message);
 
 		try {
 			await axios.post("https://formspree.io/f/mzblpvwo", message);
@@ -74,7 +74,7 @@ export default function ContactPage() {
 			setshowToast(true);
 			setFormSubmitted(true);
 		} catch (error) {
-			console.log("Error submitting form:", error);
+			//console.log("Error submitting form:", error);
 			// Handle the error
 		}
 	};

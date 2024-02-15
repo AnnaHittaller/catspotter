@@ -79,7 +79,7 @@ export default function UserUpdatePage() {
 			const response = await axios.delete(baseUrl + `/users/delete/${state.user._id}`, {
 				withCredentials: true,
 			});
-			console.log("delete response", response);
+			//console.log("delete response", response);
 
 			dispatch({ type: "LOGOUT" });
 			navigate("/");
@@ -117,7 +117,7 @@ export default function UserUpdatePage() {
 						withCredentials: true,
 					}
 				);
-				console.log("nominatim userupdate", response.data.address);
+				//console.log("nominatim userupdate", response.data.address);
 				if (response.data.address.postcode)
 					setPostcode(response.data.address.postcode);
 				//check village-Town-city
@@ -165,10 +165,10 @@ export default function UserUpdatePage() {
 			formdata.set("areaRadius", rangeValue[1]);
 			formdata.set("_id", state.user._id); //check if this is correctly set
 
-			console.log("formdata", formdata);
+			//console.log("formdata", formdata);
 
 			for (let pair of formdata.entries()) {
-				console.log(pair[0] + ": " + pair[1]);
+				//console.log(pair[0] + ": " + pair[1]);
 			}
 
 			const response = await axios.put(
@@ -178,7 +178,7 @@ export default function UserUpdatePage() {
 					withCredentials: true,
 				}
 			);
-			console.log("response", response);
+			//console.log("response", response);
 
 			if (response.data.success) {
 				dispatch({

@@ -36,15 +36,15 @@ export default function RegisterForm({ onFormSwitch, currentForm }) {
 		try {
 			if (!userData.email || !userData.password || !userData.username) return setShowToast("Email, username and password are mandatory");
 
-			console.log("userData registration", userData);
+			//console.log("userData registration", userData);
 			const response = await axios.post(baseUrl + "/users/register", userData, {
 				withCredentials: true,
 			});
 
-			console.log(response.data);
+			//console.log(response.data);
 
 				if (response.data.success === true) {
-					console.log("registration if data success");
+					//console.log("registration if data success");
 
 					setUserData({
 						username: "",

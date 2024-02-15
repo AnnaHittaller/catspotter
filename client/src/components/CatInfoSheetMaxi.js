@@ -27,9 +27,9 @@ import { baseUrl } from "../baseurl";
 
 export default function CatInfoSheetMaxi({ id }) {
 	const { state, dispatch } = useContext(AppContext);
-	console.log(state);
+	//console.log(state);
 	const [cat, setCat] = useState("");
-	console.log(cat);
+	//console.log(cat);
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(true);
 
@@ -45,7 +45,7 @@ export default function CatInfoSheetMaxi({ id }) {
 					withCredentials: true,
 				}
 			);
-			console.log("response bookmark:", response)
+			//console.log("response bookmark:", response)
 
 			if (!response.data.success && response.data.errorId === "jwt expired") {
 				navigate("/login");
@@ -68,7 +68,7 @@ export default function CatInfoSheetMaxi({ id }) {
 				const response = await axios.get(baseUrl + `/cats/listone/${id}`, {
 					withCredentials: true,
 				});
-				console.log("response", response);
+				//console.log("response", response);
 				if (response.data.success) {
 					setCat(response.data.cat);
 					setLoading(false);
@@ -84,7 +84,7 @@ export default function CatInfoSheetMaxi({ id }) {
 		const response = await axios.delete( baseUrl + `/cats/delete/${id}`, {
 			withCredentials: true,
 		});
-		console.log("response:", response);
+		//console.log("response:", response);
 
 		if (!response.data.success && response.data.errorId === "jwt expired") {
 			navigate("/login");

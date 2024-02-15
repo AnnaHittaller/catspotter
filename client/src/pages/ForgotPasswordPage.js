@@ -31,7 +31,7 @@ function ForgotPasswordPage(props) {
 				withCredentials: true,
 			}
 		);
-		console.log("response:", response);
+		//console.log("response:", response);
 
 		//make a toaster out of this instead of alert**********
 		if (response.data.success)

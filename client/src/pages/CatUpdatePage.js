@@ -92,14 +92,14 @@ export default function CatUpdatePage() {
 	const placeholder =
 		cloudinaryRoot + "placeholder_sfuu70.png"; 
 
-		console.log(cloudinaryRoot)
+		//console.log(cloudinaryRoot)
 
 	const [catImage, setCatImage] = useState({
 		url: "",
 		file: null,
 	});
 
-	console.log("cat", cat);
+	//console.log("cat", cat);
 
 	useEffect(() => {
 		const fetchCat = async () => {
@@ -107,7 +107,7 @@ export default function CatUpdatePage() {
 				const response = await axios.get(baseUrl + `/cats/listone/${id}`, {
 					withCredentials: true,
 				});
-				console.log("response", response);
+				//console.log("response", response);
 				if (response.data.success) {
 					setCat(response.data.cat);
 				}
@@ -125,7 +125,7 @@ export default function CatUpdatePage() {
 		color[2]?.value
 	);
 
-	console.log("markerCoords", markerCoords);
+	//console.log("markerCoords", markerCoords);
 
 	useEffect(() => {
 		if (cat) {
@@ -177,7 +177,7 @@ export default function CatUpdatePage() {
 						withCredentials: true,
 					}
 				);
-				console.log("nominatim", response.data.address);
+				//console.log("nominatim", response.data.address);
 				if (response.data.address.postcode)
 					setPostcode(response.data.address.postcode);
 				//check village-Town-city
@@ -196,7 +196,7 @@ export default function CatUpdatePage() {
 		fetchAddress();
 	}, [markerCoords]);
 
-	console.log(street, city);
+	//console.log(street, city);
 
 	//toast has to be set in the page!!!
 
@@ -218,7 +218,7 @@ export default function CatUpdatePage() {
 		});
 	};
 
-	console.log(catImage)
+	//console.log(catImage)
 
 	const handleChange = (selectedOption, name) => {
 		switch (name) {
@@ -269,7 +269,7 @@ export default function CatUpdatePage() {
 		}
 	};
 
-	console.log("color", color);
+	//console.log("color", color);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -332,7 +332,7 @@ export default function CatUpdatePage() {
 			//console.log("formdata", formdata);
 
 			for (let pair of formdata.entries()) {
-				console.log(pair[0] + ": " + pair[1]);
+				//console.log(pair[0] + ": " + pair[1]);
 			}
 
 			// console.log("pattern", pattern);
@@ -348,7 +348,7 @@ export default function CatUpdatePage() {
 					withCredentials: true,
 				}
 			);
-			console.log("response", response);
+			//console.log("response", response);
 
 			if (response.data.success) {
 				dispatch({
@@ -375,7 +375,7 @@ export default function CatUpdatePage() {
 		return <div>Loading...</div>; // or any loading indicator you prefer
 	}
 
-	console.log(cloudinaryRoot + placeholder);
+	//console.log(cloudinaryRoot + placeholder);
 
 	return (
 		<StyledPage display="flex" flexDirection="column">

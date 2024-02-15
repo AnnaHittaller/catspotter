@@ -46,7 +46,7 @@ export default function MapUserUpdate({
 	// 	state.user.location.coordinates[1],
 	// 	state.user.location.coordinates[0],
 	// ]);
-	console.log("markerCoords from userupdatemap,", markerCoords);
+	//console.log("markerCoords from userupdatemap,", markerCoords);
 	const { pathname } = useLocation(); //is this used? probs not
 	const [showToast, setShowToast] = useState(false);
 
@@ -64,8 +64,8 @@ export default function MapUserUpdate({
 	const handleMapClick = (e) => {
 		const { lat, lng } = e.latlng;
 		setMarkerCoords({ lat, lng });
-		console.log("newmarkercoords", markerCoords)
-		console.log(rangeValue, "rangevalue");
+		//console.log("newmarkercoords", markerCoords)
+		//console.log(rangeValue, "rangevalue");
 	};
 	const MapClickHandler = () => {
 		useMapEvents({

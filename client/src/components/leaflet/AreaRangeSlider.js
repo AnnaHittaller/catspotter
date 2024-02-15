@@ -17,7 +17,7 @@ export default function AreaRangeSlider({ setArea, area, rangeValue, setRangeVal
 
 	useEffect(() => {
 		const radiusInMeter = value[1] * 1000;
-		console.log(radiusInMeter);
+		//console.log(radiusInMeter);
 		
 	}, [value]);
 

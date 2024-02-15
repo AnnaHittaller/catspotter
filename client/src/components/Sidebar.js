@@ -37,13 +37,13 @@ export default function Sidebar() {
 	const { sidebaropen, setsidebaropen } = useContext(SidebarContext);
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
-	console.log(state);
+	//console.log(state);
 
 	const handleLogout = async () => {
 		const response = await axios.post(baseUrl + "/users/logout", {
 			withCredentials: true,
 		});
-		console.log("response:", response.data);
+		//console.log("response:", response.data);
 
 		dispatch({ type: "LOGOUT" });
 		//navigate('/login')

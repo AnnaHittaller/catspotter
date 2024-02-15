@@ -27,7 +27,7 @@ export default function NotificationsPage() {
 	const [showToast, setShowToast] = useState("");
 	const navigate = useNavigate();
 
-	console.log("matches:", matches) 
+	//console.log("matches:", matches) 
 
 	useEffect(() => {
 		const filterCatsByLocation = async () => {
@@ -35,7 +35,7 @@ export default function NotificationsPage() {
 				const response = await axios.get(baseUrl + "/cats/listbylocation", {
 					withCredentials: true,
 				});
-				console.log("response for locationfilter", response);
+				//console.log("response for locationfilter", response);
 
 				if (!response.data.success && response.data.errorId === "jwt expired") {
 					navigate("/login");
@@ -62,7 +62,7 @@ export default function NotificationsPage() {
 				const response = await axios.get(baseUrl + "/cats/listmatches", {
 					withCredentials: true,
 				});
-				console.log("listmatches response", response);
+				//console.log("listmatches response", response);
 
 				// should get back an array of cardData objects, so many as many cats the user has uploaded. May have to save them in a local state to map through them
 				// and render only those pair where the distance between userCat and matchingCat is less than 1 km
@@ -93,13 +93,13 @@ export default function NotificationsPage() {
 									);
 				// 					// If the distance is less than 1 km, keep the cat in the array
 										if (isNaN(distance)) {
-											console.log(
-												"Invalid distance calculation: ",
-												cardData.usersOwnCat.location,
-												cat.location
-											);
+											// console.log(
+											// 	"Invalid distance calculation: ",
+											// 	cardData.usersOwnCat.location,
+											// 	cat.location
+											// );
 										} else {
-											console.log("Distance: ", distance);
+											//console.log("Distance: ", distance);
 										}
 				 					if (distance < 1) {
 				 						return true;

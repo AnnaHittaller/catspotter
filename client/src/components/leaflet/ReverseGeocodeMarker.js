@@ -28,8 +28,8 @@ export default function ReverseGeocodeMarker({ position, icon }) {
 					(results) => {
 						var r = results[0];
 						if (r) {
-							console.log(r.center.lat + "," + r.center.lng + ",", r.name);
-							console.log(r);
+							//console.log(r.center.lat + "," + r.center.lng + ",", r.name);
+							//console.log(r);
 							const popupContent = ReactDOMServer.renderToString(
 								<MenuAddress r={r} />
 							);

@@ -45,7 +45,7 @@ export default function LoginForm({ onFormSwitch, currentForm }) {
 			const response = await axios.post(baseUrl + "/users/login", userData, {
 				withCredentials: true,
 			});
-			console.log("response:", response);
+			//console.log("response:", response);
 
 			if(!response.data.success) {
 				return setShowToast("Incorrect username or password");

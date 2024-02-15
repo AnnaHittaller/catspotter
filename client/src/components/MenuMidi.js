@@ -4,7 +4,7 @@ import { StyledP, StyledPBold } from "../styles/styled/Styled_Text";
 import dateFormatter from "../utils/DateFormatter";
  
 export default function MenuMidi({cat}) {
-	console.log("menumidi cat", cat)
+	//console.log("menumidi cat", cat)
 	const { formattedDate} = dateFormatter(cat?.date); 
 	return (
 		<StyledMenuMidi type={cat.status}>

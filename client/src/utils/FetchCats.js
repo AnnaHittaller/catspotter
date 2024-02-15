@@ -12,14 +12,14 @@ const FetchCats = () => {
 				const response = await axios.get( baseUrl + "/cats/list", {
 					withCredentials: true,
 				});
-				console.log("fetchCats:", response.data);
+				//console.log("fetchCats:", response.data);
 
 				if (response.data.success) {
 					dispatch({
 						type: "LIST_CATS",
 						payload: response.data.cats,
 					});
-					console.log("separate fetchCats function success")
+					//console.log("separate fetchCats function success")
 				}
 			} catch (error) {
 				console.log(error.message);
